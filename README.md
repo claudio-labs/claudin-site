@@ -1,5 +1,8 @@
 # Claudio
 
+![Node.js](https://img.shields.io/badge/Node.js-20+-339933?style=flat-square&logo=node.js&logoColor=white)
+![npm](https://img.shields.io/npm/v/@claudiolabs/claudio?style=flat-square&label=npm&color=CB3837)
+
 **One coding agent CLI. Any LLM.**
 
 Claudio brings a terminal-first agentic workflow — bash, file tools, grep, glob, agents, MCP, slash commands, streaming — to any model provider. Switch between OpenAI, Gemini, DeepSeek, Ollama, Mistral, GitHub Copilot, Bedrock, Vertex, and 200+ OpenAI-compatible endpoints without changing your workflow.
