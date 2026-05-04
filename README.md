@@ -8,6 +8,11 @@ Claudio brings a terminal-first agentic workflow — bash, file tools, grep, glo
 
 ---
 
+<img width="895" height="350" alt="image" src="https://github.com/user-attachments/assets/6734c38a-d42e-41dd-933f-2d222dbbd581" />
+
+
+---
+
 ## Install
 
 Requires Node.js 20+.
