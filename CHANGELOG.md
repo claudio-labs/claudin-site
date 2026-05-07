@@ -1,3 +1,10 @@
+## v0.1.12 — 2026-05-07
+
+- feat(memory): bench test and otimize memory (c35050a)
+- feat: opeain models (fa5070c)
+- fix(memory): prune ContentReplacementState orphans on every turn (#17) (e3caa36)
+- feat(outputFilter): add Phase 6.1.2 batch — 10 high-ROI bash output filters (#16) (efdce09)
+
 ## v0.1.11 — 2026-05-06
 
 - perf(memory): add evictOldStubbedMessages to remove fully-stubbed pairs (#15) (5bdbfc1)
