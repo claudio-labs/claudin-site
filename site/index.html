@@ -121,13 +121,13 @@
           <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true">
             <circle cx="5" cy="5" r="5"/>
           </svg>
-          Open source &middot; Node.js 20+
+          Open source &middot; MIT &middot; Node.js 20+
         </div>
         <h1 class="hero__heading">
           One coding<br />agent. <em>Any LLM.</em>
         </h1>
         <p class="hero__sub">
-          Terminal-first agentic workflow — bash, file tools, grep, glob, agents, MCP, slash commands, streaming &mdash; for any model provider.
+          Full agentic workflow — bash, files, grep, glob, agents, MCP, web search — running on Anthropic, OpenAI, Gemini, Ollama, or any of 200+ models. One CLI, zero vendor lock-in.
         </p>
 
         <!-- Install widget -->
@@ -150,9 +150,9 @@
           </div>
           <div class="install-panel" data-panel="bun">
             <span class="install-cmd">
-              <span class="cmd-prefix">$ </span><span class="cmd-pkg">bun</span> add -g @claudiolabs/claudio@latest
+              <span class="cmd-prefix">$ </span><span class="cmd-pkg">bun</span> install -g @claudiolabs/claudio@latest
             </span>
-            <button class="copy-btn" data-copy="bun add -g @claudiolabs/claudio@latest" aria-label="Copy bun install command">
+            <button class="copy-btn" data-copy="bun install -g @claudiolabs/claudio@latest" aria-label="Copy bun install command">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
               </svg>
@@ -171,27 +171,30 @@
             </button>
           </div>
         </div>
-      </div>
 
-      <!-- Terminal animation -->
-      <div class="terminal-window" aria-hidden="true">
-        <div class="terminal-bar">
-          <span class="terminal-dot terminal-dot--close"></span>
-          <span class="terminal-dot terminal-dot--min"></span>
-          <span class="terminal-dot terminal-dot--max"></span>
-          <span class="terminal-title">claudio</span>
+        <!-- Terminal animation -->
+        <div class="terminal" role="region" aria-label="Terminal demo" aria-live="polite">
+          <div class="terminal__bar" aria-hidden="true">
+            <span class="terminal__dot terminal__dot--red"></span>
+            <span class="terminal__dot terminal__dot--yellow"></span>
+            <span class="terminal__dot terminal__dot--green"></span>
+            <span class="terminal__title">claudio</span>
+          </div>
+          <div class="terminal__body">
+            <div id="terminal-output" aria-label="Terminal output"></div>
+            <div class="terminal__cursor" aria-hidden="true"></div>
+          </div>
         </div>
-        <div class="terminal-body" id="terminal-body"></div>
       </div>
     </div>
   </section>
 
   <!-- Providers -->
-  <section class="providers section" id="providers">
+  <section class="section" id="providers">
     <div class="container">
       <p class="section-label">Providers</p>
-      <h2 class="section-title">Works with any model</h2>
-      <p class="section-desc">Switch providers without changing your workflow. One CLI, 15+ presets, 200+ OpenAI-compatible endpoints.</p>
+      <h2 class="section-title">Every major LLM. One CLI.</h2>
+      <p class="section-desc">Configure any provider interactively with <code>/provider</code> — no environment variables, no config files, no restarts.</p>
 
       <div class="provider-grid" role="list">
 
@@ -227,14 +230,14 @@
 
         <article class="provider-card" role="listitem">
           <div class="provider-name">GitHub Copilot</div>
-          <div class="provider-preset">github-copilot</div>
+          <div class="provider-preset">copilot</div>
           <span class="provider-badge provider-badge--oauth">GitHub OAuth</span>
         </article>
 
         <article class="provider-card" role="listitem">
-          <div class="provider-name">ChatGPT / Codex</div>
+          <div class="provider-name">Codex / ChatGPT</div>
           <div class="provider-preset">codex</div>
-          <span class="provider-badge provider-badge--oauth">ChatGPT OAuth</span>
+          <span class="provider-badge provider-badge--oauth">OAuth</span>
         </article>
 
         <article class="provider-card" role="listitem">
@@ -280,6 +283,12 @@
         </article>
 
         <article class="provider-card" role="listitem">
+          <div class="provider-name">Together AI</div>
+          <div class="provider-preset">together</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
           <div class="provider-name">Any OpenAI-compat</div>
           <div class="provider-preset">custom</div>
           <span class="provider-badge provider-badge--apikey">Base URL + key</span>
@@ -293,7 +302,7 @@
   <section class="section" id="features">
     <div class="container">
       <p class="section-label">Features</p>
-      <h2 class="section-title">Everything you need</h2>
+      <h2 class="section-title">Built different</h2>
 
       <div class="feature-grid">
 
@@ -301,16 +310,24 @@
           <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/>
           </svg>
-          <h3 class="feature-title">Any provider, any model</h3>
-          <p class="feature-desc">Switch between 15+ presets or connect any OpenAI-compatible endpoint. One <code>/provider</code> command. No config files needed.</p>
+          <h3 class="feature-title">No env vars needed</h3>
+          <p class="feature-desc">Configure providers and models entirely from inside the app with <code>/provider</code>. Switch live. Run <code>/provider doctor</code> to health-check your active profile.</p>
+        </div>
+
+        <div class="feature-card">
+          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253"/>
+          </svg>
+          <h3 class="feature-title">Web search on any model</h3>
+          <p class="feature-desc">DuckDuckGo web search ships built-in for all providers — not just Anthropic. Optional Firecrawl integration for JS-rendered pages. No extra setup required.</p>
         </div>
 
         <div class="feature-card">
           <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/>
           </svg>
-          <h3 class="feature-title">File-based memory</h3>
-          <p class="feature-desc">Persistent memory across sessions. Claudio learns your project, your preferences, and your team conventions — and remembers them forever.</p>
+          <h3 class="feature-title">Memory system</h3>
+          <p class="feature-desc">Persistent memory across sessions — private and team-scoped. Automatic context pruning, token budget management, and stub eviction keep costs low as projects grow.</p>
         </div>
 
         <div class="feature-card">
@@ -318,9 +335,54 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z"/>
           </svg>
           <h3 class="feature-title">Full agentic toolkit</h3>
-          <p class="feature-desc">Bash execution, file tools, grep, glob, sub-agents, MCP servers, slash commands, and streaming output — all in the terminal.</p>
+          <p class="feature-desc">Bash execution, file tools, grep, glob, sub-agents, tasks, MCP servers, LSP diagnostics, Jupyter notebooks, cron scheduling, plan mode, git worktrees — all in one CLI.</p>
         </div>
 
+        <div class="feature-card">
+          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z"/>
+          </svg>
+          <h3 class="feature-title">gRPC headless server</h3>
+          <p class="feature-desc">Embed the full agentic engine into CI/CD pipelines or custom UIs via gRPC bidirectional streaming. Generate clients in Python, Go, Rust, or any language from the included <code>.proto</code> file.</p>
+        </div>
+
+        <div class="feature-card">
+          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z"/>
+          </svg>
+          <h3 class="feature-title">VS Code extension included</h3>
+          <p class="feature-desc">Provider-aware control-center UI, launch integration, and theme support — no separate install. MCP built-in. Skills and plugins system for extensible slash commands.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Migrate from Claude Code -->
+  <section class="section" id="migrate">
+    <div class="container">
+      <div class="local-inner">
+        <div>
+          <span class="local-badge">
+            <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><circle cx="4" cy="4" r="4"/></svg>
+            Zero friction migration
+          </span>
+          <h2 class="section-title">Coming from Claude Code?</h2>
+          <p class="section-desc" style="margin-bottom: var(--space-4)">Claudio originated from the Claude Code codebase and has been substantially modified to support any provider. It automatically detects your existing <code>~/.claude/</code> and migrates tokens, settings, theme, plugins, and keybindings.</p>
+          <p class="section-desc" style="margin-bottom: var(--space-6); color: var(--color-text-muted); font-size: var(--text-sm)">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+          <a href="docs.html#migrate" class="nav__cta" style="display:inline-block;">Migration guide &rarr;</a>
+        </div>
+        <div class="local-code" role="region" aria-label="Migration commands">
+          <div><span class="c-comment"># install claudio</span></div>
+          <div><span class="c-accent">npm</span> <span class="c-cmd">install -g @claudiolabs/claudio@latest</span></div>
+          <div>&nbsp;</div>
+          <div><span class="c-comment"># run — migration is automatic</span></div>
+          <div><span class="c-accent">claudio</span></div>
+          <div>&nbsp;</div>
+          <div><span class="c-green">✓</span> <span class="c-cmd">Migrated settings from ~/.claude/</span></div>
+          <div><span class="c-green">✓</span> <span class="c-cmd">Tokens, theme, plugins restored</span></div>
+          <div><span class="c-green">✓</span> <span class="c-cmd">Ready — switch provider with /provider</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -335,11 +397,11 @@
             Local &middot; Zero key &middot; Free
           </span>
           <h2 class="section-title">Run fully offline</h2>
-          <p class="section-desc" style="margin-bottom: var(--space-6)">No API key, no cost, no data sent anywhere. Pull a model with Ollama and start coding in under a minute.</p>
+          <p class="section-desc" style="margin-bottom: var(--space-6)">No API key, no cost, no data sent anywhere. Pull a model with Ollama or LM Studio and start coding in under a minute.</p>
           <a href="docs.html#local" class="nav__cta" style="display:inline-block;">Local setup guide &rarr;</a>
         </div>
         <div class="local-code" role="region" aria-label="Local model setup commands">
-          <div><span class="c-comment"># pull a model</span></div>
+          <div><span class="c-comment"># pull a model with ollama</span></div>
           <div><span class="c-accent">ollama</span> <span class="c-cmd">pull qwen2.5-coder:7b</span></div>
           <div>&nbsp;</div>
           <div><span class="c-comment"># launch claudio with it</span></div>
