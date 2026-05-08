@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary meta -->
+  <title>Changelog — Claudio</title>
+  <meta name="description" content="Claudio release history — every feature, fix, and improvement across all versions." />
+  <meta name="robots" content="index, follow, max-snippet:-1" />
+  <link rel="canonical" href="https://claudiolabs.ai/changelog.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Claudio" />
+  <meta property="og:title" content="Changelog — Claudio" />
+  <meta property="og:description" content="Claudio release history — every feature, fix, and improvement across all versions." />
+  <meta property="og:url" content="https://claudiolabs.ai/changelog.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Changelog — Claudio" />
+  <meta name="twitter:description" content="Claudio release history — every feature, fix, and improvement." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
+
+  <!-- Theme & favicon -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <span class="nav__logo-dot" aria-hidden="true"></span>
+        claudio
+      </a>
+
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__links" id="nav-links" role="list">
+        <li>
+          <a href="https://github.com/claudiolabs/claudio" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+        </li>
+        <li><a href="docs.html" class="nav__link">Docs</a></li>
+        <li><a href="changelog.html" class="nav__link" style="color: var(--color-accent)">Changelog</a></li>
+        <li><a href="docs.html#install" class="nav__cta">Install</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-hero">
+      <h1 class="page-hero__title">Changelog</h1>
+      <p class="page-hero__sub">Release history for <code>@claudiolabs/claudio</code></p>
+    </div>
+
+    <div class="changelog-list">
+
+      <!-- v0.1.12 -->
+      <article class="changelog-entry" id="v0-1-12">
+        <div class="changelog-version">
+          <span class="changelog-version-num">v0.1.12</span>
+          <span class="changelog-date">2026-05-07</span>
+        </div>
+        <div class="changelog-items">
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--feat">feat</span>
+            <span class="changelog-item-text"><span class="scope">memory</span> — bench test and optimize memory</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--feat">feat</span>
+            <span class="changelog-item-text">OpenAI model discovery</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--fix">fix</span>
+            <span class="changelog-item-text"><span class="scope">memory</span> — prune ContentReplacementState orphans on every turn</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--feat">feat</span>
+            <span class="changelog-item-text"><span class="scope">outputFilter</span> — Phase 6.1.2 batch — 10 high-ROI bash output filters</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- v0.1.11 -->
+      <article class="changelog-entry" id="v0-1-11">
+        <div class="changelog-version">
+          <span class="changelog-version-num">v0.1.11</span>
+          <span class="changelog-date">2026-05-06</span>
+        </div>
+        <div class="changelog-items">
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--perf">perf</span>
+            <span class="changelog-item-text"><span class="scope">memory</span> — add evictOldStubbedMessages to remove fully-stubbed pairs</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--perf">perf</span>
+            <span class="changelog-item-text"><span class="scope">memory</span> — apply applyStableStubs to REPL React state after each turn</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--perf">perf</span>
+            <span class="changelog-item-text"><span class="scope">memory</span> — reduce pruneOldToolResults keepTurns from 6 to 1</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--perf">perf</span>
+            <span class="changelog-item-text"><span class="scope">memory</span> — prune tool_result content older than 6 turns every turn</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--fix">fix</span>
+            <span class="changelog-item-text"><span class="scope">memory</span> — prune ContentReplacementState orphans on every turn</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--fix">fix</span>
+            <span class="changelog-item-text"><span class="scope">bash-filter</span> — code quality fixes + 2-space indentation</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--fix">fix</span>
+            <span class="changelog-item-text"><span class="scope">providers</span> — retry transient 404s from OpenAI-compat providers</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--fix">fix</span>
+            <span class="changelog-item-text"><span class="scope">providers</span> — use claudio branding in User-Agent for non-Anthropic providers</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--chore">chore</span>
+            <span class="changelog-item-text"><span class="scope">bash-filter</span> — plumbing for bash-output-filter v1 (Phase 0)</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--refactor">refactor</span>
+            <span class="changelog-item-text"><span class="scope">memory</span> — extract stubOneBlock, export AnyMessage, fix cutoffIdx guard</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- v0.1.10 -->
+      <article class="changelog-entry" id="v0-1-10">
+        <div class="changelog-version">
+          <span class="changelog-version-num">v0.1.10</span>
+          <span class="changelog-date">2026-05-05</span>
+        </div>
+        <div class="changelog-items">
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--feat">feat</span>
+            <span class="changelog-item-text"><span class="scope">providers</span> — dynamic model discovery + fixes for OpenAI-compat providers</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--fix">fix</span>
+            <span class="changelog-item-text"><span class="scope">providers</span> — accurate token metrics for OpenAI-compat providers</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--fix">fix</span>
+            <span class="changelog-item-text"><span class="scope">interrupt</span> — propagate Ctrl+C to exit handler when nothing to cancel</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--fix">fix</span>
+            <span class="changelog-item-text"><span class="scope">cache</span> — skip model-options cache scope for non-local provider URLs</span>
+          </div>
+          <div class="changelog-item">
+            <span class="changelog-badge changelog-badge--fix">fix</span>
+            <span class="changelog-item-text"><span class="scope">repl</span> — route Ctrl+C double-press through handleExit to stop ~5s freeze</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- v0.1.9 -->
+      <article class="changelog-entry" id="v0-1-9">
+        <div class="changelog-version">
+          <span class="changelog-version-num">v0.1.9</span>
+          <span class="changelog-date">2026-05-04</span>
+        </div>
+        <p class="changelog-skip">No user-facing commits since previous tag.</p>
+      </article>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom" style="border-top: 1px solid var(--color-border); padding-top: var(--space-6);">
+        <a href="/" style="font-family: var(--font-mono); font-weight: 600; display: flex; align-items: center; gap: var(--space-2);">
+          <span class="nav__logo-dot" aria-hidden="true"></span>claudio
+        </a>
+        <span style="color: var(--color-text-dim); font-size: var(--text-xs)">Independent project. Not affiliated with Anthropic.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
