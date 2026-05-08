@@ -1,0 +1,161 @@
+[
+  {
+    "version": "v0.1.12",
+    "date": "2026-05-07",
+    "items": [
+      {
+        "type": "feat",
+        "scope": "memory",
+        "text": "bench test and otimize memory"
+      },
+      {
+        "type": "feat",
+        "scope": null,
+        "text": "opeain models"
+      },
+      {
+        "type": "fix",
+        "scope": "memory",
+        "text": "prune ContentReplacementState orphans on every turn"
+      },
+      {
+        "type": "feat",
+        "scope": "outputFilter",
+        "text": "add Phase 6.1.2 batch — 10 high-ROI bash output filters"
+      }
+    ]
+  },
+  {
+    "version": "v0.1.11",
+    "date": "2026-05-06",
+    "items": [
+      {
+        "type": "perf",
+        "scope": "memory",
+        "text": "add evictOldStubbedMessages to remove fully-stubbed pairs"
+      },
+      {
+        "type": "test",
+        "scope": "memory",
+        "text": "add pruneOldToolResults test suite (9 cases)"
+      },
+      {
+        "type": "refactor",
+        "scope": "memory",
+        "text": "extract stubOneBlock, export AnyMessage, fix cutoffIdx guard"
+      },
+      {
+        "type": "perf",
+        "scope": "memory",
+        "text": "reduce pruneOldToolResults keepTurns from 6 to 1"
+      },
+      {
+        "type": "perf",
+        "scope": "memory",
+        "text": "prune tool_result content older than 6 turns every turn"
+      },
+      {
+        "type": "docs",
+        "scope": "roadmap",
+        "text": "mark 5.7 complete — REPL React state gap closed"
+      },
+      {
+        "type": "perf",
+        "scope": "memory",
+        "text": "apply applyStableStubs to REPL React state after each turn (ROADMAP 5.7)"
+      },
+      {
+        "type": "fix",
+        "scope": "bash-filter",
+        "text": "code quality fixes + 2-space indentation"
+      },
+      {
+        "type": "feat",
+        "scope": null,
+        "text": "tests"
+      },
+      {
+        "type": "chore",
+        "scope": "bash-filter",
+        "text": "plumbing for bash-output-filter v1 (Phase 0)"
+      },
+      {
+        "type": "docs",
+        "scope": null,
+        "text": "bash-output-filter discovery + v1 tech spec"
+      },
+      {
+        "type": "fix",
+        "scope": "providers",
+        "text": "retry transient 404s from OpenAI-compat providers"
+      },
+      {
+        "type": "fix",
+        "scope": "providers",
+        "text": "use claudio branding in User-Agent for non-Anthropic providers"
+      }
+    ]
+  },
+  {
+    "version": "v0.1.10",
+    "date": "2026-05-05",
+    "items": [
+      {
+        "type": "fix",
+        "scope": "cache",
+        "text": "skip model-options cache scope for non-local provider URLs"
+      },
+      {
+        "type": "fix",
+        "scope": "providers",
+        "text": "accurate token metrics for OpenAI-compat providers"
+      },
+      {
+        "type": "fix",
+        "scope": "interrupt",
+        "text": "propagate Ctrl+C to exit handler when nothing to cancel"
+      },
+      {
+        "type": "feat",
+        "scope": "providers",
+        "text": "dynamic model discovery + fixes for OpenAI-compat providers"
+      },
+      {
+        "type": "feat",
+        "scope": null,
+        "text": "fix cli"
+      },
+      {
+        "type": "test",
+        "scope": "cache",
+        "text": "regression tests + bench for cc_workload prefix flip"
+      },
+      {
+        "type": "feat",
+        "scope": "benches",
+        "text": "add 11 token-economy measurement scripts"
+      },
+      {
+        "type": "feat",
+        "scope": "benches",
+        "text": "add 5 token-efficiency measurement scripts"
+      },
+      {
+        "type": "test",
+        "scope": "tools",
+        "text": "add guard tests + heap probes for lazy-tool registry"
+      },
+      {
+        "type": "fix",
+        "scope": "repl",
+        "text": "route Ctrl+C double-press through handleExit to stop ~5s freeze"
+      }
+    ]
+  },
+  {
+    "version": "v0.1.9",
+    "date": "2026-05-04",
+    "items": [],
+    "skip": "No user-facing commits since previous tag."
+  }
+]
