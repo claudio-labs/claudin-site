@@ -114,7 +114,14 @@ const TERMINAL_SCRIPT = [
   { type: 'cursor' },
 ];
 
-function initTerminal() {
+async function initTerminal() {
+  let latestVersion = 'v0.1.12';
+  try {
+    const res = await fetch('changelog-data.json');
+    const data = await res.json();
+    if (data[0]?.version) latestVersion = data[0].version;
+  } catch (_) {}
+
   const container = document.getElementById('terminal-body');
   if (!container) return;
 
@@ -133,13 +140,13 @@ function initTerminal() {
     }
   }
 
-  function addHeader() {
+  function addHeader(version) {
     const wrap = document.createElement('div');
     wrap.className = 'terminal-header-block';
     wrap.innerHTML = `
       <img src="img/mascot.png" class="terminal-mascot-img" alt="Claudio mascot" width="48" height="56" />
       <div class="terminal-meta">
-        <span class="terminal-meta__name">Claudio <span class="terminal-text--muted">v0.1.6</span></span>
+        <span class="terminal-meta__name">Claudio <span class="terminal-text--muted">${version}</span></span>
         <span class="terminal-text--muted">Anthropic · claude-sonnet-4-6</span>
         <span class="terminal-text--muted">~/projects/claudio</span>
       </div>`;
@@ -155,7 +162,7 @@ function initTerminal() {
       if (!visible) { scriptRunning = false; return; }
 
       if (step.type === 'header') {
-        addHeader();
+        addHeader(latestVersion);
 
       } else if (step.type === 'pause') {
         await sleep(step.delay);
@@ -243,6 +250,21 @@ function initTerminal() {
   observer.observe(container);
 }
 
+/* ── Announce bar version ────────────────────────────────────── */
+async function initAnnounceBar() {
+  const el = document.getElementById('announce-version');
+  if (!el) return;
+  try {
+    const res = await fetch('changelog-data.json');
+    const data = await res.json();
+    if (data[0]?.version) {
+      const v = data[0].version;
+      const desc = data[0].entries?.[0]?.replace(/^[a-z]+\([^)]+\):\s*/i, '') || '';
+      el.textContent = `${v} released${desc ? ' \u2014 ' + desc : ''} \u2014 `;
+    }
+  } catch (_) {}
+}
+
 /* ── Init ────────────────────────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', () => {
   initTabs();
@@ -250,4 +272,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initHamburger();
   initDocsNav();
   initTerminal();
+  initAnnounceBar();
 });
