@@ -331,16 +331,12 @@
   margin-bottom: var(--space-3);
 }
 
-.terminal-mascot {
-  font-size: 10px;
-  line-height: 1.2;
-  color: var(--color-accent);
-  font-family: var(--font-mono);
-  user-select: none;
+.terminal-mascot-img {
+  width: 48px;
+  height: auto;
   flex-shrink: 0;
+  image-rendering: pixelated;
 }
-
-.px-eye { color: #fff; }
 
 .terminal-meta {
   display: flex;

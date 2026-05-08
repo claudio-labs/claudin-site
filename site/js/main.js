@@ -137,14 +137,7 @@ function initTerminal() {
     const wrap = document.createElement('div');
     wrap.className = 'terminal-header-block';
     wrap.innerHTML = `
-      <div class="terminal-mascot">
-        <div class="px-row">██████</div>
-        <div class="px-row">█<span class="px-eye">◉</span>██<span class="px-eye">◉</span>█</div>
-        <div class="px-row">██████</div>
-        <div class="px-row">█▄██▄█</div>
-        <div class="px-row">▀████▀</div>
-        <div class="px-row">█ ██ █</div>
-      </div>
+      <img src="img/mascot.png" class="terminal-mascot-img" alt="Claudio mascot" width="48" height="56" />
       <div class="terminal-meta">
         <span class="terminal-meta__name">Claudio <span class="terminal-text--muted">v0.1.6</span></span>
         <span class="terminal-text--muted">Anthropic · claude-sonnet-4-6</span>
