@@ -95,10 +95,9 @@ function initDocsNav() {
 
 /* ── Terminal animation ──────────────────────────────────────── */
 const TERMINAL_SCRIPT = [
-  { type: 'prompt', text: 'claudio', delay: 60 },
-  { type: 'pause', delay: 600 },
-  { type: 'output', text: 'Provider: anthropic (claude-sonnet-4-6)', cls: 'terminal-text--muted', delay: 18 },
+  { type: 'header' },
   { type: 'blank' },
+  { type: 'cursor-idle', delay: 800 },
   { type: 'prompt', text: 'refactor auth.ts to use async/await', delay: 45 },
   { type: 'pause', delay: 500 },
   { type: 'output', text: '⠋ Reading auth.ts...', cls: 'terminal-text--muted', delay: 20 },
@@ -107,6 +106,7 @@ const TERMINAL_SCRIPT = [
   { type: 'pause', delay: 800 },
   { type: 'output', text: '✓ src/auth.ts — 3 functions updated', cls: 'terminal-text--green', delay: 22 },
   { type: 'blank' },
+  { type: 'cursor-idle', delay: 600 },
   { type: 'prompt', text: '/provider switch gemini', delay: 55 },
   { type: 'pause', delay: 400 },
   { type: 'output', text: '✓ Switched to gemini (gemini-2.5-pro)', cls: 'terminal-text--green', delay: 20 },
@@ -118,7 +118,8 @@ function initTerminal() {
   const container = document.getElementById('terminal-body');
   if (!container) return;
 
-  let running = true;
+  let visible = true;
+  let scriptRunning = false;
 
   async function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -126,36 +127,75 @@ function initTerminal() {
 
   async function typeText(el, text, charDelay) {
     for (const ch of text) {
-      if (!running) return;
+      if (!visible) return;
       el.textContent += ch;
       await sleep(charDelay + (Math.random() * 20 - 10));
     }
   }
 
+  function addHeader() {
+    const wrap = document.createElement('div');
+    wrap.className = 'terminal-header-block';
+    wrap.innerHTML = `
+      <div class="terminal-mascot">
+        <div class="px-row">██████</div>
+        <div class="px-row">█<span class="px-eye">◉</span>██<span class="px-eye">◉</span>█</div>
+        <div class="px-row">██████</div>
+        <div class="px-row">█▄██▄█</div>
+        <div class="px-row">▀████▀</div>
+        <div class="px-row">█ ██ █</div>
+      </div>
+      <div class="terminal-meta">
+        <span class="terminal-meta__name">Claudio <span class="terminal-text--muted">v0.1.6</span></span>
+        <span class="terminal-text--muted">Anthropic · claude-sonnet-4-6</span>
+        <span class="terminal-text--muted">~/projects/claudio</span>
+      </div>`;
+    container.appendChild(wrap);
+  }
+
   async function runScript() {
+    if (scriptRunning) return;
+    scriptRunning = true;
     container.innerHTML = '';
 
     for (const step of TERMINAL_SCRIPT) {
-      if (!running) return;
+      if (!visible) { scriptRunning = false; return; }
 
-      if (step.type === 'pause') {
+      if (step.type === 'header') {
+        addHeader();
+
+      } else if (step.type === 'pause') {
         await sleep(step.delay);
 
       } else if (step.type === 'blank') {
         container.appendChild(document.createElement('br'));
+
+      } else if (step.type === 'cursor-idle') {
+        const line = document.createElement('div');
+        line.className = 'terminal-line';
+        const prompt = document.createElement('span');
+        prompt.className = 'terminal-prompt';
+        prompt.textContent = '❯ ';
+        const cursor = document.createElement('span');
+        cursor.className = 'terminal-cursor';
+        line.appendChild(prompt);
+        line.appendChild(cursor);
+        container.appendChild(line);
+        await sleep(step.delay);
+        line.remove();
 
       } else if (step.type === 'cursor') {
         const line = document.createElement('div');
         line.className = 'terminal-line';
         const prompt = document.createElement('span');
         prompt.className = 'terminal-prompt';
-        prompt.textContent = '❯';
+        prompt.textContent = '❯ ';
         const cursor = document.createElement('span');
         cursor.className = 'terminal-cursor';
         line.appendChild(prompt);
         line.appendChild(cursor);
         container.appendChild(line);
-        await sleep(3500);
+        await sleep(3000);
 
       } else if (step.type === 'prompt') {
         const line = document.createElement('div');
@@ -168,7 +208,6 @@ function initTerminal() {
         const textEl = document.createElement('span');
         textEl.className = 'terminal-text';
 
-        // Show cursor while typing
         const cursor = document.createElement('span');
         cursor.className = 'terminal-cursor';
         cursor.style.animation = 'none';
@@ -194,21 +233,19 @@ function initTerminal() {
         await sleep(80);
       }
 
-      // Auto-scroll
       container.scrollTop = container.scrollHeight;
     }
 
-    // Loop after pause
     await sleep(2500);
-    if (running) runScript();
+    scriptRunning = false;
+    if (visible) runScript();
   }
 
   runScript();
 
-  // Stop when off-screen to save resources
   const observer = new IntersectionObserver(entries => {
-    running = entries[0].isIntersecting;
-    if (running) runScript();
+    visible = entries[0].isIntersecting;
+    if (visible) runScript();
   });
   observer.observe(container);
 }
