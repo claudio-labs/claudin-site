@@ -27,7 +27,7 @@
   top: 0;
   z-index: 100;
   height: var(--nav-height);
-  background: rgba(13, 13, 13, 0.85);
+  background: rgba(26, 29, 46, 0.9);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--color-border);
@@ -157,7 +157,17 @@
   color: var(--color-text-muted);
   line-height: var(--leading-snug);
   max-width: 44ch;
-  margin-bottom: var(--space-10);
+}
+
+.hero__install {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.hero__install .install-widget {
+  width: 100%;
+  max-width: 480px;
 }
 
 /* Install widget */
@@ -245,6 +255,11 @@
 }
 
 /* Terminal window */
+.hero__inner .terminal-window {
+  grid-column: 1 / -1;
+  margin-top: var(--space-12);
+}
+
 .terminal-window {
   background: var(--color-code-bg);
   border: 1px solid var(--color-border);

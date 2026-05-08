@@ -1,20 +1,20 @@
 :root {
   /* Colors */
-  --color-bg:        #0d0d0d;
-  --color-surface:   #161616;
-  --color-surface-2: #1e1e1e;
-  --color-border:    #2a2a2a;
-  --color-border-2:  #383838;
+  --color-bg:        #1a1d2e;
+  --color-surface:   #20243a;
+  --color-surface-2: #272b42;
+  --color-border:    #2e3350;
+  --color-border-2:  #3a3f60;
 
   --color-text:      #f0f0f0;
-  --color-text-muted: #888888;
-  --color-text-dim:  #555555;
+  --color-text-muted: #8892b0;
+  --color-text-dim:  #4a5175;
 
-  --color-accent:    #f59e0b;
-  --color-accent-dim: rgba(245, 158, 11, 0.12);
-  --color-accent-glow: rgba(245, 158, 11, 0.25);
+  --color-accent:    #e879a0;
+  --color-accent-dim: rgba(232, 121, 160, 0.12);
+  --color-accent-glow: rgba(232, 121, 160, 0.28);
 
-  --color-code-bg:   #111111;
+  --color-code-bg:   #161929;
 
   --color-badge-feat:  rgba(34, 197, 94, 0.15);
   --color-badge-fix:   rgba(248, 113, 113, 0.15);

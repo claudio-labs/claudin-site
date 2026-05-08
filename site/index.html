@@ -32,7 +32,7 @@
   <meta name="twitter:image:alt" content="Claudio CLI terminal demo" />
 
   <!-- Theme & favicon -->
-  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="theme-color" content="#1a1d2e" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -49,7 +49,7 @@
     "url": "https://claudiolabs.ai/",
     "downloadUrl": "https://claudiolabs.ai/docs.html#install",
     "softwareVersion": "0.1.12",
-    "license": "https://github.com/claudiolabs/claudio/blob/main/LICENSE",
+    "license": "https://github.com/claudio-labs/claudio/blob/main/LICENSE",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -97,7 +97,7 @@
 
       <ul class="nav__links" id="nav-links" role="list">
         <li>
-          <a href="https://github.com/claudiolabs/claudio" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/claudio-labs/claudio" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
             </svg>
@@ -117,12 +117,7 @@
   <section class="hero section--lg container">
     <div class="hero__inner">
       <div class="hero__content">
-        <div class="hero__tag">
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true">
-            <circle cx="5" cy="5" r="5"/>
-          </svg>
-          Open source &middot; MIT &middot; Node.js 20+
-        </div>
+
         <h1 class="hero__heading">
           One coding<br />agent. <em>Any LLM.</em>
         </h1>
@@ -130,7 +125,10 @@
           Full agentic workflow — bash, files, grep, glob, agents, MCP, web search — running on Anthropic, OpenAI, Gemini, Ollama, or any of 200+ models. One CLI, zero vendor lock-in.
         </p>
 
-        <!-- Install widget -->
+      </div>
+
+      <!-- Install widget -->
+      <div class="hero__install">
         <div class="install-widget" role="region" aria-label="Installation">
           <div class="install-tabs" role="tablist">
             <button class="install-tab active" role="tab" aria-selected="true" data-tab="npm">npm</button>
@@ -171,19 +169,17 @@
             </button>
           </div>
         </div>
+      </div><!-- /.hero__install -->
 
-        <!-- Terminal animation -->
-        <div class="terminal" role="region" aria-label="Terminal demo" aria-live="polite">
-          <div class="terminal__bar" aria-hidden="true">
-            <span class="terminal__dot terminal__dot--red"></span>
-            <span class="terminal__dot terminal__dot--yellow"></span>
-            <span class="terminal__dot terminal__dot--green"></span>
-            <span class="terminal__title">claudio</span>
-          </div>
-          <div class="terminal__body">
-            <div id="terminal-output" aria-label="Terminal output"></div>
-            <div class="terminal__cursor" aria-hidden="true"></div>
-          </div>
+      <!-- Terminal animation -->
+      <div class="terminal-window" role="region" aria-label="Terminal demo" aria-live="polite">
+        <div class="terminal-bar" aria-hidden="true">
+          <span class="terminal-dot terminal-dot--close"></span>
+          <span class="terminal-dot terminal-dot--min"></span>
+          <span class="terminal-dot terminal-dot--max"></span>
+          <span class="terminal-title">claudio</span>
+        </div>
+        <div class="terminal-body" id="terminal-body">
         </div>
       </div>
     </div>
@@ -428,7 +424,7 @@
 
         <div class="footer__links">
           <div class="footer__links-title">Project</div>
-          <a href="https://github.com/claudiolabs/claudio" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/claudio-labs/claudio" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="changelog.html" class="footer__link">Changelog</a>
           <a href="docs.html" class="footer__link">Docs</a>
         </div>
