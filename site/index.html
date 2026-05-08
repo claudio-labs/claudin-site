@@ -37,8 +37,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-  <!-- JSON-LD: SoftwareApplication -->
-  <script type="application/ld+json">
+  <!-- JSON-LD: SoftwareApplication (version injected dynamically) -->
+  <script id="jsonld-software" type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -61,6 +61,16 @@
       "url": "https://claudiolabs.ai/"
     }
   }
+  </script>
+  <script>
+    fetch('changelog-data.json').then(r => r.json()).then(data => {
+      const v = data[0]?.version?.replace(/^v/, '');
+      if (!v) return;
+      const el = document.getElementById('jsonld-software');
+      const obj = JSON.parse(el.textContent);
+      obj.softwareVersion = v;
+      el.textContent = JSON.stringify(obj);
+    }).catch(() => {});
   </script>
 
   <!-- JSON-LD: WebSite (enables Google Sitelinks search) -->
