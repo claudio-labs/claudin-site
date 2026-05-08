@@ -133,6 +133,7 @@
             <button class="install-tab active" role="tab" aria-selected="true" data-tab="npm">npm</button>
             <button class="install-tab" role="tab" aria-selected="false" data-tab="bun">bun</button>
             <button class="install-tab" role="tab" aria-selected="false" data-tab="npx">npx</button>
+            <button class="install-tab" role="tab" aria-selected="false" data-tab="curl">curl</button>
           </div>
           <div class="install-panel active" data-panel="npm">
             <span class="install-cmd">
@@ -161,6 +162,17 @@
               <span class="cmd-prefix">$ </span><span class="cmd-pkg">npx</span> @claudiolabs/claudio@latest
             </span>
             <button class="copy-btn" data-copy="npx @claudiolabs/claudio@latest" aria-label="Copy npx command">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+              </svg>
+              Copy
+            </button>
+          </div>
+          <div class="install-panel" data-panel="curl">
+            <span class="install-cmd">
+              <span class="cmd-prefix">$ </span><span class="cmd-pkg">curl</span> -fsSL https://claudiolabs.ai/install.sh | sh
+            </span>
+            <button class="copy-btn" data-copy="curl -fsSL https://claudiolabs.ai/install.sh | sh" aria-label="Copy curl install command">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
               </svg>
