@@ -112,11 +112,27 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="footer__bottom" style="border-top: 1px solid var(--color-border); padding-top: var(--space-6);">
-        <a href="/" style="font-family: var(--font-mono); font-weight: 600; display: flex; align-items: center; gap: var(--space-2);">
-          <span class="nav__logo-dot" aria-hidden="true"></span>claudio
-        </a>
-        <span style="color: var(--color-text-dim); font-size: var(--text-xs)">Independent project. Not affiliated with Anthropic.</span>
+      <div class="footer__inner">
+        <div>
+          <div class="footer__brand">
+            <span class="nav__logo-dot" aria-hidden="true"></span>
+            claudio
+          </div>
+          <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__links-title">Project</div>
+          <a href="https://github.com/claudio-labs/claudio" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="changelog.html" class="footer__link">Changelog</a>
+          <a href="docs.html" class="footer__link">Docs</a>
+          <a href="https://github.com/claudio-labs/claudio/issues" class="footer__link" target="_blank" rel="noopener noreferrer">Issues</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span>claudiolabs.ai</span>
       </div>
     </div>
   </footer>
