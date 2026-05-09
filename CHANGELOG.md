@@ -1,3 +1,29 @@
+## v0.1.13 — 2026-05-09
+
+- ci(release): remove test suite and privacy check, keep only smoke (6609663)
+- ci: keep only smoke check in pr-checks workflow (8597a43)
+- fix(tests): resolve remaining 274 CI failures — more mock leaks and ReDoS (2a26c92)
+- fix(tests): resolve all 293 CI failures — mock leaks, ReDoS, and flaky thresholds (7ad8738)
+- fix(openaiShim): filter Anthropic server-side tools before sending to OpenAI-compat providers (fad5768)
+- refactor: complete migration of project-level paths from .claude to .claudio (fc31ed3)
+- feat(output-filter): phase 6.2 — JS/TS toolchain + tsc + git diff/show (Linux) (915d30e)
+- ci: serialize bun test with --max-concurrency=1 to prevent mock leaks (af25e8f)
+- feat(output-filter): phase 7 — default-on, /config toggle, performance tip (4fa810c)
+- ci: replace flaky per-file test loop with single bun test invocation (7423140)
+- perf: reduce startup latency, memory usage, and I/O contention (c64bff7)
+- fix(tests): eliminate ESM live-binding leaks and missing afterAll restores across full suite (2d35768)
+- fix(codex): force-refresh OAuth token on 401 to handle server-side revocation (d40a967)
+- fix(copilot): auto-refresh expired GitHub Copilot tokens without reconnect (05de8b6)
+- feat(output-filter): close phase 6.1.6 schema hardening gaps (#24) (caa4651)
+- fix(repl): replace boolean exit guard with a 3-state machine to handle stalled shutdown (276c3b6)
+- fix(tests): restore BaseSandboxManager static stubs and force-enable LSP gate in dedup test (a5a2aa5)
+- chore(deps): upgrade @mendable/firecrawl-js to 4.22.2 for axios 1.15.2 (#23) (03f9762)
+- chore: remove gRPC server and its dependencies (#22) (fd421da)
+- fix(repl): drop stale local-jsx writes via generation token to unblock /clear and /provider (#21) (83f1c73)
+- feat(filters): add container, network, and extended git output filters (#20) (f4b078c)
+- feat(filters): add GitHub CLI output filters for issues, PRs, and runs (#19) (5c97675)
+- feat(tool):  BashTool integration output filter (#18) (88dcb80)
+
 ## v0.1.12 — 2026-05-07
 
 - feat(memory): bench test and otimize memory (c35050a)
