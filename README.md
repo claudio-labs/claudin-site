@@ -1,4 +1,4 @@
-# Claudio
+# <img src="site/img/icon.png" alt="" width="40" valign="middle" /> Claudio
 
 ![Node.js](https://img.shields.io/badge/Node.js-20+-339933?style=flat-square&logo=node.js&logoColor=white)
 ![npm](https://img.shields.io/npm/v/@claudiolabs/claudio?style=flat-square&label=npm&color=CB3837)
