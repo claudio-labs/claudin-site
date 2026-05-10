@@ -1,3 +1,8 @@
+## v0.1.15 — 2026-05-10
+
+- fix(bash-filter): harden pipeline against compound, env, and replace edge cases (1b060ae)
+- feat(agents): add Running/Library tabs to /agents with live background agent monitoring (ba2b8fa)
+
 ## v0.1.14 — 2026-05-10
 
 - refactor: remove /logout command in favor of /provider (#26) (3c84490)
