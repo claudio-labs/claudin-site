@@ -1,3 +1,9 @@
+## v0.1.14 — 2026-05-10
+
+- refactor: remove /logout command in favor of /provider (#26) (3c84490)
+- docs: add bash output filter feature documentation with before/after examples (9c6cb2c)
+- fix: suppress npm deprecation notification for non-Anthropic packages (0056c47)
+
 ## v0.1.13 — 2026-05-09
 
 - ci(release): remove test suite and privacy check, keep only smoke (6609663)
