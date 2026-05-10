@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary meta -->
+  <title>Bash Output Filter — Claudio Features</title>
+  <meta name="description" content="Claudio's Bash Output Filter strips CLI noise from jest, pytest, go test, cargo, and git. Preserves errors and warnings. Saves ~50k tokens per session." />
+  <meta name="keywords" content="bash output filter, claudio features, CLI noise reduction, token savings, jest filter, pytest filter, go test filter" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://claudiolabs.ai/bash-output-filter.html" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Claudio" />
+  <meta property="og:title" content="Bash Output Filter — Claudio Features" />
+  <meta property="og:description" content="Automatically removes noise from CLI output, saving ~50 000 tokens per session and 72% of input cost." />
+  <meta property="og:url" content="https://claudiolabs.ai/bash-output-filter.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Claudio CLI — Bash Output Filter" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Bash Output Filter — Claudio Features" />
+  <meta name="twitter:description" content="Removes CLI noise automatically. Saves ~50k tokens per session." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Bash Output Filter — Claudio Features",
+    "description": "Claudio's Bash Output Filter strips CLI noise from jest, pytest, go test, cargo, and git commands. Saves ~50k tokens per session.",
+    "url": "https://claudiolabs.ai/bash-output-filter.html",
+    "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "isPartOf": { "@type": "WebSite", "name": "Claudio", "url": "https://claudiolabs.ai/" }
+  }
+  </script>
+
+  <!-- Theme & favicon -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    .code-label {
+      font-size: var(--text-xs);
+      font-weight: var(--weight-semibold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-dim);
+      margin-bottom: var(--space-2) !important;
+      margin-top: var(--space-5) !important;
+    }
+    .filter-stats {
+      display: flex;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+      margin: var(--space-8) 0;
+      padding: var(--space-6) var(--space-8);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-accent);
+      border-radius: var(--radius-lg);
+    }
+    .filter-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .filter-stat-value {
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-accent);
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+    .filter-stat-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    .filter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      background: rgba(96, 165, 250, 0.1);
+      color: #60a5fa;
+      border: 1px solid rgba(96, 165, 250, 0.2);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      margin-left: var(--space-2);
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <span class="nav__logo-dot" aria-hidden="true"></span>
+        claudio
+      </a>
+
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__links" id="nav-links" role="list">
+        <li>
+          <a href="https://github.com/claudio-labs/claudio" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+        </li>
+        <li><a href="docs.html" class="nav__link" style="color: var(--color-accent)">Docs</a></li>
+        <li><a href="changelog.html" class="nav__link">Changelog</a></li>
+        <li><a href="install.html" class="nav__cta">Install</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="docs-layout">
+
+      <!-- Sidebar -->
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <nav>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Getting started</div>
+            <a href="install.html" class="docs-nav-link">Install</a>
+            <a href="install.html#quickstart" class="docs-nav-link">Quick start</a>
+            <a href="providers.html" class="docs-nav-link">Providers</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Providers</div>
+            <a href="providers.html#all-providers" class="docs-nav-link">All providers</a>
+            <a href="providers.html#local" class="docs-nav-link">Local models</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Features</div>
+            <a href="#overview" class="docs-nav-link active">Overview</a>
+            <a href="#commands" class="docs-nav-link">Commands</a>
+            <a href="#summary" class="docs-nav-link">Reduction summary</a>
+            <a href="#configuration" class="docs-nav-link">Configuration</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Reference</div>
+            <a href="changelog.html" class="docs-nav-link">Changelog</a>
+            <a href="https://github.com/claudio-labs/claudio" class="docs-nav-link" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <main class="docs-content" id="main-content">
+
+        <div class="page-hero">
+          <h1>Bash Output Filter</h1>
+          <p class="page-hero__sub">Removes CLI noise before it reaches the model — saving tokens, preserving signal.</p>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+
+        <p>CLI tools are built for humans. They're chatty by design. When Claudio runs a command, all of that noise goes straight into the model's context — costing tokens and crowding out the signal that actually matters.</p>
+
+        <p>The Bash Output Filter intercepts every Bash tool result and removes progress bars, download lines, verbose headers, and passing test lines, while preserving errors, warnings, and actionable output.</p>
+
+        <p><strong>On by default. No configuration required.</strong></p>
+
+        <div class="filter-stats">
+          <div class="filter-stat-item">
+            <span class="filter-stat-value">~50 000</span>
+            <span class="filter-stat-desc">tokens saved per 30-min session</span>
+          </div>
+          <div class="filter-stat-item">
+            <span class="filter-stat-value">~72%</span>
+            <span class="filter-stat-desc">reduction in input cost</span>
+          </div>
+        </div>
+
+        <h2 id="commands">Commands</h2>
+
+        <p>The filter ships with built-in rules for the most common CLI tools. Each rule is conservative: on any failure condition, full output is preserved.</p>
+
+        <h3 id="bundle-install">bundle install</h3>
+        <p>Strips every <code>Fetching &lt;gem&gt;</code> line. Collapses to a one-liner on clean success. On failure (any <code>error</code> / <code>conflict</code> / <code>could not find</code> line), the full output is preserved.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>Fetching gem metadata from https://rubygems.org/..........
+Fetching addressable 2.8.7
+Fetching bigdecimal 3.1.8
+Fetching concurrent-ruby 1.3.4
+Fetching connection_pool 2.4.1
+Fetching crass 1.0.6
+Installing addressable 2.8.7
+Installing bigdecimal 3.1.8
+Installing concurrent-ruby 1.3.4
+Bundle complete! 42 Gemfile dependencies, 187 gems now installed.</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>✓ bundle install completed</code></pre>
+
+        <h3 id="pytest">pytest</h3>
+        <p>Strips warnings summary, deprecation notices, and <code>PytestUnraisableExceptionWarning</code> blocks. Caps at 100 lines. Collapses on a clean <code>N passed</code> result. On failure (<code>FAILED</code> / <code>ERROR</code> present), full output is preserved including tracebacks.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>============================= warnings summary ==============================
+tests/test_auth.py::test_login
+  /usr/local/lib/python3.11/site-packages/jwt/algorithms.py:393: CryptographyDeprecationWarning: ...
+PytestDeprecationWarning: Support for nose-style setup/teardown is deprecated and will be removed.
+============================= warnings summary ==============================
+PASSED tests/test_auth.py::test_login
+PASSED tests/test_api.py::test_health
+PASSED tests/test_api.py::test_create_user
+================================= 3 passed in 0.84s =================================</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>✓ pytest: all tests passed</code></pre>
+
+        <h3 id="rspec">rspec</h3>
+        <p>Strips <code>Randomized with seed N</code> footer. Collapses on <code>N examples, 0 failures</code>.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>.......
+
+Finished in 0.21394 seconds (files took 1.22 seconds to load)
+7 examples, 0 failures
+
+Randomized with seed 54321</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>Finished in 0.21394 seconds (files took 1.22 seconds to load)
+7 examples, 0 failures</code></pre>
+
+        <h3 id="go-test">go test -v</h3>
+        <p>Strips <code>=== RUN</code>, <code>=== PAUSE</code>, <code>=== CONT</code>, <code>--- PASS:</code>, and bare <code>PASS</code> lines. Collapses on <code>ok &lt;pkg&gt; &lt;time&gt;</code>.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>=== RUN   TestHandleRequest
+=== RUN   TestHandleRequest/valid_payload
+=== RUN   TestHandleRequest/missing_field
+--- PASS: TestHandleRequest/valid_payload (0.00s)
+--- PASS: TestHandleRequest/missing_field (0.00s)
+--- PASS: TestHandleRequest (0.00s)
+=== RUN   TestParseConfig
+--- PASS: TestParseConfig (0.00s)
+PASS
+ok  	github.com/myorg/myapp	0.015s</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>✓ go test: all tests passed</code></pre>
+
+        <h3 id="jest">jest</h3>
+        <p>Strips <code>RUNS ...</code> carousel lines and indented <code>✓ test name (Nms)</code> per-test lines. Collapses on <code>Tests: N passed, N total</code>.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code> RUNS  src/utils/format.test.ts
+ RUNS  src/api/client.test.ts
+ PASS  src/utils/format.test.ts
+  ✓ formats currency correctly (3ms)
+  ✓ handles null input (1ms)
+  ✓ rounds to 2 decimal places (1ms)
+ PASS  src/api/client.test.ts
+  ✓ sends correct headers (12ms)
+  ✓ retries on 429 (45ms)
+
+Test Suites: 2 passed, 2 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        1.234s</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>✓ jest: all tests passed</code></pre>
+
+        <h3 id="vitest">vitest</h3>
+        <p>Strips the <code>RUN v...</code> banner and indented <code>✓ describe &gt; it Nms</code> per-test lines. Collapses on <code>Tests N passed (N)</code>.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code> RUN  v1.6.0 /home/user/project
+
+ ✓ src/utils/string.test.ts (3)
+   ✓ truncate &gt; truncates long strings 2ms
+   ✓ truncate &gt; preserves short strings 0ms
+   ✓ truncate &gt; handles empty string 0ms
+
+ Test Files  1 passed (1)
+ Tests       3 passed (3)
+ Start at    14:32:01
+ Duration    312ms</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>✓ vitest: all tests passed</code></pre>
+
+        <h3 id="bun-test">bun test</h3>
+        <p>Strips the <code>bun test v...</code> banner and per-test <code>✓ name [Nms]</code> lines. Collapses on <code>N pass</code> with <code>0 fail</code>.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>bun test v1.1.8 (9f27a12)
+
+src/utils/hash.test.ts:
+✓ hashes a string [0.82ms]
+✓ returns consistent results [0.11ms]
+✓ handles empty input [0.09ms]
+
+ 3 pass
+ 0 fail
+Ran 3 tests across 1 files. [48.00ms]</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>✓ bun test: all tests passed</code></pre>
+
+        <h3 id="mocha">mocha</h3>
+        <p>Strips indented <code>✓ name (Nms)</code> per-test lines. Collapses on <code>N passing (Xms)</code>.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>  Authentication
+    ✓ rejects invalid token (8ms)
+    ✓ accepts valid JWT (3ms)
+    ✓ refreshes expired session (14ms)
+
+  Database
+    ✓ connects on first call (22ms)
+    ✓ pools connections (1ms)
+
+
+  5 passing (51ms)</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>✓ mocha: all tests passed</code></pre>
+
+        <h3 id="playwright">playwright test</h3>
+        <p>Strips indented <code>✓  N [project] › file.spec.ts:L:C › title (Ns)</code> per-test lines. Collapses on <code>N passed (Xm Ys)</code>.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>Running 4 tests using 2 workers
+
+  ✓  1 [chromium] › tests/auth.spec.ts:12:5 › login flow › shows dashboard (1.2s)
+  ✓  2 [chromium] › tests/auth.spec.ts:28:5 › login flow › redirects on logout (0.8s)
+  ✓  3 [firefox] › tests/auth.spec.ts:12:5 › login flow › shows dashboard (1.4s)
+  ✓  4 [firefox] › tests/auth.spec.ts:28:5 › login flow › redirects on logout (0.9s)
+
+  4 passed (6s)</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>✓ playwright: all tests passed</code></pre>
+
+        <h3 id="rubocop">rubocop</h3>
+        <p>Strips the "new cops available" preamble (cop-entry headers, <code>Enabled:</code> lines, intro paragraphs). Collapses blank-line runs created by the strip.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>The following cops were added to RuboCop, but are not configured. Please
+set Enabled to either `true` or `false` in your `.rubocop.yml` file.
+
+Please also note that you can opt-in to new cops by default...
+
+Style/RedundantLineContinuation: # new in 1.36
+  Enabled: true
+Gemspec/AddRuntimeDependency: # new in 1.65
+  Enabled: true
+For more information: https://docs.rubocop.org/rubocop/versioning.html
+
+Inspecting 42 files
+..........................................
+
+42 files inspected, no offenses detected</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>Inspecting 42 files
+..........................................
+
+42 files inspected, no offenses detected</code></pre>
+
+        <h3 id="ls-la">ls -la</h3>
+        <p>Replaces each long-format row with <code>[type] name</code>. Preserves the <code>total N</code> header. Symlink targets are preserved.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>total 48
+drwxr-xr-x 1 viudes viudes  680 May  5 14:20 .
+drwxr-xr-x 1 viudes viudes  460 May  4 09:11 ..
+-rw-r--r-- 1 viudes viudes 1024 May  5 13:55 .env
+drwxr-xr-x 1 viudes viudes  200 May  5 14:20 src
+-rw-r--r-- 1 viudes viudes 2048 May  3 10:00 package.json
+lrwxrwxrwx 1 viudes viudes   12 May  1 08:00 dist -> build/dist</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>total 48
+[d] .
+[d] ..
+[-] .env
+[d] src
+[-] package.json
+[l] dist -> build/dist</code></pre>
+
+        <h3 id="cargo">cargo check / cargo build</h3>
+        <p>Strips <code>Compiling &lt;dep&gt; v1.2.3</code> (transitive deps, no path), <code>Checking &lt;dep&gt; v1.2.3</code>, and download/update lines. Your own crate is always preserved. Collapses on <code>Finished ... in Xs</code>.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>    Checking libc v0.2.155
+    Checking proc-macro2 v1.0.86
+    Checking quote v1.0.36
+    Checking syn v2.0.68
+    Checking tokio v1.38.0
+    Checking serde v1.0.203
+    Checking serde_json v1.0.120
+    Checking my-project v0.1.0 (/home/viudes/my-project)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.32s</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>    Checking my-project v0.1.0 (/home/viudes/my-project)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.32s</code></pre>
+
+        <p>On clean success, collapses further to:</p>
+        <pre><code>✓ cargo check: ok</code></pre>
+
+        <h3 id="tsc">tsc / tsc --noEmit</h3>
+        <p>Strips <code>~~~~~</code> underline decoration lines and the trailing <code>Errors  Files</code> summary table (which duplicates the inline error count). On a clean run, emits nothing.</p>
+
+        <p class="code-label">Before (with errors)</p>
+        <pre><code>src/api/client.ts(42,5): error TS2322: Type 'string' is not assignable to type 'number'.
+    const timeout: number = config.timeout
+                   ~~~~~~~
+
+src/utils/parse.ts(17,12): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+
+Found 2 errors in 2 files.
+
+Errors  Files
+     1  src/api/client.ts:42
+     1  src/utils/parse.ts:17</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>src/api/client.ts(42,5): error TS2322: Type 'string' is not assignable to type 'number'.
+    const timeout: number = config.timeout
+
+src/utils/parse.ts(17,12): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+
+Found 2 errors in 2 files.</code></pre>
+
+        <h3 id="ps-aux">ps aux</h3>
+        <p>Strips kernel thread rows (VSZ=0, RSS=0, command in brackets). Caps at 50 lines.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0 167364 11504 ?        Ss   May04   0:03 /sbin/init
+root         2  0.0  0.0      0     0 ?        S    May04   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        I&lt;   May04   0:00 [rcu_gp]
+root         4  0.0  0.0      0     0 ?        I&lt;   May04   0:00 [rcu_par_gp]
+viudes    1234  0.1  0.5 812344 42100 pts/0    Sl+  14:20   0:01 node dist/cli.mjs
+viudes    5678  0.0  0.1  12345  8900 pts/1    Ss   14:22   0:00 bash</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0 167364 11504 ?        Ss   May04   0:03 /sbin/init
+viudes    1234  0.1  0.5 812344 42100 pts/0    Sl+  14:20   0:01 node dist/cli.mjs
+viudes    5678  0.0  0.1  12345  8900 pts/1    Ss   14:22   0:00 bash</code></pre>
+
+        <h3 id="git-log">git log <span class="filter-badge">rewrite</span></h3>
+        <p>Injects <code>--oneline</code> before the command runs and caps output at 50 lines. The verbose multi-line format is never sent to the model.</p>
+
+        <p class="code-label">Before — <code>git log</code></p>
+        <pre><code>commit a1b2c3d4e5f6789012345678901234567890abcd
+Author: Viudes &lt;viudes@example.com&gt;
+Date:   Mon May 5 14:20:00 2025 +0000
+
+    fix(auth): handle token expiry on refresh
+
+commit b2c3d4e5f6789012345678901234567890abcde
+Author: Viudes &lt;viudes@example.com&gt;
+Date:   Sun May 4 10:00:00 2025 +0000
+
+    feat(api): add rate limit headers</code></pre>
+
+        <p class="code-label">After — <code>git log --oneline</code>, capped at 50</p>
+        <pre><code>a1b2c3d fix(auth): handle token expiry on refresh
+b2c3d4e feat(api): add rate limit headers</code></pre>
+
+        <h3 id="git-status">git status <span class="filter-badge">rewrite</span></h3>
+        <p>Replaced with <code>git status --porcelain --branch</code> before the command runs.</p>
+
+        <p class="code-label">Before — <code>git status</code></p>
+        <pre><code>On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add &lt;file&gt;..." to update what will be committed)
+  (use "git restore &lt;file&gt;..." to discard changes in working directory)
+	modified:   src/api/client.ts
+
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+	src/api/newfeature.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")</code></pre>
+
+        <p class="code-label">After — <code>git status --porcelain --branch</code></p>
+        <pre><code>## main...origin/main
+ M src/api/client.ts
+?? src/api/newfeature.ts</code></pre>
+
+        <h3 id="git-diff">git diff</h3>
+        <p>Strips <code>diff --git a/X b/X</code> header lines, <code>index &lt;hash&gt;..&lt;hash&gt;</code> lines, and <code>\ No newline at end of file</code> markers. Hunks are never touched. Collapses to <code>✓ git diff: no changes</code> on empty output.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>diff --git a/src/api/client.ts b/src/api/client.ts
+index a1b2c3d..d4e5f6a 100644
+--- a/src/api/client.ts
++++ b/src/api/client.ts
+@@ -40,7 +40,7 @@ export class ApiClient {
+   async get(path: string) {
+-    const timeout = 5000
++    const timeout = 30_000
+     return this.request('GET', path, { timeout })
+   }
+\ No newline at end of file</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>--- a/src/api/client.ts
++++ b/src/api/client.ts
+@@ -40,7 +40,7 @@ export class ApiClient {
+   async get(path: string) {
+-    const timeout = 5000
++    const timeout = 30_000
+     return this.request('GET', path, { timeout })
+   }</code></pre>
+
+        <h3 id="git-show">git show</h3>
+        <p>Same diff-body cleanup as <code>git diff</code>, plus collapses <code>Author: Name &lt;email&gt;\nDate: ...</code> into a single <code>Author: Name (date)</code> line.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>commit a1b2c3d4e5f6789012345678901234567890abcd
+Author: Viudes &lt;viudes@example.com&gt;
+Date:   Mon May 5 14:20:00 2025 +0000
+
+    fix(auth): handle token expiry on refresh
+
+diff --git a/src/auth/refresh.ts b/src/auth/refresh.ts
+index 0000000..1111111 100644
+--- a/src/auth/refresh.ts
++++ b/src/auth/refresh.ts
+@@ -10,6 +10,8 @@ export async function refreshToken(token: string) {
++  if (isExpired(token)) throw new TokenExpiredError()</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>commit a1b2c3d4e5f6789012345678901234567890abcd
+Author: Viudes (2025-05-05)
+
+    fix(auth): handle token expiry on refresh
+
+--- a/src/auth/refresh.ts
++++ b/src/auth/refresh.ts
+@@ -10,6 +10,8 @@ export async function refreshToken(token: string) {
++  if (isExpired(token)) throw new TokenExpiredError()</code></pre>
+
+        <h3 id="git-commit">git commit</h3>
+        <p>Replaces the <code>[branch hash] subject\n N files changed...</code> block with <code>✓ committed &lt;hash&gt;</code>. Strips <code>create mode</code> / <code>delete mode</code> lines.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>[main a1b2c3d] fix(auth): handle token expiry on refresh
+ 2 files changed, 14 insertions(+), 3 deletions(-)
+ create mode 100644 src/auth/errors.ts</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>✓ committed a1b2c3d</code></pre>
+
+        <h3 id="git-pull">git pull</h3>
+        <p>Strips remote progress noise (Enumerating / Counting / Compressing / Writing / Resolving / Unpacking). Preserves <code>From</code>, <code>Updating</code>, fast-forward lines, diff-stat, and conflict markers.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 4 (delta 2), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (4/4), done.
+From github.com:myorg/myapp
+   a1b2c3d..d4e5f6a  main -> origin/main
+Updating a1b2c3d..d4e5f6a
+Fast-forward
+ src/api/client.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>From github.com:myorg/myapp
+   a1b2c3d..d4e5f6a  main -> origin/main
+Updating a1b2c3d..d4e5f6a
+Fast-forward
+ src/api/client.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
+
+        <h3 id="git-push">git push</h3>
+        <p>Strips transfer protocol lines (Enumerating / Counting / Delta / Compressing / Writing / Total / Resolving). Preserves <code>remote:</code> lines (server-side hooks, PR URLs) and the <code>To &lt;remote&gt;</code> result.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 1.23 KiB | 1.23 MiB/s, done.
+Total 4 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+remote: Create a pull request: https://github.com/myorg/myapp/pull/new/my-branch
+To github.com:myorg/myapp.git
+   a1b2c3d..d4e5f6a  my-branch -> my-branch</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>remote: Create a pull request: https://github.com/myorg/myapp/pull/new/my-branch
+To github.com:myorg/myapp.git
+   a1b2c3d..d4e5f6a  my-branch -> my-branch</code></pre>
+
+        <h3 id="git-blame">git blame</h3>
+        <p>Collapses <code>hash (Author YYYY-MM-DD HH:MM:SS +TZ line)</code> to <code>hash YYYY-MM-DD line)</code>. Removes author name, email, time-of-day, and timezone.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>a1b2c3d4 (Viudes Ferreira 2025-04-10 11:23:45 +0100 42) export async function fetchUser(id: string) {
+b2c3d4e5 (Maria Santos  2025-03-22 09:14:02 +0000 43)   const res = await api.get(`/users/${id}`)</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>a1b2c3d4 2025-04-10 42) export async function fetchUser(id: string) {
+b2c3d4e5 2025-03-22 43)   const res = await api.get(`/users/${id}`)</code></pre>
+
+        <h2 id="summary">Reduction summary</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>Reduction</th>
+              <th>What's stripped</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>jest</code></td><td>98.7%</td><td>RUNS carousel, ✓ per-test lines</td></tr>
+            <tr><td><code>playwright test</code></td><td>98.4%</td><td>✓ per-test lines</td></tr>
+            <tr><td><code>vitest</code></td><td>98.5%</td><td>RUN banner, ✓ per-test lines</td></tr>
+            <tr><td><code>bundle install</code></td><td>96%</td><td>Fetching lines</td></tr>
+            <tr><td><code>pytest</code></td><td>95%</td><td>Warnings blocks, deprecations</td></tr>
+            <tr><td><code>bun test</code></td><td>98.2%</td><td>Banner, ✓ per-test lines</td></tr>
+            <tr><td><code>mocha</code></td><td>97.6%</td><td>✓ per-test lines</td></tr>
+            <tr><td><code>ps aux</code></td><td>93%</td><td>Kernel thread rows</td></tr>
+            <tr><td><code>git log</code></td><td>92%</td><td>Author/Date/body per commit</td></tr>
+            <tr><td><code>go test -v</code></td><td>82%</td><td>RUN/PAUSE/CONT/PASS lines</td></tr>
+            <tr><td><code>ls -la</code></td><td>81%</td><td>uid/gid/size/mtime columns</td></tr>
+            <tr><td><code>cargo check</code></td><td>64%</td><td>Transitive Compiling/Checking lines</td></tr>
+            <tr><td><code>rubocop</code></td><td>83%</td><td>New-cops preamble</td></tr>
+            <tr><td><code>tsc</code></td><td>18%</td><td>Underlines, Errors table</td></tr>
+            <tr><td><code>git diff</code></td><td>10.8%</td><td><code>diff --git</code>, <code>index</code>, <code>No newline</code> lines</td></tr>
+            <tr><td><code>git show</code></td><td>9.4%</td><td>Same as diff + Author/Date merge</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="configuration">Configuration</h2>
+
+        <h3 id="toggle">Activate / deactivate</h3>
+
+        <p>Open <code>/config</code> inside the Claudio REPL and toggle <strong>Bash output filter</strong>.</p>
+
+        <p>Or edit <code>~/.claudio/settings.json</code> directly:</p>
+
+        <pre><code>{
+  "bashOutputFilterEnabled": false
+}</code></pre>
+
+        <p>Omit the key (or set <code>true</code>) to keep it on. The change takes effect immediately — no restart needed.</p>
+
+        <h3 id="custom-filters">User-defined filters</h3>
+
+        <p>Add your own rules on top of the built-ins. Create <code>~/.claudio/bash-filters.json</code>:</p>
+
+        <pre><code>{
+  "filters": [
+    {
+      "name": "my-tool",
+      "matchCommand": "^my-tool\\b",
+      "stripAnsi": true,
+      "stripLinesMatching": ["^Fetching ", "^Resolving "],
+      "maxLines": 50
+    }
+  ]
+}</code></pre>
+
+        <p>Patterns are validated against a zod schema on load and guarded against ReDoS before being compiled.</p>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div>
+          <div class="footer__brand">
+            <span class="nav__logo-dot" aria-hidden="true"></span>
+            claudio
+          </div>
+          <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__links-title">Project</div>
+          <a href="https://github.com/claudio-labs/claudio" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="changelog.html" class="footer__link">Changelog</a>
+          <a href="docs.html" class="footer__link">Docs</a>
+          <a href="https://github.com/claudio-labs/claudio/issues" class="footer__link" target="_blank" rel="noopener noreferrer">Issues</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span>claudiolabs.ai</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

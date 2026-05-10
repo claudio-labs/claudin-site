@@ -209,9 +209,9 @@
 .install-panel {
   display: none;
   align-items: center;
-  justify-content: space-between;
   padding: var(--space-4) var(--space-5);
   gap: var(--space-4);
+  overflow: hidden;
 }
 
 .install-panel.active { display: flex; }
@@ -221,9 +221,13 @@
   font-size: var(--text-sm);
   color: var(--color-text);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow-x: auto;
+  flex: 1;
+  min-width: 0;
+  /* hide scrollbar but allow scroll if ever needed */
+  scrollbar-width: none;
 }
+.install-cmd::-webkit-scrollbar { display: none; }
 
 .install-cmd .cmd-prefix { color: var(--color-text-dim); }
 .install-cmd .cmd-pkg    { color: var(--color-accent); }
