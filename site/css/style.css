@@ -57,11 +57,9 @@
 }
 
 .nav__logo-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  box-shadow: 0 0 8px var(--color-accent);
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 
 .nav__links {
