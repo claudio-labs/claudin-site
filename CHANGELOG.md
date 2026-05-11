@@ -1,3 +1,7 @@
+## v0.2.0 — 2026-05-11
+
+- feat(agents): per-agent model overrides for built-in, project, and user agents (9357f57)
+
 ## v0.1.15 — 2026-05-10
 
 - fix(bash-filter): harden pipeline against compound, env, and replace edge cases (1b060ae)
