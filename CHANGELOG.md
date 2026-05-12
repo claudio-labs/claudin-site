@@ -1,3 +1,11 @@
+## v0.2.1 — 2026-05-12
+
+- fix(tui): show 10 slash-command suggestions and clear ghost cells under permission dialogs (b9419fb)
+- feat(usage): show session + project-total cost in /config Usage tab (79ecbfe)
+- fix(permissions): allow 'auto' as a persistable defaultMode (799ca99)
+- fix(shutdown): release file watchers from event loop so /exit doesn't hang (e9ed558)
+- feat(attribution): drop default Co-Authored-By trailer on commits (91da19d)
+
 ## v0.2.0 — 2026-05-11
 
 - feat(agents): per-agent model overrides for built-in, project, and user agents (9357f57)
