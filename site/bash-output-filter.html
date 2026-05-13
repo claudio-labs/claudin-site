@@ -632,6 +632,76 @@ b2c3d4e5 (Maria Santos  2025-03-22 09:14:02 +0000 43)   const res = await api.ge
         <pre><code>a1b2c3d4 2025-04-10 42) export async function fetchUser(id: string) {
 b2c3d4e5 2025-03-22 43)   const res = await api.get(`/users/${id}`)</code></pre>
 
+        <h3 id="wget">wget</h3>
+        <p>Strips CA / Resolving / Connecting chatter, the "HTTP request sent…" 200/206 success line, <code>Length:</code> / <code>Saving to:</code> headers, and the dot-progress block. Preserves any non-success HTTP status (3xx redirects, 4xx/5xx) and the final <code>saved [bytes/total]</code> summary. <code>-q</code>, <code>--quiet</code>, <code>-O -</code> / <code>-qO-</code> / <code>--output-document=-</code> are passed through unchanged (output is being piped or already silenced).</p>
+
+        <p class="code-label">Before (74 lines, 5 KB — clipped)</p>
+        <pre><code>--2026-05-12 09:14:02--  https://releases.example.com/dist/big-package-1.2.3.tar.gz
+Loaded CA certificate '/etc/ssl/certs/ca-certificates.crt'
+Resolving releases.example.com... 151.101.1.91, 151.101.65.91, ...
+Connecting to releases.example.com|151.101.1.91|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 52428800 (50M) [application/gzip]
+Saving to: 'big-package-1.2.3.tar.gz'
+
+     0K .......... .......... .......... .......... ..........  0% 2.34M 21s
+    50K .......... .......... .......... .......... ..........  0% 4.12M 17s
+... (60+ more dot-progress lines) ...
+ 51200K .......... ..........                                  100% 14.7M=3.4s
+
+2026-05-12 09:14:05 (14.7 MB/s) - 'big-package-1.2.3.tar.gz' saved [52428800/52428800]</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>--2026-05-12 09:14:02--  https://releases.example.com/dist/big-package-1.2.3.tar.gz
+2026-05-12 09:14:05 (14.7 MB/s) - 'big-package-1.2.3.tar.gz' saved [52428800/52428800]</code></pre>
+
+        <h3 id="find">find</h3>
+        <p>Output is already pure signal (one path per line), so nothing is stripped — instead the spec caps long results with a head/tail window (first 50 + last 100, marker in between) and truncates pathological lines beyond 4 KB. Reject list covers flags whose output is custom-formatted and would be unsafe to truncate: <code>-printf</code>, <code>-print0</code>, <code>-exec</code> / <code>-execdir</code>, <code>-ok</code> / <code>-okdir</code>, <code>-ls</code>, <code>-fprint*</code>. Stderr lines like <code>find: '/root': Permission denied</code> survive the cap.</p>
+
+        <p class="code-label">Before (321 lines)</p>
+        <pre><code>./src/a/b/c/file001.ts
+./src/a/b/c/file002.ts
+... (300+ more paths) ...
+./vendor/pkg/file321.ts</code></pre>
+
+        <p class="code-label">After (151 lines)</p>
+        <pre><code>./src/a/b/c/file001.ts
+... (first 50) ...
+./src/a/b/c/file050.ts
+[... 170 more lines omitted ...]
+./vendor/pkg/file221.ts
+... (last 100) ...
+./vendor/pkg/file321.ts</code></pre>
+
+        <p>Small outputs (&lt; 150 lines) pass through unchanged.</p>
+
+        <h3 id="curl">curl (plain, non-verbose)</h3>
+        <p>Collapses CR-overwritten progress bars from the default progress meter to the final state. The verbose form (<code>curl -v</code>) is handled by a separate spec (verbose headers stay; only <code>*</code> debug noise is trimmed).</p>
+
+        <h3 id="rsync">rsync</h3>
+        <p>Collapses CR-overwritten file-progress lines and strips per-file <code>… speedup is X.XX</code> summaries. Preserves the final <code>sent / received / total</code> block and any <code>rsync: …</code> error lines.</p>
+
+        <h3 id="ping">ping</h3>
+        <p>Strips per-packet <code>64 bytes from … icmp_seq=N time=… ms</code> rows beyond the first one. Preserves the header and the <code>--- ping statistics ---</code> summary block (packet loss, rtt min/avg/max).</p>
+
+        <h3 id="tree">tree</h3>
+        <p>Caps the listing at a configurable head/tail window and replaces the rest with <code>[… N entries omitted …]</code>. The final <code>N directories, M files</code> summary is always kept.</p>
+
+        <h3 id="ssh">ssh -v / -vv / -vvv</h3>
+        <p>Strips <code>debug1:</code> / <code>debug2:</code> / <code>debug3:</code> lines and <code>OpenSSH_…</code> banners. Preserves any line containing <code>Warning</code>, <code>Error</code>, <code>Permission denied</code>, <code>Connection refused</code>, or a fingerprint prompt.</p>
+
+        <h3 id="df-du">df / du</h3>
+        <p>Drops virtual / pseudo filesystem rows (<code>tmpfs</code>, <code>devtmpfs</code>, <code>overlay</code>, <code>udev</code>, <code>cgroup</code>, <code>proc</code>, <code>sys</code>, <code>efivars</code>) from <code>df</code>. Strips <code>du: cannot access …: Permission denied</code> noise from <code>du</code>. Real mount points and the actual byte counts always survive.</p>
+
+        <h3 id="dmesg-journalctl">dmesg / journalctl</h3>
+        <p>Strips repeated bracketed-timestamp prefixes from <code>dmesg</code>. For <code>journalctl</code>, removes the noisy <code>-- Boot 0x… --</code> markers and collapses <code>systemd[1]: Started …</code> / <code>Stopped …</code> / <code>Reached target …</code> chatter, keeping anything tagged <code>error</code>, <code>fail</code>, <code>denied</code>, <code>warning</code>, or <code>kernel:</code>.</p>
+
+        <h3 id="stat">stat</h3>
+        <p>No-op when the output is short; only triggers when <code>stat</code> is called over many files and the same field labels (<code>File:</code>, <code>Size:</code>, <code>Blocks:</code>, <code>IO Block:</code>, etc.) repeat — in which case it elides the redundant labels.</p>
+
+        <h3 id="jq">jq</h3>
+        <p>Truncates deeply nested pretty-printed JSON beyond a configurable depth/line cap. Top-level keys and the closing brackets are always preserved so the structure stays parseable.</p>
+
         <h2 id="summary">Reduction summary</h2>
 
         <table>
@@ -643,24 +713,45 @@ b2c3d4e5 2025-03-22 43)   const res = await api.get(`/users/${id}`)</code></pre>
             </tr>
           </thead>
           <tbody>
+            <tr><td><code>cargo check</code></td><td>99.8%</td><td>Transitive <code>Compiling</code> / <code>Checking</code> lines</td></tr>
+            <tr><td><code>cargo build</code></td><td>99.7%</td><td>Same as <code>cargo check</code></td></tr>
             <tr><td><code>jest</code></td><td>98.7%</td><td>RUNS carousel, ✓ per-test lines</td></tr>
-            <tr><td><code>playwright test</code></td><td>98.4%</td><td>✓ per-test lines</td></tr>
             <tr><td><code>vitest</code></td><td>98.5%</td><td>RUN banner, ✓ per-test lines</td></tr>
-            <tr><td><code>bundle install</code></td><td>96%</td><td>Fetching lines</td></tr>
-            <tr><td><code>pytest</code></td><td>95%</td><td>Warnings blocks, deprecations</td></tr>
             <tr><td><code>bun test</code></td><td>98.2%</td><td>Banner, ✓ per-test lines</td></tr>
+            <tr><td><code>ssh -vvv</code></td><td>97.9%</td><td><code>debug1/2/3</code> lines</td></tr>
             <tr><td><code>mocha</code></td><td>97.6%</td><td>✓ per-test lines</td></tr>
-            <tr><td><code>ps aux</code></td><td>93%</td><td>Kernel thread rows</td></tr>
-            <tr><td><code>git log</code></td><td>92%</td><td>Author/Date/body per commit</td></tr>
-            <tr><td><code>go test -v</code></td><td>82%</td><td>RUN/PAUSE/CONT/PASS lines</td></tr>
-            <tr><td><code>ls -la</code></td><td>81%</td><td>uid/gid/size/mtime columns</td></tr>
-            <tr><td><code>cargo check</code></td><td>64%</td><td>Transitive Compiling/Checking lines</td></tr>
-            <tr><td><code>rubocop</code></td><td>83%</td><td>New-cops preamble</td></tr>
-            <tr><td><code>tsc</code></td><td>18%</td><td>Underlines, Errors table</td></tr>
+            <tr><td><code>wget</code></td><td>96.7%</td><td>CA/Resolving/Connecting, 200/206 line, dot-progress</td></tr>
+            <tr><td><code>bundle install</code></td><td>95.2%</td><td>Fetching lines</td></tr>
+            <tr><td><code>pytest</code></td><td>95.1%</td><td>Warnings blocks, deprecations (clean run)</td></tr>
+            <tr><td><code>ps aux</code></td><td>93.9%</td><td>Kernel thread rows</td></tr>
+            <tr><td><code>rsync</code></td><td>91.1%</td><td>CR-overwritten progress lines</td></tr>
+            <tr><td><code>git log</code></td><td>85.0%</td><td>Author/Date/body per commit</td></tr>
+            <tr><td><code>rubocop</code></td><td>84.1%</td><td>New-cops preamble</td></tr>
+            <tr><td><code>go test -v</code></td><td>82.6%</td><td>RUN/PAUSE/CONT/PASS lines</td></tr>
+            <tr><td><code>curl</code> (plain)</td><td>78.4%</td><td>CR-overwritten progress bar</td></tr>
+            <tr><td><code>ls -la</code></td><td>73.7%</td><td>uid/gid/size/mtime columns</td></tr>
+            <tr><td><code>top -b -n 1</code></td><td>73.3%</td><td>Per-CPU rows, idle processes</td></tr>
+            <tr><td><code>dig</code></td><td>66.7%</td><td>Empty <code>;; SECTION</code> blocks, OPT pseudo-section</td></tr>
+            <tr><td><code>du -sh</code></td><td>59.4%</td><td><code>du: cannot access …</code> Permission denied noise</td></tr>
+            <tr><td><code>ping</code></td><td>57.8%</td><td>Per-packet <code>icmp_seq</code> lines</td></tr>
+            <tr><td><code>df -h</code></td><td>52.3%</td><td>tmpfs / devtmpfs / overlay rows</td></tr>
+            <tr><td><code>tree</code></td><td>51.3%</td><td>Mid-listing entries (head/tail cap)</td></tr>
+            <tr><td><code>git pull</code></td><td>51.1%</td><td><code>Resolving deltas</code> / <code>remote: Counting</code></td></tr>
+            <tr><td><code>find</code> (large)</td><td>50.9%</td><td>Head/tail cap (small outputs pass through)</td></tr>
+            <tr><td><code>docker ps</code></td><td>40.8%</td><td>Column padding / inactive rows</td></tr>
+            <tr><td><code>docker images</code></td><td>36.3%</td><td><code>&lt;none&gt;</code> rows, ID column</td></tr>
+            <tr><td><code>rg</code> / <code>grep</code></td><td>33%</td><td>ANSI color escapes, line numbers</td></tr>
+            <tr><td><code>git blame</code></td><td>25.4%</td><td>Author name/email/time/TZ</td></tr>
+            <tr><td><code>dmesg</code></td><td>23.6%</td><td>Repeated bracketed timestamps</td></tr>
+            <tr><td><code>docker logs</code></td><td>19.3%</td><td>Repeated timestamp prefix</td></tr>
+            <tr><td><code>tsc</code></td><td>18.2%</td><td>Underlines, Errors table</td></tr>
+            <tr><td><code>journalctl</code></td><td>15.1%</td><td><code>Boot</code> markers, systemd lifecycle</td></tr>
             <tr><td><code>git diff</code></td><td>10.8%</td><td><code>diff --git</code>, <code>index</code>, <code>No newline</code> lines</td></tr>
             <tr><td><code>git show</code></td><td>9.4%</td><td>Same as diff + Author/Date merge</td></tr>
           </tbody>
         </table>
+
+        <p>Pass-throughs (0%): <code>cargo clippy</code>, <code>cargo test --no-run</code>, <code>jq</code>, <code>ruff check</code> (clean), <code>stat</code>, <code>find</code> (small) — output is already pure signal.</p>
 
         <h2 id="configuration">Configuration</h2>
 
