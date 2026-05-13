@@ -1,3 +1,7 @@
+## v0.2.2 — 2026-05-13
+
+- feat(tui): redesign prompt input footer with provider/model pills and richer session metrics (0de51ca)
+
 ## v0.2.1 — 2026-05-12
 
 - fix(tui): show 10 slash-command suggestions and clear ghost cells under permission dialogs (b9419fb)
