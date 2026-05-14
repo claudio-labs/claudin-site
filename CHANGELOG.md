@@ -1,3 +1,17 @@
+## v0.2.3 — 2026-05-14
+
+- docs: rewrite README with features, slash commands, and provider list (c9466b9)
+- feat(bash-filter): add gradle, mvn, terraform filters (phase 11) (8374b6e)
+- refactor(agents): rename built-in agents and remove Memory column (da2c850)
+- feat(agents): show full provider model list in Change model dialog (ebead5f)
+- docs: simplify README and tighten LICENSE to personal-use-only terms (91e56a6)
+- fix(ink): recover from stdin readable-stream wedge with watchdog (eb22702)
+- feat(bash-filter): phase 10 — wget + find specs, measured ROI table (c264fcb)
+- feat(usage): collapse Session block into Project total in /config Usage (90a1596)
+- fix(schema): trim whitespace and accept leading + in semanticNumber (2eceb6d)
+- docs(discovery): add 2026-05 market research, top-10 features, viability and gaps analysis (a0ba400)
+- feat(bash-filter): phase 9 — system utilities (ping/rsync/tree/ssh/df/du/dmesg/stat/jq + curl-plain) (de900ae)
+
 ## v0.2.2 — 2026-05-13
 
 - feat(tui): redesign prompt input footer with provider/model pills and richer session metrics (0de51ca)
