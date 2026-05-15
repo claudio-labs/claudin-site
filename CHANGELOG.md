@@ -1,3 +1,15 @@
+## v0.2.4 — 2026-05-15
+
+- chore(deps): migrate zod 3.25 → 4.4 (7c5cd78)
+- feat(markdown): migrate marked 15→18 with task list checkbox support (bcea1b0)
+- chore(deps): update typescript from 5.9.3 to 6.0.3 (17e71dd)
+- chore(deps): update commander and extra-typings from v12 to v14 (54a1e91)
+- chore(deps): update chokidar, diff, https-proxy-agent, and undici (2bce02d)
+- chore(deps): update env-paths and type-fest (8fb8812)
+- chore(deps): update cli-boxes, wrap-ansi, and supports-hyperlinks (7c7b66b)
+- chore(deps): update @anthropic-ai/sdk, @types/node, and tsx (a2180cc)
+- chore: update safe patch/minor dependencies (247ef2c)
+
 ## v0.2.3 — 2026-05-14
 
 - docs: rewrite README with features, slash commands, and provider list (c9466b9)
