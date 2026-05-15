@@ -1,3 +1,7 @@
+## v0.2.7 — 2026-05-15
+
+- fix(auto-update): skip when install type is unknown or symlinked dev tree (#29) (fa973d3)
+
 ## v0.2.6 — 2026-05-15
 
 - fix(build): wipe chunks/ on release builds so npm tarball has no dev duplicates (e4118e2)
