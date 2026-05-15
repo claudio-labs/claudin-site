@@ -1,3 +1,7 @@
+## v0.2.6 — 2026-05-15
+
+- fix(build): wipe chunks/ on release builds so npm tarball has no dev duplicates (e4118e2)
+
 ## v0.2.5 — 2026-05-15
 
 - feat(auto-update): self-update from npm on startup (#28) (4487b5e)
