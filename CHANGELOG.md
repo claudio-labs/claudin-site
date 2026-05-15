@@ -1,3 +1,7 @@
+## v0.2.8 — 2026-05-15
+
+- fix(auto-update): detect bun global installs and use bun to update them (#30) (2b7a5fc)
+
 ## v0.2.7 — 2026-05-15
 
 - fix(auto-update): skip when install type is unknown or symlinked dev tree (#29) (fa973d3)
