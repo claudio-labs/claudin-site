@@ -1,3 +1,15 @@
+## v0.2.5 — 2026-05-15
+
+- feat(auto-update): self-update from npm on startup (#28) (4487b5e)
+- fix(autofix-pr): set error name for AutofixPreconditionError (f3c1768)
+- fix(build): preserve chunks across dev rebuilds to avoid breaking running CLIs (5e7ecf8)
+- fix(commands): register /autofix-pr in the runtime command list (de06042)
+- feat(autofix-pr): add precondition guards and shared helpers (#27) (20a29c3)
+- chore(ui): abbreviate token status bar labels (8bab1d6)
+- feat(banner): show effort level with symbol in startup banner (346e2ad)
+- fix(startup): update LOGO_LINES comment to reflect 4-row layout (80dfc55)
+- fix(auto-mode): enter plan mode when user explicitly asks to plan (d359d04)
+
 ## v0.2.4 — 2026-05-15
 
 - chore(deps): migrate zod 3.25 → 4.4 (7c5cd78)
