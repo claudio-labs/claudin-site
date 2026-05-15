@@ -1,3 +1,7 @@
+## v0.2.9 — 2026-05-15
+
+- fix(auto-update): require .git to flag a source tree, not just a matching package.json (#31) (818e062)
+
 ## v0.2.8 — 2026-05-15
 
 - fix(auto-update): detect bun global installs and use bun to update them (#30) (2b7a5fc)
