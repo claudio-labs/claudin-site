@@ -76,32 +76,81 @@
     <div class="changelog-list" id="changelog-list">
       <p style="color: var(--color-text-dim); font-family: var(--font-mono); font-size: var(--text-sm);">Loading...</p>
     </div>
+    <nav class="changelog-pager" id="changelog-pager" aria-label="Changelog pagination" hidden></nav>
   </div>
 
   <script>
+    const PAGE_SIZE = 10;
+
+    function renderRelease(r) {
+      const id = r.version.replace(/\./g, '-');
+      const items = r.skip
+        ? `<p class="changelog-skip">${r.skip}</p>`
+        : r.items.map(item => {
+            const scope = item.scope ? `<span class="scope">${item.scope}</span> — ` : '';
+            return `<div class="changelog-item">
+              <span class="changelog-badge changelog-badge--${item.type}">${item.type}</span>
+              <span class="changelog-item-text">${scope}${item.text}</span>
+            </div>`;
+          }).join('');
+      return `<article class="changelog-entry" id="${id}">
+        <div class="changelog-version">
+          <span class="changelog-version-num">${r.version}</span>
+          <span class="changelog-date">${r.date}</span>
+        </div>
+        ${r.items.length > 0 ? `<div class="changelog-items">${items}</div>` : items}
+      </article>`;
+    }
+
+    function getPageFromHash() {
+      const m = location.hash.match(/^#page=(\d+)/);
+      return m ? Math.max(1, parseInt(m[1], 10)) : 1;
+    }
+
     fetch('/changelog-data.json')
       .then(r => r.json())
       .then(releases => {
         const list = document.getElementById('changelog-list');
-        list.innerHTML = releases.map(r => {
-          const id = r.version.replace(/\./g, '-');
-          const items = r.skip
-            ? `<p class="changelog-skip">${r.skip}</p>`
-            : r.items.map(item => {
-                const scope = item.scope ? `<span class="scope">${item.scope}</span> — ` : '';
-                return `<div class="changelog-item">
-                  <span class="changelog-badge changelog-badge--${item.type}">${item.type}</span>
-                  <span class="changelog-item-text">${scope}${item.text}</span>
-                </div>`;
-              }).join('');
-          return `<article class="changelog-entry" id="${id}">
-            <div class="changelog-version">
-              <span class="changelog-version-num">${r.version}</span>
-              <span class="changelog-date">${r.date}</span>
-            </div>
-            ${r.items.length > 0 ? `<div class="changelog-items">${items}</div>` : items}
-          </article>`;
-        }).join('');
+        const pager = document.getElementById('changelog-pager');
+        const totalPages = Math.max(1, Math.ceil(releases.length / PAGE_SIZE));
+
+        function render(page) {
+          page = Math.min(Math.max(1, page), totalPages);
+          const start = (page - 1) * PAGE_SIZE;
+          const slice = releases.slice(start, start + PAGE_SIZE);
+          list.innerHTML = slice.map(renderRelease).join('');
+
+          if (totalPages <= 1) { pager.hidden = true; return; }
+          pager.hidden = false;
+
+          const btn = (label, target, opts = {}) => {
+            const disabled = opts.disabled ? ' disabled' : '';
+            const active = opts.active ? ' changelog-pager__btn--active' : '';
+            return `<button class="changelog-pager__btn${active}" data-page="${target}"${disabled} aria-label="${opts.aria || label}"${opts.active ? ' aria-current="page"' : ''}>${label}</button>`;
+          };
+
+          const parts = [];
+          parts.push(btn('‹ Prev', page - 1, { disabled: page === 1, aria: 'Previous page' }));
+          for (let i = 1; i <= totalPages; i++) {
+            parts.push(btn(String(i), i, { active: i === page, aria: `Page ${i}` }));
+          }
+          parts.push(btn('Next ›', page + 1, { disabled: page === totalPages, aria: 'Next page' }));
+          pager.innerHTML = parts.join('');
+
+          pager.querySelectorAll('button[data-page]').forEach(b => {
+            b.addEventListener('click', () => {
+              const p = parseInt(b.dataset.page, 10);
+              if (p === page || b.disabled) return;
+              location.hash = `page=${p}`;
+            });
+          });
+        }
+
+        render(getPageFromHash());
+        window.addEventListener('hashchange', () => {
+          render(getPageFromHash());
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
       })
       .catch(() => {
         document.getElementById('changelog-list').innerHTML =
