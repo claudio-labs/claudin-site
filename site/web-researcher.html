@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary meta -->
+  <title>Web Researcher — Claudio Features</title>
+  <meta name="description" content="Claudio's built-in WebResearcher subagent runs multi-page web research in an isolated context — saving ~20k tokens per query and running on the cheapest model." />
+  <meta name="keywords" content="claudio web researcher, subagent, multi-page research, token savings, WebSearch, WebFetch, AgentTool, claudio features" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://claudiolabs.ai/web-researcher.html" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Claudio" />
+  <meta property="og:title" content="Web Researcher — Claudio Features" />
+  <meta property="og:description" content="Built-in subagent for multi-page web research. Keeps raw HTML out of the main context and runs on a cheap model by default." />
+  <meta property="og:url" content="https://claudiolabs.ai/web-researcher.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-web-researcher.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Claudio CLI — Web Researcher" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Web Researcher — Claudio Features" />
+  <meta name="twitter:description" content="Multi-page research in an isolated subagent. Saves tokens, returns only a synthesis with cited URLs." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-web-researcher.png" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Web Researcher — Claudio Features",
+    "description": "Claudio's built-in WebResearcher subagent runs multi-page research in an isolated context and returns a synthesis with cited URLs.",
+    "url": "https://claudiolabs.ai/web-researcher.html",
+    "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "isPartOf": { "@type": "WebSite", "name": "Claudio", "url": "https://claudiolabs.ai/" }
+  }
+  </script>
+
+  <!-- Theme & favicon -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    .filter-stats {
+      display: flex;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+      margin: var(--space-8) 0;
+      padding: var(--space-6) var(--space-8);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-accent);
+      border-radius: var(--radius-lg);
+    }
+    .filter-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .filter-stat-value {
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-accent);
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+    .filter-stat-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+        claudio
+      </a>
+
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__links" id="nav-links" role="list">
+        <li>
+          <a href="https://github.com/claudio-labs/claudio" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+        </li>
+        <li><a href="docs.html" class="nav__link" style="color: var(--color-accent)">Docs</a></li>
+        <li><a href="changelog.html" class="nav__link">Changelog</a></li>
+        <li><a href="install.html" class="nav__cta">Install</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="docs-layout">
+
+      <!-- Sidebar -->
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <nav>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Getting started</div>
+            <a href="install.html" class="docs-nav-link">Install</a>
+            <a href="install.html#quickstart" class="docs-nav-link">Quick start</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Providers</div>
+            <a href="providers.html#all-providers" class="docs-nav-link">All providers</a>
+            <a href="providers.html#local" class="docs-nav-link">Local models</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Features</div>
+            <a href="bash-output-filter.html" class="docs-nav-link">Bash output filter</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
+            <a href="web-researcher.html" class="docs-nav-link active">Web researcher</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">On this page</div>
+            <a href="#overview" class="docs-nav-link">Overview</a>
+            <a href="#when" class="docs-nav-link">When it's chosen</a>
+            <a href="#design" class="docs-nav-link">Design decisions</a>
+            <a href="#model-override" class="docs-nav-link">Model override</a>
+            <a href="#custom-override" class="docs-nav-link">Custom override</a>
+            <a href="#tradeoffs" class="docs-nav-link">Trade-offs</a>
+            <a href="#testing" class="docs-nav-link">Try it</a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <main class="docs-content" id="main-content">
+
+        <div class="page-hero">
+          <h1>Web Researcher</h1>
+          <p class="page-hero__sub">Built-in subagent for multi-page web research — runs in isolation, returns just the synthesis.</p>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+
+        <p>The <code>WebResearcher</code> is a built-in subagent the main agent can invoke through the <code>Agent</code> tool whenever a question needs digging through several web pages. It runs in an <strong>isolated context</strong>, with access only to <code>WebSearch</code> and <code>WebFetch</code>, and returns a single textual synthesis with cited URLs.</p>
+
+        <p>Before this subagent existed, prompts like <em>"how do I configure OAuth device flow for provider X"</em> made the main model chain 5–7 direct <code>WebFetch</code> / <code>WebSearch</code> calls. Every <code>WebFetch</code> dumped 3–5k tokens of HTML-to-markdown into the main history — roughly 20k tokens of mechanical browsing taking up expensive context (typically Opus) during long sessions.</p>
+
+        <div class="filter-stats">
+          <div class="filter-stat-item">
+            <span class="filter-stat-value">~20 000</span>
+            <span class="filter-stat-desc">tokens kept out of the main context per research query</span>
+          </div>
+          <div class="filter-stat-item">
+            <span class="filter-stat-value">~10×</span>
+            <span class="filter-stat-desc">cheaper model used for the mechanical browsing</span>
+          </div>
+        </div>
+
+        <p>With the <code>WebResearcher</code>:</p>
+
+        <ul>
+          <li>Raw HTML stays in the child's context and is discarded when it finishes.</li>
+          <li>The parent receives only the final synthesis — hundreds of tokens, not tens of thousands.</li>
+          <li>The child runs on <code>haiku</code> by default (the cheapest first-party alias), so the mechanical work doesn't consume the expensive model.</li>
+        </ul>
+
+        <h2 id="when">When the parent picks WebResearcher vs. direct tools</h2>
+
+        <p>The description injected into the parent's prompt makes the choice explicit. The parent model decides — there is no automatic routing.</p>
+
+        <table>
+          <thead>
+            <tr><th>Scenario</th><th>Choice</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Research across 3+ pages, broad topic</td><td><code>Agent(WebResearcher)</code></td></tr>
+            <tr><td>Fetch one known URL</td><td><code>WebFetch</code> directly</td></tr>
+            <tr><td>Discover links for a term</td><td><code>WebSearch</code> directly</td></tr>
+            <tr><td>Something in the local repo</td><td><code>Agent(Explore)</code></td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="design">Design decisions</h2>
+
+        <table>
+          <thead>
+            <tr><th>Decision</th><th>Value</th><th>Why</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tools allowlist</td>
+              <td><code>[WebSearch, WebFetch]</code></td>
+              <td>Pure public-web scope; no local file reads, no MCP. The allowlist won't silently widen if new write-tools are added later.</td>
+            </tr>
+            <tr>
+              <td>Model</td>
+              <td><code>haiku</code></td>
+              <td>Cheapest of the first-party aliases. Resolves correctly on Anthropic, Bedrock, Vertex, and Foundry. See "Model override" for OpenAI-compatible providers.</td>
+            </tr>
+            <tr>
+              <td>Omit <code>CLAUDE.md</code></td>
+              <td>yes</td>
+              <td>Web research doesn't need project-level commit/lint/TypeScript rules.</td>
+            </tr>
+            <tr>
+              <td>Omit git status</td>
+              <td>yes</td>
+              <td>Web research never touches the local repo; skipping the gitStatus blob (up to 40 KB) is pure savings.</td>
+            </tr>
+            <tr>
+              <td>One-shot trailer</td>
+              <td>built-in one-shot agent</td>
+              <td>Parent doesn't receive <code>agentId</code> / <code>SendMessage</code> / usage trailer — saves ~135 chars per call.</td>
+            </tr>
+            <tr>
+              <td>Permission mode</td>
+              <td>inherited</td>
+              <td>Domain checks for <code>WebFetch</code> on a new host still surface for approval in the parent UI.</td>
+            </tr>
+            <tr>
+              <td>Continue (<code>SendMessage</code>)</td>
+              <td>not exposed</td>
+              <td>Preserves isolation. If the parent needs to dig deeper it spawns a fresh <code>WebResearcher</code>.</td>
+            </tr>
+            <tr>
+              <td>Feature flag</td>
+              <td>none</td>
+              <td>Always on. Simplicity over an extra knob.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Why <code>haiku</code> and not hard-coded Gemini Flash / DeepSeek?</h3>
+
+        <p>Hard-coding a specific provider would violate Claudio's "no hardcoded provider logic" rule and would break for anyone who hasn't configured that provider. <code>haiku</code> is the cheapest universal alias.</p>
+
+        <h2 id="model-override">Model override (important for non-Anthropic providers)</h2>
+
+        <p>On providers that aren't Claude-native — anything routed through the OpenAI shim such as OpenRouter, Gemini, DeepSeek, Mistral, LM Studio, Together — the alias <code>haiku</code> falls back to the parent's model. That means on OpenRouter + Opus, without an override, the WebResearcher also runs on Opus, cancelling the cost win.</p>
+
+        <p><strong>Fix it</strong> by setting an explicit override in <code>~/.claudio/settings.json</code>:</p>
+
+        <pre><code>{
+  "agentModelOverrides": {
+    "built-in:WebResearcher": "deepseek-chat"
+  }
+}</code></pre>
+
+        <p>Or any other cheap model your active provider exposes. No code changes required.</p>
+
+        <h2 id="custom-override">Override with a custom agent</h2>
+
+        <p>Drop a file at <code>.claudio/agents/WebResearcher.md</code> (same <code>agentType</code>) and it will <strong>override</strong> the built-in. The merge order is <code>built-in → plugin → user settings → project settings → flag settings → policy settings</code>, with each source winning over the previous one. This is a feature, not a bug — useful for customizing the system prompt without forking.</p>
+
+        <h2 id="tradeoffs">Trade-offs</h2>
+
+        <ul>
+          <li><strong>Extra latency.</strong> Queries that would have been 1–2 direct fetches pay the overhead of a subagent round-trip. The injected description is explicit about when <em>not</em> to use it.</li>
+          <li><strong>Synthesis can lose nuance.</strong> The parent never sees raw HTML. If detail is needed, the parent can <code>WebFetch</code> one of the URLs the child cited.</li>
+          <li><strong>No MCP, no local reads.</strong> The allowlist excludes both by design. To cross web with internal docs (Notion, repo, etc.), the parent does that before or after — not inside the WebResearcher.</li>
+          <li><strong>No feature flag.</strong> Can't be turned off at build-time; if something breaks, revert via PR. Accepted for simplicity.</li>
+        </ul>
+
+        <h2 id="testing">Try it</h2>
+
+        <p>Inside the Claudio REPL, ask something that naturally requires multi-page research:</p>
+
+        <pre><code>research how to configure OAuth device flow for the GitHub Copilot CLI provider</code></pre>
+
+        <p>What you should see:</p>
+
+        <ul>
+          <li>The parent calls <code>Agent(subagent_type='WebResearcher')</code>.</li>
+          <li>Several <code>WebFetch</code> / <code>WebSearch</code> calls happen <em>inside</em> the subagent — they don't appear in the parent history.</li>
+          <li>The final answer in the parent cites URLs in markdown, without any raw HTML.</li>
+        </ul>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div>
+          <div class="footer__brand">
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+            claudio
+          </div>
+          <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__links-title">Project</div>
+          <a href="https://github.com/claudio-labs/claudio" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="changelog.html" class="footer__link">Changelog</a>
+          <a href="docs.html" class="footer__link">Docs</a>
+          <a href="https://github.com/claudio-labs/claudio/issues" class="footer__link" target="_blank" rel="noopener noreferrer">Issues</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span>claudiolabs.ai</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

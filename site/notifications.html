@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary meta -->
+  <title>Notifications — Claudio Features</title>
+  <meta name="description" content="Claudio sends 'needs attention' notifications through iTerm2, Kitty, Ghostty, Windows Terminal, and native OS toasts. Auto-detects the best channel for your terminal." />
+  <meta name="keywords" content="claudio notifications, terminal notifications, iterm2 OSC 9, kitty OSC 99, ghostty OSC 777, notify-send, windows toast, claudio features" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://claudiolabs.ai/notifications.html" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Claudio" />
+  <meta property="og:title" content="Notifications — Claudio Features" />
+  <meta property="og:description" content="Claudio routes attention-required events through the best channel your terminal supports: OSC sequences, native OS toasts, or terminal bell." />
+  <meta property="og:url" content="https://claudiolabs.ai/notifications.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-notifications.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Claudio CLI — Notifications" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Notifications — Claudio Features" />
+  <meta name="twitter:description" content="Auto-detected terminal and OS notifications when Claudio needs your attention." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-notifications.png" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Notifications — Claudio Features",
+    "description": "Claudio routes attention-required events through OSC sequences, native OS toasts, or terminal bell — auto-detected per terminal.",
+    "url": "https://claudiolabs.ai/notifications.html",
+    "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "isPartOf": { "@type": "WebSite", "name": "Claudio", "url": "https://claudiolabs.ai/" }
+  }
+  </script>
+
+  <!-- Theme & favicon -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+        claudio
+      </a>
+
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__links" id="nav-links" role="list">
+        <li>
+          <a href="https://github.com/claudio-labs/claudio" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+        </li>
+        <li><a href="docs.html" class="nav__link" style="color: var(--color-accent)">Docs</a></li>
+        <li><a href="changelog.html" class="nav__link">Changelog</a></li>
+        <li><a href="install.html" class="nav__cta">Install</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="docs-layout">
+
+      <!-- Sidebar -->
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <nav>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Getting started</div>
+            <a href="install.html" class="docs-nav-link">Install</a>
+            <a href="install.html#quickstart" class="docs-nav-link">Quick start</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Providers</div>
+            <a href="providers.html#all-providers" class="docs-nav-link">All providers</a>
+            <a href="providers.html#local" class="docs-nav-link">Local models</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Features</div>
+            <a href="bash-output-filter.html" class="docs-nav-link">Bash output filter</a>
+            <a href="notifications.html" class="docs-nav-link active">Notifications</a>
+            <a href="web-researcher.html" class="docs-nav-link">Web researcher</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">On this page</div>
+            <a href="#overview" class="docs-nav-link">Overview</a>
+            <a href="#channels" class="docs-nav-link">Channels</a>
+            <a href="#auto" class="docs-nav-link">Auto resolution</a>
+            <a href="#matrix" class="docs-nav-link">Terminal matrix</a>
+            <a href="#os-native" class="docs-nav-link">OS-native backends</a>
+            <a href="#hooks" class="docs-nav-link">Hooks</a>
+            <a href="#configuration" class="docs-nav-link">Configuration</a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <main class="docs-content" id="main-content">
+
+        <div class="page-hero">
+          <h1>Notifications</h1>
+          <p class="page-hero__sub">Get pinged when Claudio needs you — through whatever channel your terminal and OS support.</p>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+
+        <p>Claudio surfaces "needs attention" events — input required, long task finished, custom hook-driven events — through the best channel available in your environment. The router picks automatically by default, and you can override it via <code>/config</code> at any time.</p>
+
+        <p>Identical notifications fired within 2 seconds are coalesced, so you won't get spammed when several tools complete in quick succession.</p>
+
+        <h2 id="channels">Channels</h2>
+
+        <p>Configured via <code>preferredNotifChannel</code> in <code>~/.claudio/settings.json</code> — or pick interactively under <code>/config</code> → <strong>Notifications</strong>.</p>
+
+        <table>
+          <thead>
+            <tr><th>Channel</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>auto</code></td><td>Pick the best available channel for the detected terminal/OS (default).</td></tr>
+            <tr><td><code>iterm2</code></td><td>iTerm2 proprietary OSC 9 sub-protocol.</td></tr>
+            <tr><td><code>iterm2_with_bell</code></td><td>iTerm2 OSC 9 + raw BEL.</td></tr>
+            <tr><td><code>kitty</code></td><td>Kitty OSC 99 (3-part: title / body / focus).</td></tr>
+            <tr><td><code>ghostty</code></td><td>Ghostty OSC 777 <code>notify;…</code>.</td></tr>
+            <tr><td><code>os_native</code></td><td>Desktop toast via <code>notify-send</code> / <code>osascript</code> / Windows Toast XML.</td></tr>
+            <tr><td><code>terminal_bell</code></td><td>Raw <code>\x07</code> BEL.</td></tr>
+            <tr><td><code>notifications_disabled</code></td><td>No-op.</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="auto">Auto resolution</h2>
+
+        <p>The <code>auto</code> channel walks this decision tree:</p>
+
+        <ol>
+          <li><strong>Headless</strong> (<code>!process.stdout.isTTY</code>) → <code>os_native</code> (no terminal to talk to).</li>
+          <li><strong>OSC channel</strong> from the terminal matrix below, if one matches.</li>
+          <li><strong>Apple Terminal</strong> → try <code>os_native</code> (toast), else BEL if the user's Profile has Bell enabled.</li>
+          <li><strong>SSH session without WSL</strong> → skip OS-native (a toast on the remote host is invisible). The terminal-side OSC paths still work — the escape travels over the tty to your local emulator.</li>
+          <li>Otherwise → <code>os_native</code>.</li>
+        </ol>
+
+        <h2 id="matrix">Terminal → channel matrix</h2>
+
+        <table>
+          <thead>
+            <tr><th>Terminal</th><th>Channel chosen by <code>auto</code></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>iTerm2</td><td><code>iterm2</code></td></tr>
+            <tr><td>kitty</td><td><code>kitty</code></td></tr>
+            <tr><td>Ghostty</td><td>OSC 777</td></tr>
+            <tr><td>WezTerm</td><td>OSC 777</td></tr>
+            <tr><td>foot (Wayland)</td><td>OSC 777</td></tr>
+            <tr><td>urxvt / rxvt</td><td>OSC 777</td></tr>
+            <tr><td>Windows Terminal</td><td>OSC 9 plain (WT renders raw OSC 9 as a toast)</td></tr>
+            <tr><td>ConEmu</td><td>OSC 9 plain</td></tr>
+            <tr><td>Apple Terminal</td><td><code>os_native</code> (osascript) → fallback BEL</td></tr>
+            <tr><td>Alacritty</td><td><code>os_native</code></td></tr>
+            <tr><td>GNOME Terminal / Konsole / Terminator / Tilix / xterm</td><td><code>os_native</code></td></tr>
+            <tr><td>Anything else</td><td><code>os_native</code> (best-effort)</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="os-native">OS-native backends</h2>
+
+        <table>
+          <thead>
+            <tr><th>Platform</th><th>Primary</th><th>Fallback</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>macOS</td><td><code>terminal-notifier</code> (if installed via brew)</td><td><code>osascript -e 'display notification …'</code></td></tr>
+            <tr><td>Linux</td><td><code>notify-send</code> (libnotify)</td><td><code>kdialog --passivepopup</code></td></tr>
+            <tr><td>Windows 10/11</td><td><code>powershell.exe</code> Toast XML via <code>-EncodedCommand</code> (built-in WinRT, no module dep)</td><td>—</td></tr>
+            <tr><td>WSL</td><td>Same Toast XML over <code>powershell.exe</code> interop</td><td>—</td></tr>
+          </tbody>
+        </table>
+
+        <p>The Windows Toast payload is base64-encoded as UTF-16LE before being passed to <code>powershell.exe -EncodedCommand</code> — that avoids both XML and shell-quoting pitfalls. AppleScript and Toast XML payloads are escaped accordingly.</p>
+
+        <h2 id="hooks">Hooks</h2>
+
+        <p>Before routing to the channel above, Claudio fires <code>executeNotificationHooks()</code>. That lets you wire any custom backend — Slack, Pushover, ntfy, an internal webhook — via the <code>hooks</code> section of <code>~/.claudio/settings.json</code>. The channel runs <em>in addition to</em>, not <em>instead of</em>, the hook.</p>
+
+        <p>Useful when you want both a desktop toast and a Slack DM, or when you're on a remote box and want the notification to reach your phone instead.</p>
+
+        <h2 id="configuration">Configuration</h2>
+
+        <p>Open <code>/config</code> inside the Claudio REPL and pick a channel under <strong>Notifications</strong>. Or edit <code>~/.claudio/settings.json</code> directly:</p>
+
+        <pre><code>{
+  "preferredNotifChannel": "auto"
+}</code></pre>
+
+        <p>Set to any of the channels listed above. Omit the key (or leave it at <code>auto</code>) for automatic detection.</p>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div>
+          <div class="footer__brand">
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+            claudio
+          </div>
+          <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__links-title">Project</div>
+          <a href="https://github.com/claudio-labs/claudio" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="changelog.html" class="footer__link">Changelog</a>
+          <a href="docs.html" class="footer__link">Docs</a>
+          <a href="https://github.com/claudio-labs/claudio/issues" class="footer__link" target="_blank" rel="noopener noreferrer">Issues</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span>claudiolabs.ai</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
