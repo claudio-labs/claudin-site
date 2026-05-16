@@ -1,3 +1,21 @@
+## v0.2.10 — 2026-05-16
+
+- chore(license): rewrite as source-available v1.1 under Claudiolabs (85685cf)
+- perf(api): per-provider undici dispatcher with h2 fallback (item 11.5) (8640d91)
+- bench(undici-pool): matriz de tuning + baseline para item 11.5 (b395898)
+- feat(history-picker): preserve state across toggles via React Activity (f878d75)
+- chore(mcp): remove dead claudeInChrome references (8cd2ac2)
+- chore(tsconfig): drop deprecated baseUrl and ignoreDeprecations (c805a90)
+- refactor(schemas): convert eligible unions to discriminatedUnion in coreSchemas (cd709cc)
+- feat(refusal): surface server explanation and category in refusal errors (65dc5e2)
+- fix(cost): bill 1h prompt-cache writes at correct 2× rate (f6c092b)
+- refactor(zod): normalize imports to zod/v4 and add source guard (c0c5225)
+- feat(notifications): native OS fallback for terminals without OSC support (8535819)
+- docs(claude.md): document claudio vs claudiodev dev convention (2e04959)
+- feat(agents): add built-in WebResearcher subagent (#32) (cfd11f3)
+- docs(roadmap): add agentic_fetch + OS notifications; archive completed items (c9b0cf7)
+- feat(prompt-suggestion): render as inline ghost text gated by follow-up offers (c186668)
+
 ## v0.2.9 — 2026-05-15
 
 - fix(auto-update): require .git to flag a source tree, not just a matching package.json (#31) (818e062)
