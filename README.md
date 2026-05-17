@@ -11,7 +11,8 @@ Claudio brings a terminal-first agentic workflow — bash, file tools, grep, glo
 
 ---
 
-<img width="895" height="350" alt="image" src="https://github.com/user-attachments/assets/6734c38a-d42e-41dd-933f-2d222dbbd581" />
+<img width="917" height="281" alt="image" src="https://github.com/user-attachments/assets/febdce99-f52c-4376-987c-7b71000bdff9" />
+
 
 
 ---
