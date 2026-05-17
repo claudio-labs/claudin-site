@@ -1,3 +1,15 @@
+## v0.2.11 — 2026-05-17
+
+- test(messages): characterization tests before 11a split (#33) (b6d2a41)
+- ci: fix tests release (d782461)
+- feat(plan-mode): surface decisions proactively instead of waiting for ambiguity (1fa758b)
+- fix(tests): remove mock.restore() calls that break preload stubs (64f8c3f)
+- ci: add bun version diagnostics to pr-checks workflow (10778db)
+- test: fix global config contamination and migrate undici-bench sanity tests (a587523)
+- fix(lsp+tools): propagar state changes de LSP e GrowthBook para cache de isEnabled() (61a453b)
+- perf(startup): paralelizar update check e github token refresh no boot (d7ccb37)
+- refactor(api): hoist hot-path regex to module scope (roadmap tier 1.1) (8b0bb87)
+
 ## v0.2.10 — 2026-05-16
 
 - chore(license): rewrite as source-available v1.1 under Claudiolabs (85685cf)
