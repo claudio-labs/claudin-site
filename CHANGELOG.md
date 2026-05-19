@@ -1,3 +1,14 @@
+## v0.2.12 — 2026-05-19
+
+- refactor(attachments): extract pipeline.ts, collapse monolith to barrel (#39) (35d2917)
+- refactor(bashParser): extract tokens, lexer, parserContext (#38) (5ac5200)
+- refactor(main): extract default-action dispatch (#37) (28f252f)
+- refactor(repl): extract Transcript/Status/Dialogs subviews  (#36) (8588b5b)
+- refactor(hooks): split monolithic hooks.ts into 9 focused submodules (11d) (849f858)
+- refactor(sessionStorage) collapse barrel + pin public surface (#35) (6e4c474)
+- refactor(print): move runHeadless (#34) (e4ac773)
+- refactor(auto-update): remove in-REPL AutoUpdater polling (be75dd5)
+
 ## v0.2.11 — 2026-05-17
 
 - test(messages): characterization tests before 11a split (#33) (b6d2a41)
