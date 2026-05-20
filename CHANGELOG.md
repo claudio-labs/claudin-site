@@ -1,3 +1,7 @@
+## v0.3.2 — 2026-05-20
+
+- fix(autoUpdater): also update bun global install when npm is the active updater (703e469)
+
 ## v0.3.1 — 2026-05-20
 
 - fix(autoUpdater): pass --force to npm install to handle EEXIST on mise-managed bins (50515b6)
