@@ -1,3 +1,10 @@
+## v0.2.13 — 2026-05-20
+
+- feat(memory): skip-routine guidance in extraction prompts (41e4d64)
+- docs(discovery): add claude-mem insights review for memory subsystem (d23496b)
+- feat(codeOutline): add scanSymbols primitive + outline renderer (#40) (90335e1)
+- docs(features): add Smart Code Navigation feature design (7.1) (5347976)
+
 ## v0.2.12 — 2026-05-19
 
 - refactor(attachments): extract pipeline.ts, collapse monolith to barrel (#39) (35d2917)
