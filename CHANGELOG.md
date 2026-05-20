@@ -1,3 +1,7 @@
+## v0.3.1 — 2026-05-20
+
+- fix(autoUpdater): pass --force to npm install to handle EEXIST on mise-managed bins (50515b6)
+
 ## v0.3.0 — 2026-05-20
 
 - feat(memory): skip-routine guidance in extraction prompts (41e4d64)
