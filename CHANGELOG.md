@@ -1,3 +1,8 @@
+## v0.3.3 — 2026-05-22
+
+- refactor(mcp): split client.ts monolith into focused submodules (30b7971)
+- refactor(skills): rename /simplify to /code-review (#41) (fb67c5b)
+
 ## v0.3.2 — 2026-05-20
 
 - fix(autoUpdater): also update bun global install when npm is the active updater (703e469)
