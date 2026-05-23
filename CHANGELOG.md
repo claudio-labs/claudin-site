@@ -1,3 +1,10 @@
+## v0.3.4 — 2026-05-23
+
+- feat(usage): split Usage into Usage + Session tabs, friendlier rate-limit errors (f2166a0)
+- feat(bash-filter): expand built-in coverage with 29 new filters (#43) (578be71)
+- refactor(api): split claude.ts monolith into focused submodules (#42) (0892d97)
+- feat(mcp): default claude.ai connectors to disabled (9e646ed)
+
 ## v0.3.3 — 2026-05-22
 
 - refactor(mcp): split client.ts monolith into focused submodules (30b7971)
