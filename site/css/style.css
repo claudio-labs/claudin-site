@@ -904,3 +904,58 @@
   color: var(--color-text-muted);
   font-size: var(--text-lg);
 }
+
+/* ─── Utility modifiers (replaces inline styles) ────────────── */
+.section-desc--mb-4 { margin-bottom: var(--space-4); }
+.section-desc--mb-6 { margin-bottom: var(--space-6); }
+.section-desc--note {
+  margin-bottom: var(--space-6);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+.nav__cta--inline { display: inline-block; }
+
+/* ─── FAQ ──────────────────────────────────────────────────── */
+.faq-list {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+  max-width: 820px;
+}
+.faq-item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+}
+.faq-item[open] {
+  border-color: var(--color-accent-dim);
+}
+.faq-item summary {
+  cursor: pointer;
+  font-weight: var(--weight-medium);
+  font-size: var(--text-base);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  font-family: var(--font-mono);
+  color: var(--color-accent);
+  font-size: var(--text-lg);
+  transition: transform var(--duration-fast);
+}
+.faq-item[open] summary::after { content: "−"; }
+.faq-item p {
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+.faq-item p code {
+  font-size: 0.875em;
+}
