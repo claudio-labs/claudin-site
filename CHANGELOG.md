@@ -1,3 +1,7 @@
+## v0.3.6 — 2026-05-23
+
+- fix(codex): allow plaintext credential fallback when keychain unavailable (cfa5467)
+
 ## v0.3.5 — 2026-05-23
 
 - fix(build): stub utils/telemetry/instrumentation to prevent @opentelemetry/api runtime error (1a4bc81)
