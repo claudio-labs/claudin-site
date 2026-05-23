@@ -1,3 +1,7 @@
+## v0.3.8 — 2026-05-23
+
+- fix(cli): polyfill util.markAsUncloneable for Node < 22.4 (6c59c89)
+
 ## v0.3.7 — 2026-05-23
 
 - fix(cli): polyfill Promise.withResolvers for Node < 22 (f7e0e74)
