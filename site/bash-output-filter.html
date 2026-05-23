@@ -6,7 +6,7 @@
 
   <!-- Primary meta -->
   <title>Bash Output Filter — Claudio Features</title>
-  <meta name="description" content="Claudio's Bash Output Filter strips CLI noise from jest, pytest, go test, cargo, and git. Preserves errors and warnings. Saves ~50k tokens per session." />
+  <meta name="description" content="Claudio's Bash Output Filter strips CLI noise from jest, pytest, go test, cargo, git, npm, pnpm, pip, and 60+ other commands. Preserves errors and warnings. Saves ~75k tokens per session (75% reduction)." />
   <meta name="keywords" content="bash output filter, claudio features, CLI noise reduction, token savings, jest filter, pytest filter, go test filter" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
   <link rel="canonical" href="https://claudiolabs.ai/bash-output-filter.html" />
@@ -16,7 +16,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Claudio" />
   <meta property="og:title" content="Bash Output Filter — Claudio Features" />
-  <meta property="og:description" content="Automatically removes noise from CLI output, saving ~50 000 tokens per session and 72% of input cost." />
+  <meta property="og:description" content="Automatically removes noise from CLI output, saving ~75 000 tokens per session and ~75% of input cost across 60+ commands." />
   <meta property="og:url" content="https://claudiolabs.ai/bash-output-filter.html" />
   <meta property="og:image" content="https://claudiolabs.ai/og-bash-output-filter.png" />
   <meta property="og:image:width" content="1200" />
@@ -27,7 +27,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Bash Output Filter — Claudio Features" />
-  <meta name="twitter:description" content="Removes CLI noise automatically. Saves ~50k tokens per session." />
+  <meta name="twitter:description" content="Removes CLI noise automatically. Saves ~75k tokens per session (75% reduction across 60+ commands)." />
   <meta name="twitter:image" content="https://claudiolabs.ai/og-bash-output-filter.png" />
 
   <!-- JSON-LD -->
@@ -36,7 +36,7 @@
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "Bash Output Filter — Claudio Features",
-    "description": "Claudio's Bash Output Filter strips CLI noise from jest, pytest, go test, cargo, and git commands. Saves ~50k tokens per session.",
+    "description": "Claudio's Bash Output Filter strips CLI noise from jest, pytest, go test, cargo, git, npm, pnpm, pip, and 60+ other commands. Saves ~75k tokens per session (~75% reduction).",
     "url": "https://claudiolabs.ai/bash-output-filter.html",
     "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
@@ -161,6 +161,8 @@
             <div class="docs-nav-section-title">On this page</div>
             <a href="#overview" class="docs-nav-link">Overview</a>
             <a href="#commands" class="docs-nav-link">Commands</a>
+            <a href="#phase12" class="docs-nav-link">Phase 12 additions</a>
+            <a href="#pass-through" class="docs-nav-link">Pass-through filters</a>
             <a href="#summary" class="docs-nav-link">Reduction summary</a>
             <a href="#configuration" class="docs-nav-link">Configuration</a>
           </div>
@@ -190,14 +192,20 @@
 
         <div class="filter-stats">
           <div class="filter-stat-item">
-            <span class="filter-stat-value">~50 000</span>
+            <span class="filter-stat-value">~75 000</span>
             <span class="filter-stat-desc">tokens saved per 30-min session</span>
           </div>
           <div class="filter-stat-item">
-            <span class="filter-stat-value">~72%</span>
-            <span class="filter-stat-desc">reduction in input cost</span>
+            <span class="filter-stat-value">~75%</span>
+            <span class="filter-stat-desc">reduction in input cost across 60+ commands</span>
+          </div>
+          <div class="filter-stat-item">
+            <span class="filter-stat-value">75.1%</span>
+            <span class="filter-stat-desc">aggregate byte reduction across 30 Phase 12 fixtures</span>
           </div>
         </div>
+
+        <p>Measured across a typical 30-minute session after Phase 12 coverage (JS/Python/Go/Rust package managers, linters, git remote ops). Aggregate measurement across 30 Phase 12 sample fixtures: <strong>75.1%</strong> byte reduction (36 170 B &rarr; 8 999 B). Reproducible via <code>bun test src/outputFilter/Bash/phase12Report.test.ts</code>.</p>
 
         <h2 id="commands">Commands</h2>
 
@@ -708,7 +716,198 @@ Saving to: 'big-package-1.2.3.tar.gz'
         <h3 id="jq">jq</h3>
         <p>Truncates deeply nested pretty-printed JSON beyond a configurable depth/line cap. Top-level keys and the closing brackets are always preserved so the structure stays parseable.</p>
 
-        <h2 id="summary">Reduction summary</h2>
+        <h2 id="phase12">Phase 12 additions</h2>
+
+        <p>29 new filters covering JS package managers, Python tooling, Git remote ops, Go/Rust extras, and cross-language linters. Same fail-open contract: errors and warnings always survive; only the chatter is stripped.</p>
+
+        <h3 id="npm-install">npm install / npm ci / npm i</h3>
+        <p>Strips <code>added/changed/audited N packages</code> summary tail, <code>npm fund</code> notices, progress bars (CR-collapsed), and the <code>npm http fetch</code> chatter under <code>--verbose</code>. Preserves warnings (<code>npm WARN deprecated</code>, peer-dep warnings) and any <code>npm ERR!</code> block.</p>
+
+        <p class="code-label">Before (~700 bytes for a small package)</p>
+        <pre><code>added 57 packages, and audited 58 packages in 4s
+
+12 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+npm notice
+npm notice New major version of npm available! 10.8.1 -&gt; 11.0.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.0.0
+npm notice To update run: npm install -g npm@11.0.0
+npm notice</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>added 57 packages in 4s
+
+found 0 vulnerabilities</code></pre>
+
+        <h3 id="pnpm-install">pnpm install / pnpm add</h3>
+        <p>Strips the boxed "Update available" notice, Progress lines, <code>Lockfile is up to date</code>, <code>Downloading</code> chatter, and the <code>Done in Xs</code> footer. Preserves peer-dep warnings, deprecation notices, <code>ERR_PNPM_*</code> blocks, and the actual dependency tree.</p>
+
+        <p class="code-label">Before (747 bytes for <code>pnpm add express</code>)</p>
+        <pre><code>   ╭──────────────────────────────────────────────────────────────────╮
+   │                                                                  │
+   │              Update available! 9.7.0 → 10.0.0.                   │
+   │   Changelog: https://github.com/pnpm/pnpm/releases/tag/v10.0.0   │
+   │                Run "pnpm add -g pnpm" to update.                 │
+   │                                                                  │
+   ╰──────────────────────────────────────────────────────────────────╯
+
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 70, reused 0, downloaded 67, added 67
+Done in 2.1s</code></pre>
+
+        <p class="code-label">After (59 bytes — 92% reduction)</p>
+        <pre><code>dependencies:
++ express 4.21.2</code></pre>
+
+        <h3 id="yarn-install">yarn install / yarn</h3>
+        <p>Strips the 4-phase progress (<code>[1/4] Resolving packages…</code> through <code>[4/4] Building fresh packages…</code>) and the <code>Done in Xs</code> footer. Preserves warnings, errors, and the dependency list.</p>
+        <p><strong>93% reduction</strong> on a typical install. Yarn berry (v2+) output is structurally different but still benefits from progress-line removal.</p>
+
+        <h3 id="pip-install">pip install</h3>
+        <p>Strips <code>Collecting</code>, <code>Downloading</code>, <code>Using cached</code>, <code>Building wheel for …</code> lines, and the multi-line <code>[notice] A new release of pip is available</code> block. Preserves <code>Successfully installed …</code>, version conflicts, and <code>error: subprocess-exited-with-error</code> blocks.</p>
+
+        <p class="code-label">Before (1572 bytes for <code>pip install requests</code>)</p>
+        <pre><code>Collecting requests
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.6 kB)
+Collecting charset-normalizer&lt;4,&gt;=2 (from requests)
+  Downloading charset_normalizer-3.4.4-cp312-cp312-manylinux_2_17_x86_64.whl.metadata (35 kB)
+Collecting idna&lt;4,&gt;=2.5 (from requests)
+  Downloading idna-3.10-py3-none-any.whl.metadata (10 kB)
+...
+Downloading requests-2.34.2-py3-none-any.whl (64 kB)
+Downloading charset_normalizer-3.4.4-cp312-cp312-manylinux_2_17_x86_64.whl (151 kB)
+...
+Installing collected packages: certifi, urllib3, idna, charset-normalizer, requests
+Successfully installed certifi-2025.4.26 charset-normalizer-3.4.4 idna-3.10 requests-2.34.2 urllib3-2.5.0
+
+[notice] A new release of pip is available: 24.0 -&gt; 24.3.1
+[notice] To update, run: pip install --upgrade pip</code></pre>
+
+        <p class="code-label">After (192 bytes — 88% reduction)</p>
+        <pre><code>Installing collected packages: certifi, urllib3, idna, charset-normalizer, requests
+Successfully installed certifi-2025.4.26 charset-normalizer-3.4.4 idna-3.10 requests-2.34.2 urllib3-2.5.0</code></pre>
+
+        <h3 id="npm-test">npm test / npm run / pnpm run</h3>
+        <p>Strips the two-line script header (<code>&gt; pkg@v script\n&gt; actual command</code>) injected by the runner before delegating to the underlying test framework. Combined with the existing jest/vitest/bun-test filters, a typical <code>npm test</code> collapses to a single <code>✓ &lt;runner&gt;: all tests passed</code> line.</p>
+        <p><strong>82% reduction</strong> for <code>npm test</code> wrapping jest. <strong>80%</strong> for <code>pnpm run &lt;task&gt;</code>.</p>
+
+        <h3 id="git-fetch">git fetch</h3>
+        <p>Strips the entire <code>remote: Enumerating/Counting/Compressing/Total/Receiving objects/Resolving deltas</code> progress block (which can balloon to tens of KB on large repos when <code>--progress</code> is forced or the terminal is non-TTY). Preserves the <code>From &lt;url&gt;</code> header and every <code>&lt;old&gt;..&lt;new&gt;  &lt;ref&gt; -&gt; &lt;remote&gt;/&lt;ref&gt;</code> ref-update line.</p>
+
+        <p class="code-label">Before (21 981 bytes for <code>git fetch origin --progress</code> on a large repo)</p>
+        <pre><code>remote: Enumerating objects: 4521, done.
+remote: Counting objects: 100% (4521/4521), done.
+remote: Compressing objects: 100% (1832/1832), done.
+remote: Total 4521 (delta 2891), reused 4012 (delta 2521), pack-reused 0
+Receiving objects: 100% (4521/4521), 12.4 MiB | 8.2 MiB/s, done.
+Resolving deltas: 100% (2891/2891), done.
+From github.com:myorg/myapp
+   a1b2c3d..d4e5f6a  main       -&gt; origin/main
+   * [new branch]    feature/x  -&gt; origin/feature/x</code></pre>
+
+        <p class="code-label">After (133 bytes — 99.4% reduction)</p>
+        <pre><code>From github.com:myorg/myapp
+   a1b2c3d..d4e5f6a  main       -&gt; origin/main
+   * [new branch]    feature/x  -&gt; origin/feature/x</code></pre>
+
+        <p><code>--porcelain</code> invocations bypass the filter (machine-readable, already minimal).</p>
+
+        <h3 id="go-build">go build</h3>
+        <p>Strips <code>go: downloading &lt;mod&gt; v1.2.3</code>, <code>go: finding &lt;mod&gt;</code>, and <code>go: found &lt;mod&gt;</code> lines that appear on cold-cache or <code>go.sum</code> rebuild. Preserves compile errors and warm-cache silent runs (which already emit nothing).</p>
+
+        <p>When the output is <strong>only</strong> download/find/found lines (cold-cache success), the filter short-circuits to a positive marker — <code>✓ go build: dependencies downloaded, build ok</code> — so the model gets a clear confirmation instead of an empty body.</p>
+
+        <p class="code-label">Before (cold-cache success)</p>
+        <pre><code>go: finding module for package github.com/spf13/cobra
+go: downloading github.com/spf13/cobra v1.10.2
+go: found github.com/spf13/cobra in github.com/spf13/cobra v1.10.2
+go: downloading github.com/spf13/pflag v1.0.9
+go: downloading github.com/inconshreveable/mousetrap v1.1.0</code></pre>
+
+        <p class="code-label">After</p>
+        <pre><code>✓ go build: dependencies downloaded, build ok</code></pre>
+
+        <p>On compile errors (lines matching <code>error:</code> / <code>undefined:</code> / <code>cannot find</code> / <code>build failed</code> / <code>FAIL</code> / typical <code>file.go:L:C:</code> location prefix), the positive marker is suppressed and the error output is preserved verbatim. Warm-cache builds are no-op (zero output → nothing to strip and nothing to confirm).</p>
+
+        <h3 id="cargo-run">cargo run</h3>
+        <p>Strips the build prologue (<code>Compiling &lt;dep&gt;</code>, <code>Finished … in Xs</code>, <code>Running `target/debug/&lt;bin&gt;`</code>) so only the program's actual stdout reaches the model. Build errors still surface unchanged.</p>
+
+        <p class="code-label">Before</p>
+        <pre><code>   Compiling libc v0.2.155
+   Compiling proc-macro2 v1.0.86
+   ... (many compile lines) ...
+   Compiling my-app v0.1.0 (/home/viudes/my-app)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.32s
+     Running `target/debug/my-app`
+Hello, world!</code></pre>
+
+        <p class="code-label">After (89% reduction)</p>
+        <pre><code>Hello, world!</code></pre>
+
+        <h3 id="cargo-fmt">cargo fmt --check</h3>
+        <p>Same minimal pass as <code>prettier --check</code>: only diffs/errors survive. ANSI stripped, blank-line runs collapsed. <strong>21%</strong> on the diff sample; clean runs emit nothing.</p>
+
+        <h3 id="pre-commit">pre-commit run</h3>
+        <p>Strips all <code>&lt;hook id&gt;........................................Passed$</code> lines and collapses the resulting blank runs. Preserves Failed hooks with their full diagnostic block (<code>- hook id:</code>, <code>- exit code:</code>, captured stdout/stderr).</p>
+
+        <p class="code-label">Before (1396 bytes, 11 hooks with 2 failures)</p>
+        <pre><code>trim trailing whitespace.................................................Passed
+fix end of files.........................................................Passed
+check yaml...............................................................Passed
+check for added large files..............................................Passed
+black....................................................................Failed
+- hook id: black
+- files were modified by this hook
+
+reformatted src/api/client.py
+
+ruff check...............................................................Passed
+...
+mypy.....................................................................Failed
+- hook id: mypy
+- exit code: 1
+
+src/api/client.py:42: error: Incompatible types in assignment</code></pre>
+
+        <p class="code-label">After (58% reduction)</p>
+        <p>Exactly the Failed hooks plus their diagnostic blocks survive.</p>
+
+        <h3 id="prisma">prisma generate / prisma migrate</h3>
+        <p>Strips banners (<code>✔ Generated Prisma Client</code>, <code>Loaded the config…</code>, <code>Schema loaded from…</code>) and runtime tips. Preserves drift warnings, schema validation errors, and the actual migration plan.</p>
+        <p><strong>67%</strong> on <code>generate</code>, <strong>44%</strong> on <code>migrate</code>.</p>
+
+        <h3 id="shellcheck">shellcheck</h3>
+        <p>Strips the trailing <code>For more information:</code> block and the two wiki URLs that follow each diagnostic. Preserves the diagnostic itself (severity, code, caret line, suggestion). <strong>~28%</strong> on typical output. Machine-readable formats (<code>-f gcc</code>, <code>-f checkstyle</code>, <code>--format=json</code>, etc.) bypass the filter.</p>
+
+        <h2 id="pass-through">Pass-through / safety-floor filters</h2>
+
+        <p>These commands ship with a registered filter purely to apply ANSI stripping, collapse blank-line runs, and cap output length. No targeted line-stripping is configured — their output is already mostly signal. Adding them to the registry locks in safety guarantees: ANSI escapes will never leak, and pathological lengths will be capped.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>What the filter does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>eslint</code></td><td>ANSI strip, collapse runs. JSON/junit/compact/checkstyle/tap/html formats bypass.</td></tr>
+            <tr><td><code>prettier --write</code> / <code>--check</code></td><td>ANSI strip, collapse runs. Diffs preserved verbatim.</td></tr>
+            <tr><td><code>mypy</code></td><td>ANSI strip, collapse runs. <code>--junit-xml</code> bypasses.</td></tr>
+            <tr><td><code>ruff format</code></td><td>ANSI strip, collapse runs. <code>--diff</code> bypasses.</td></tr>
+            <tr><td><code>markdownlint</code> / <code>yamllint</code> / <code>hadolint</code></td><td>ANSI strip, collapse runs, cap at maxLines. Machine-readable formats bypass.</td></tr>
+            <tr><td><code>go vet</code> / <code>golangci-lint</code></td><td>ANSI strip, collapse runs. JSON/SARIF/junit/checkstyle bypass.</td></tr>
+            <tr><td><code>git branch</code> / <code>git stash list</code> / <code>git worktree list</code></td><td>ANSI strip, cap at maxLines. Mutations (<code>-d</code>, <code>-D</code>, <code>-m</code>, <code>pop</code>, <code>apply</code>) bypass.</td></tr>
+            <tr><td><code>glab pr/mr/issue list</code></td><td>ANSI strip, cap at maxLines. <code>--output json</code> bypasses.</td></tr>
+            <tr><td><code>gt log</code> / <code>jj log</code> / <code>jj st</code></td><td>ANSI strip, cap at maxLines for deep stacks.</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="summary">Per-command reduction summary</h2>
+
+        <p>Measured on the in-repo fixtures via <code>bun test scripts/measure-bash-filter-roi.test.ts</code>. Numbers are byte reduction of the filtered body (the <code>&lt;bash-output-filtered …&gt;</code> wrapper itself adds ~80 bytes, dominant only for very small fixtures).</p>
 
         <table>
           <thead>
@@ -719,8 +918,10 @@ Saving to: 'big-package-1.2.3.tar.gz'
             </tr>
           </thead>
           <tbody>
+            <tr><td><code>go build</code> (cold)</td><td>83.6%</td><td><code>go: downloading/finding/found</code> lines → positive marker</td></tr>
             <tr><td><code>cargo check</code></td><td>99.8%</td><td>Transitive <code>Compiling</code> / <code>Checking</code> lines</td></tr>
             <tr><td><code>cargo build</code></td><td>99.7%</td><td>Same as <code>cargo check</code></td></tr>
+            <tr><td><code>git fetch</code></td><td>99.4%</td><td><code>remote:</code> progress, Receiving/Resolving</td></tr>
             <tr><td><code>jest</code></td><td>98.7%</td><td>RUNS carousel, ✓ per-test lines</td></tr>
             <tr><td><code>vitest</code></td><td>98.5%</td><td>RUN banner, ✓ per-test lines</td></tr>
             <tr><td><code>bun test</code></td><td>98.2%</td><td>Banner, ✓ per-test lines</td></tr>
@@ -730,25 +931,37 @@ Saving to: 'big-package-1.2.3.tar.gz'
             <tr><td><code>bundle install</code></td><td>95.2%</td><td>Fetching lines</td></tr>
             <tr><td><code>pytest</code></td><td>95.1%</td><td>Warnings blocks, deprecations (clean run)</td></tr>
             <tr><td><code>ps aux</code></td><td>93.9%</td><td>Kernel thread rows</td></tr>
+            <tr><td><code>yarn install</code></td><td>93.1%</td><td><code>[1/4]…[4/4]</code> phases, <code>Done in Xs</code></td></tr>
+            <tr><td><code>pnpm install</code></td><td>92.1%</td><td>Update box, Progress, Lockfile, Done</td></tr>
             <tr><td><code>rsync</code></td><td>91.1%</td><td>CR-overwritten progress lines</td></tr>
+            <tr><td><code>cargo run</code></td><td>88.7%</td><td>Compiling/Finished/Running prologue</td></tr>
+            <tr><td><code>pip install</code></td><td>87.8%</td><td>Collecting/Downloading/Building wheel/notice</td></tr>
             <tr><td><code>git log</code></td><td>85.0%</td><td>Author/Date/body per commit</td></tr>
             <tr><td><code>rubocop</code></td><td>84.1%</td><td>New-cops preamble</td></tr>
             <tr><td><code>go test -v</code></td><td>82.6%</td><td>RUN/PAUSE/CONT/PASS lines</td></tr>
+            <tr><td><code>npm test</code> / <code>npm run</code></td><td>82.0%</td><td>Script header (+ underlying runner)</td></tr>
+            <tr><td><code>pnpm run</code></td><td>79.5%</td><td>Script header (+ underlying runner)</td></tr>
             <tr><td><code>curl</code> (plain)</td><td>78.4%</td><td>CR-overwritten progress bar</td></tr>
             <tr><td><code>ls -la</code></td><td>73.7%</td><td>uid/gid/size/mtime columns</td></tr>
             <tr><td><code>top -b -n 1</code></td><td>73.3%</td><td>Per-CPU rows, idle processes</td></tr>
+            <tr><td><code>prisma generate</code></td><td>66.8%</td><td>Banners, <code>Loaded config</code>, tips</td></tr>
             <tr><td><code>dig</code></td><td>66.7%</td><td>Empty <code>;; SECTION</code> blocks, OPT pseudo-section</td></tr>
             <tr><td><code>du -sh</code></td><td>59.4%</td><td><code>du: cannot access …</code> Permission denied noise</td></tr>
             <tr><td><code>ping</code></td><td>57.8%</td><td>Per-packet <code>icmp_seq</code> lines</td></tr>
+            <tr><td><code>pre-commit run</code></td><td>57.6%</td><td><code>Passed$</code> hook lines</td></tr>
             <tr><td><code>df -h</code></td><td>52.3%</td><td>tmpfs / devtmpfs / overlay rows</td></tr>
             <tr><td><code>tree</code></td><td>51.3%</td><td>Mid-listing entries (head/tail cap)</td></tr>
             <tr><td><code>git pull</code></td><td>51.1%</td><td><code>Resolving deltas</code> / <code>remote: Counting</code></td></tr>
             <tr><td><code>find</code> (large)</td><td>50.9%</td><td>Head/tail cap (small outputs pass through)</td></tr>
+            <tr><td><code>npm install</code></td><td>45.1%</td><td><code>npm fund</code>, <code>npm notice</code>, fetch progress</td></tr>
+            <tr><td><code>prisma migrate</code></td><td>43.8%</td><td>Banners, runtime tips</td></tr>
             <tr><td><code>docker ps</code></td><td>40.8%</td><td>Column padding / inactive rows</td></tr>
             <tr><td><code>docker images</code></td><td>36.3%</td><td><code>&lt;none&gt;</code> rows, ID column</td></tr>
             <tr><td><code>rg</code> / <code>grep</code></td><td>33%</td><td>ANSI color escapes, line numbers</td></tr>
+            <tr><td><code>shellcheck</code></td><td>28.1%</td><td><code>For more information:</code> + wiki URLs</td></tr>
             <tr><td><code>git blame</code></td><td>25.4%</td><td>Author name/email/time/TZ</td></tr>
             <tr><td><code>dmesg</code></td><td>23.6%</td><td>Repeated bracketed timestamps</td></tr>
+            <tr><td><code>cargo fmt --check</code></td><td>21.0%</td><td>ANSI strip on diff body</td></tr>
             <tr><td><code>docker logs</code></td><td>19.3%</td><td>Repeated timestamp prefix</td></tr>
             <tr><td><code>tsc</code></td><td>18.2%</td><td>Underlines, Errors table</td></tr>
             <tr><td><code>journalctl</code></td><td>15.1%</td><td><code>Boot</code> markers, systemd lifecycle</td></tr>
@@ -757,7 +970,9 @@ Saving to: 'big-package-1.2.3.tar.gz'
           </tbody>
         </table>
 
-        <p>Pass-throughs (0%): <code>cargo clippy</code>, <code>cargo test --no-run</code>, <code>jq</code>, <code>ruff check</code> (clean), <code>stat</code>, <code>find</code> (small) — output is already pure signal.</p>
+        <p>Pass-throughs (0% but safety-locked — ANSI strip + maxLines cap): <code>cargo clippy</code>, <code>cargo test --no-run</code>, <code>jq</code>, <code>ruff check</code> (clean), <code>stat</code>, <code>find</code> (small), <code>eslint</code>, <code>prettier</code>, <code>mypy</code>, <code>ruff format</code>, <code>markdownlint</code>, <code>yamllint</code>, <code>hadolint</code>, <code>go vet</code>, <code>golangci-lint</code>, <code>git branch</code>, <code>git stash list</code>, <code>git worktree list</code>, <code>glab list</code>, <code>gt log</code>, <code>jj log</code> — output is already pure signal.</p>
+
+        <p>The <code>gh pr|issue|run list</code> filters and <code>git status</code> are <strong>rewrites</strong>, not strippers: they force the underlying command to emit a deterministic format (<code>gh … --json …</code>, <code>git status --porcelain=v2</code>). The byte count on very small fixtures can grow slightly because of the wrapper, but the downstream parser sees a stable schema instead of a fragile pretty-printed table.</p>
 
         <h2 id="configuration">Configuration</h2>
 
