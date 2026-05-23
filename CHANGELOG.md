@@ -1,3 +1,7 @@
+## v0.3.5 — 2026-05-23
+
+- fix(build): stub utils/telemetry/instrumentation to prevent @opentelemetry/api runtime error (1a4bc81)
+
 ## v0.3.4 — 2026-05-23
 
 - feat(usage): split Usage into Usage + Session tabs, friendlier rate-limit errors (f2166a0)
