@@ -573,16 +573,18 @@
 /* ─── Docs page ─────────────────────────────────────────────── */
 .docs-layout {
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: 240px minmax(0, 1fr);
   gap: var(--space-12);
   padding-top: var(--space-12);
   padding-bottom: var(--space-24);
   min-height: calc(100vh - var(--nav-height));
 }
 
+.docs-content { min-width: 0; }
+
 @media (max-width: 768px) {
   .docs-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-6);
     padding-top: var(--space-6);
     padding-bottom: var(--space-16);
@@ -594,10 +596,14 @@
 
   .docs-content pre {
     padding: var(--space-4);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     border-radius: var(--radius-sm);
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
   }
   .docs-content code { font-size: 0.8rem; }
+  .docs-content pre code { white-space: inherit; word-break: inherit; }
 
   /* Tables scroll horizontally so columns don't squish */
   .docs-content table {
