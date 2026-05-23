@@ -1,3 +1,7 @@
+## v0.3.7 — 2026-05-23
+
+- fix(cli): polyfill Promise.withResolvers for Node < 22 (f7e0e74)
+
 ## v0.3.6 — 2026-05-23
 
 - fix(codex): allow plaintext credential fallback when keychain unavailable (cfa5467)
