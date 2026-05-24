@@ -1,3 +1,9 @@
+## v0.4.0 — 2026-05-24
+
+- feat(update): replace auto-update with manual notice in startup banner (80bc583)
+- fix(agents): align /agents model display with runtime fallback (02838e4)
+- refactor(provider): separate /model choice from profile-canonical model (05152df)
+
 ## v0.3.8 — 2026-05-23
 
 - fix(cli): polyfill util.markAsUncloneable for Node < 22.4 (6c59c89)
