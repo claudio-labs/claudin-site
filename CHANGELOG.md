@@ -1,3 +1,12 @@
+## v0.4.2 — 2026-05-27
+
+- docs(roadmap): add Tier 6 — LSP-first agent (b87acd8)
+- docs(roadmap): drop T5.10, prefix-invalidation already implemented (c541013)
+- test(tools): cover all tools (#49) (26e3920)
+- feat(init): unify init prompt, add subagents and guardrails phases (#48) (3e8b9e1)
+- refactor(openaiShim): extract 9 leaf modules from openaiShim.ts (#47) (3f1ca2f)
+- fix(update): prevent claudio update from hanging on completion regen (2f3fe88)
+
 ## v0.4.1 — 2026-05-27
 
 - feat(prompt): fall back to bracket pills when Nerd Font is unavailable (e0d109b)
