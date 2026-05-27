@@ -1,3 +1,20 @@
+## v0.4.1 — 2026-05-27
+
+- feat(prompt): fall back to bracket pills when Nerd Font is unavailable (e0d109b)
+- fix(ink): defer raw mode shutdown to prevent keystroke echo (2e552d7)
+- fix(spinner): replace ✳ glyph that paints wider than one cell on Ghostty (87d3dd9)
+- fix(image-processor): fall back to sharp when stubbed napi import succeeds (675795a)
+- fix(images): create virtual placement so Ghostty resolves placeholders (34d3f0c)
+- feat(images): inline image rendering on Kitty-family terminals (#46) (739657b)
+- refactor(tools): extract two-tier TTL cache, apply to WebSearch (dd5895f)
+- fix(query): reference params.toolUseContext in queryLoop entry guard (3190713)
+- feat(lsp): late diagnostics tail-wait for post-edit publishes (#45) (adf6f9d)
+- feat(lsp): 4 write operations (rename, applyCodeAction, renameFile, applyWorkspaceEdit) (#44) (ee026f9)
+- docs(discovery): comparative study of oh-my-pi insights for Claudio (fd6bdd9)
+- feat(attachments): per-turn background task status reminders (1c50523)
+- fix(compact): preserve short and is_error tool_results during age-prune (030a982)
+- fix(permissions): enforce plan mode as a hard gate in the engine (330e6dc)
+
 ## v0.4.0 — 2026-05-24
 
 - feat(update): replace auto-update with manual notice in startup banner (80bc583)
