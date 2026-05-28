@@ -1,3 +1,10 @@
+## v0.4.3 — 2026-05-28
+
+- fix(prompt): drop dead LSP.outgoingCalls ref in FileReadTool (#53) (00b20f3)
+- feat(read): add surgical reading strategy to FileReadTool description (#52) (dbb39a2)
+- chore: drop /lsp slash command (LSPTool gone) (#51) (8240f08)
+- fix(lsp): preserve SERVER_DEFINITIONS order in getBuiltinLspServers (#50) (c4aa523)
+
 ## v0.4.2 — 2026-05-27
 
 - docs(roadmap): add Tier 6 — LSP-first agent (b87acd8)
