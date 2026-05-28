@@ -1,3 +1,7 @@
+## v0.4.4 — 2026-05-28
+
+- feat(grep): rewrite GrepTool description with search-strategy (#54) (4ee3f2a)
+
 ## v0.4.3 — 2026-05-28
 
 - fix(prompt): drop dead LSP.outgoingCalls ref in FileReadTool (#53) (00b20f3)
