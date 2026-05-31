@@ -1,3 +1,22 @@
+## v0.5.0 — 2026-05-31
+
+- bench: A/B harness suite + decision history (56efae6)
+- refactor(ui): move effortStatusText into PromptInput footer (9989ec8)
+- feat(file-read): auto-outline elision + serial-read nudge (03c5bfb)
+- feat(context): strip old narration blocks before sending to API (055e7f9)
+- fix(openai-shim): normalize reasoning-channel field aliases (2b4c640)
+- fix(thinking): tie budget to /effort instead of model output ceiling (400df20)
+- fix(thinking): default to budget mode, drop adaptive from UI (5b62423)
+- feat(effort): horizontal /effort slider + adaptive mode (#61) (1e65449)
+- feat(effort): opt-in xhigh default for Opus 4.8 coding loops (T7.5) (#60) (19e67b8)
+- feat(auto-mode): enter plan mode on implicit/interrogative plan requests (#59) (27181e9)
+- fix(permissions): normalize model id in classifier-unavailable message (T7.3) (61fca79)
+- feat(permissions): degrade auto-mode classifier on deterministic 4xx (T7.2) (#58) (0cfe6d4)
+- fix(model): reject sampling params for Opus 4.8, not just 4.7 (#57) (b5ca39f)
+- docs(roadmap): add Tier 7 (Opus 4.8) and Spike S1 for prompt/tool adaptation (5cdf345)
+- feat(model): promote Opus 4.8 in /model (#56) (1b885d1)
+- fix(output-filter): treat 2>&1 and &> as redirection, not compound (#55) (1876b5d)
+
 ## v0.4.4 — 2026-05-28
 
 - feat(grep): rewrite GrepTool description with search-strategy (#54) (4ee3f2a)
