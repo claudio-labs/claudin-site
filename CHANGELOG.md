@@ -1,3 +1,10 @@
+## v0.5.2 — 2026-06-01
+
+- fix(tests): align cache1hTtl with always-on 1h TTL for first-party/vertex (d811119)
+- perf(api): cache SDK client by composite key with single-flight dedup (c6431a1)
+- perf(api): resolve provider transport once per retry loop (aaf8c4a)
+- perf(tools): eliminate wasteful specialTools schema construction (a322739)
+
 ## v0.5.1 — 2026-06-01
 
 - fix(auth): add single-flight dedup to GitHub Copilot token refresh (d97f8cb)
