@@ -1,3 +1,25 @@
+## v0.5.1 — 2026-06-01
+
+- fix(auth): add single-flight dedup to GitHub Copilot token refresh (d97f8cb)
+- refactor(glm): trim family addendum to concise bullet points (da08d61)
+- refactor(startup): lazy-load tool modules + early init overlap (53c31f3)
+- fix(startup): don't clear the terminal on launch by default (e3d8dde)
+- fix(model): don't resurface profile model over project "Default" choice (ef5f57b)
+- style(startup): trim side padding from the logo art (4fd4869)
+- fix(streaming): enable idle watchdog by default (65s) to recover hung streams (31e9a7d)
+- perf(cache): always use 1h cache TTL on first-party/vertex (7eeb610)
+- perf(memory): compact the every-turn memory instructions (~3.7k → ~0.8k) (f5d14c4)
+- perf(tools): enable tool deferral by default on first-party Anthropic (9897d3b)
+- perf(tools): let ENABLE_TOOL_SEARCH opt in past the beta kill switch (fa16491)
+- perf(memory): ship a compact memory stub until memories exist (2abac6c)
+- fix(cache): honor 1h cache TTL by sending the extended-cache-ttl beta (be946c5)
+- bench: CLI token-footprint + context-offender mapping (d4df7a1)
+- fix(context): render /context as a dismissible panel (7b22ea4)
+- refactor(prompts): consolidate system prompt sections (969cd5c)
+- feat(effort): simplify slider header to Faster…Smarter (1881140)
+- fix(streaming): enable fine-grained tool streaming on Anthropic 1P (726e15e)
+- feat(prompts): per-family system-prompt addendums (+ GLM fixes) (#62) (1e253b0)
+
 ## v0.5.0 — 2026-05-31
 
 - bench: A/B harness suite + decision history (56efae6)
