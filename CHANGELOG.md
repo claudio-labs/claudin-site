@@ -1,3 +1,14 @@
+## v0.5.3 — 2026-06-01
+
+- feat(bash-filter): filter base command when output is piped to tail/cat (#63) (0313fc0)
+- chore(bench): add cache-progression run results (2026-06-01) (2f87c82)
+- docs(prompts): nudge against piping Bash output to head/tail/cat (94e613f)
+- fix(model): always annotate "(1M context)" on [1m] model labels (631f667)
+- feat(model): offer 200k + 1M context variants in /model picker (31128c9)
+- style(context): draw connected tree spine in /context lists (bd8150d)
+- fix(context): show bundled skills in /context skills listing (d2424df)
+- fix(startup): remove blank padding lines, fix textRows dead entry, pass updateNotice to printStartupScreen (4ae3e59)
+
 ## v0.5.2 — 2026-06-01
 
 - fix(tests): align cache1hTtl with always-on 1h TTL for first-party/vertex (d811119)
