@@ -1,3 +1,9 @@
+## v0.5.4 — 2026-06-02
+
+- feat(worktree): add baseRef setting and path param to EnterWorktree (fd8aaa8)
+- feat(agents): add WebResearcherManager deep-research orchestrator (02adfc3)
+- feat(skills): port simplify, verify, run, fewer-permission-prompts built-ins (#64) (302ce52)
+
 ## v0.5.3 — 2026-06-01
 
 - feat(bash-filter): filter base command when output is piped to tail/cat (#63) (0313fc0)
