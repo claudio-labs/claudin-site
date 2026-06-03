@@ -1,3 +1,8 @@
+## v0.5.5 — 2026-06-03
+
+- feat(bash-filter): cover java mvn/gradle build, error, and pipe-routing cases (#65) (b2f3069)
+- feat(provider): add OpenCode Zen and OpenCode GO presets (4a4e619)
+
 ## v0.5.4 — 2026-06-02
 
 - feat(worktree): add baseRef setting and path param to EnterWorktree (fd8aaa8)
