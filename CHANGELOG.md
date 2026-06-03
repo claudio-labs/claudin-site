@@ -1,3 +1,7 @@
+## v0.5.7 — 2026-06-03
+
+- chore(rebrand): rename npm scope from @claudinlabs to @claudiolabs (1137363)
+
 ## v0.5.6 — 2026-06-03
 
 - feat(rebrand) rebrand move .claudio/ to .claudin/ and update CLAUDE.md (#66) (d862c24)
