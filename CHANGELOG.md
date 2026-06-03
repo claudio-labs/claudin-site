@@ -1,3 +1,7 @@
+## v0.5.6 — 2026-06-03
+
+- feat(rebrand) rebrand move .claudio/ to .claudin/ and update CLAUDE.md (#66) (d862c24)
+
 ## v0.5.5 — 2026-06-03
 
 - feat(bash-filter): cover java mvn/gradle build, error, and pipe-routing cases (#65) (b2f3069)
