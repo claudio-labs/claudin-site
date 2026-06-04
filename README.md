@@ -1,11 +1,11 @@
-# <img src="site/img/icon.png" alt="" width="38" valign="middle" /> Claudio
+# <img src="site/img/icon.png" alt="" width="38" valign="middle" /> Claudin
 
 ![Node.js](https://img.shields.io/badge/Node.js-20+-339933?style=flat-square&logo=node.js&logoColor=white)
-![npm](https://img.shields.io/npm/v/@claudiolabs/claudio?style=flat-square&label=npm&color=CB3837)
+![npm](https://img.shields.io/npm/v/@claudiolabs/claudin?style=flat-square&label=npm&color=CB3837)
 
 **One coding agent CLI. Any LLM.**
 
-Claudio brings a terminal-first agentic workflow — bash, file tools, grep, glob, agents, MCP, slash commands, streaming — to any model provider. Switch between OpenAI, Gemini, DeepSeek, Ollama, Mistral, GitHub Copilot, Bedrock, Vertex, and 200+ OpenAI-compatible endpoints without changing your workflow.
+Claudin brings a terminal-first agentic workflow — bash, file tools, grep, glob, agents, MCP, slash commands, streaming — to any model provider. Switch between OpenAI, Gemini, DeepSeek, Ollama, Mistral, GitHub Copilot, Bedrock, Vertex, and 200+ OpenAI-compatible endpoints without changing your workflow.
 
 > Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.
 
@@ -22,7 +22,7 @@ Claudio brings a terminal-first agentic workflow — bash, file tools, grep, glo
 Requires Node.js 20+.
 
 ```bash
-npm install -g @claudiolabs/claudio@latest
+npm install -g @claudiolabs/claudin@latest
 ```
 
 Works on **Linux**, **macOS**, and **Windows**.
@@ -32,10 +32,10 @@ Works on **Linux**, **macOS**, and **Windows**.
 ## Quick Start
 
 ```bash
-claudio
+claudin
 ```
 
-On first run, Claudio opens the `/provider` wizard automatically. Pick a preset, enter your credentials, and start coding — no config files required.
+On first run, Claudin opens the `/provider` wizard automatically. Pick a preset, enter your credentials, and start coding — no config files required.
 
 ```
 /provider          # add, edit, or switch provider profiles
@@ -70,7 +70,7 @@ On first run, Claudio opens the `/provider` wizard automatically. Pick a preset,
 
 ```bash
 ollama pull qwen2.5-coder:7b
-ollama launch claudio --model qwen2.5-coder:7b
+ollama launch claudin --model qwen2.5-coder:7b
 ```
 
 ---
