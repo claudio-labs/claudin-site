@@ -1,10 +1,10 @@
 #!/bin/sh
 set -e
 
-# Claudio installer — https://claudiolabs.ai
+# Claudin installer — https://claudiolabs.ai
 # Usage: curl -fsSL https://claudiolabs.ai/install.sh | sh
 
-PACKAGE="@claudiolabs/claudio@latest"
+PACKAGE="@claudiolabs/claudin@latest"
 MIN_NODE=20
 
 cyan='\033[0;36m'
@@ -19,7 +19,7 @@ warn()    { printf "${yellow}  !${reset} %s\n" "$1"; }
 error()   { printf "${red}  ✗${reset} %s\n" "$1" >&2; exit 1; }
 
 printf "\n"
-printf "  ${cyan}Claudio${reset} — One coding agent CLI. Any LLM.\n"
+printf "  ${cyan}Claudin${reset} — One coding agent CLI. Any LLM.\n"
 printf "  https://claudiolabs.ai\n\n"
 
 # ── Node.js check ─────────────────────────────────────────────────────────────
@@ -65,13 +65,13 @@ if ! command -v npm >/dev/null 2>&1; then
   error "npm not found — please install Node.js $MIN_NODE+ from https://nodejs.org"
 fi
 
-# ── Install Claudio ────────────────────────────────────────────────────────────
+# ── Install Claudin ────────────────────────────────────────────────────────────
 
 info "Installing $PACKAGE..."
 npm install -g "$PACKAGE" --loglevel=error
 
 printf "\n"
-success "Claudio installed successfully!"
+success "Claudin installed successfully!"
 printf "\n"
-printf "  Run ${cyan}claudio${reset} to get started.\n"
+printf "  Run ${cyan}claudin${reset} to get started.\n"
 printf "  Docs: https://claudiolabs.ai/docs\n\n"

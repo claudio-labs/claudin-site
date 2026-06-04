@@ -144,11 +144,11 @@ async function initTerminal() {
     const wrap = document.createElement('div');
     wrap.className = 'terminal-header-block';
     wrap.innerHTML = `
-      <img src="img/mascot.png" class="terminal-mascot-img" alt="Claudio mascot" width="48" height="56" />
+      <img src="img/mascot.png" class="terminal-mascot-img" alt="Claudin mascot" width="48" height="56" />
       <div class="terminal-meta">
-        <span class="terminal-meta__name">Claudio <span class="terminal-text--muted">${version}</span></span>
+        <span class="terminal-meta__name">Claudin <span class="terminal-text--muted">${version}</span></span>
         <span class="terminal-text--muted">Anthropic · claude-sonnet-4-6</span>
-        <span class="terminal-text--muted">~/projects/claudio</span>
+        <span class="terminal-text--muted">~/projects/claudin</span>
       </div>`;
     container.appendChild(wrap);
   }
