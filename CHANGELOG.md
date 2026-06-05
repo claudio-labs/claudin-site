@@ -1,3 +1,12 @@
+## v0.5.9 — 2026-06-05
+
+- chore(deps): bump vscode-languageserver-protocol to 3.18 (6fc02dc)
+- chore(deps): bump google-auth-library to 10 (aeb448e)
+- chore(deps): bump commander to 15 (ESM-only) (47c9ac3)
+- chore(deps): bump type-fest and firecrawl-js to latest (367a621)
+- chore(deps): bump security and patch-level dependencies (6f99f79)
+- feat(thinking): live token counter during redacted thinking via SDK 0.100.1 (c59a99b)
+
 ## v0.5.8 — 2026-06-05
 
 - refactor(prompts): invert burden of proof on tool batching rule (fd4ab5f)
