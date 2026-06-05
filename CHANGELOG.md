@@ -1,3 +1,15 @@
+## v0.5.8 — 2026-06-05
+
+- refactor(prompts): invert burden of proof on tool batching rule (fd4ab5f)
+- feat(prompts): nudge models to batch independent tool calls (d315f02)
+- feat(prompts): discourage tool-call narration by default (1faa3f0)
+- feat(agents): fork-by-default subagents + unified footer task cursor (2d4a416)
+- docs: rebrand Claudio to Claudin (6245fd7)
+- feat(agents): collapse subagent progress, redesign navigator, opt-in result summary (#68) (b66313b)
+- feat(prompt): show up to 14 slash-command suggestions (a052fde)
+- fix(ink): clear stale cells when a row shrinks at constant width (26a1b7a)
+- perf(cold-start): wrap up cold-start waves series (#67) (26fb783)
+
 ## v0.5.7 — 2026-06-03
 
 - chore(rebrand): rename npm scope from @claudinlabs to @claudiolabs (1137363)
