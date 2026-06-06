@@ -1,3 +1,10 @@
+## v0.5.10 — 2026-06-06
+
+- feat(launcher): guard min Node version and warn on CPU-rendered terminals (b42ebcc)
+- feat(privacy): default to essential-traffic; suppress Anthropic startup probes (b2be87b)
+- fix(coordinator): align agent tree connector under Agents header (9b53bec)
+- fix(onboarding): skip Anthropic reachability gate on welcome screen (12bae18)
+
 ## v0.5.9 — 2026-06-05
 
 - chore(deps): bump vscode-languageserver-protocol to 3.18 (6fc02dc)
