@@ -11,7 +11,8 @@ Claudin brings a terminal-first agentic workflow — bash, file tools, grep, glo
 
 ---
 
-<img width="917" height="281" alt="image" src="https://github.com/user-attachments/assets/febdce99-f52c-4376-987c-7b71000bdff9" />
+<img width="914" height="289" alt="image" src="https://github.com/user-attachments/assets/e449563e-af6d-48d8-bf7b-933333d3eda1" />
+
 
 
 
