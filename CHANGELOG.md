@@ -1,3 +1,15 @@
+## v0.5.11 — 2026-06-07
+
+- perf(cache): defer prompt-cache marker until trailing tokens ≥ 2048 (17641da)
+- fix(ink): clear orphaned rows when a subtree unmounts at constant size (c77d9ed)
+- docs(CLAUDE.md): list xAI/Grok in provider overview (68fe480)
+- fix(agent): default auto-background agents to off (7c05482)
+- fix(spinner): back off to 250ms cadence outside fullscreen mode (816f159)
+- fix(agent): curb and surface phantom agent-launch announcements (#70) (69d9abe)
+- feat(provider): add xAI / Grok (#69) (124450b)
+- feat(oauth): detect OS default browser for OAuth sign-in URLs (99b4f2f)
+- fix(codex): harden OAuth refresh + align request shape with codex CLI (bbd4774)
+
 ## v0.5.10 — 2026-06-06
 
 - feat(launcher): guard min Node version and warn on CPU-rendered terminals (b42ebcc)
