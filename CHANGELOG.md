@@ -1,3 +1,11 @@
+## v0.5.12 — 2026-06-08
+
+- fix(agent): unpin footer agent rows from 'Starting…' in default TUI (3ee17c6)
+- docs(read): refresh stale "head-tail elided" rationale in Read tool surfaces (9df2ee8)
+- refactor(summarizer): drop dead Read head-tail arm (6c571b0)
+- fix(agent): show agent badge + live progress from first message in footer (409349d)
+- fix(agent): show live progress for foreground sub-agents in footer (f9800fc)
+
 ## v0.5.11 — 2026-06-07
 
 - perf(cache): defer prompt-cache marker until trailing tokens ≥ 2048 (17641da)
