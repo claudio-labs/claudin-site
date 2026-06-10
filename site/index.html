@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary meta -->
-  <title>Claudin — Terminal AI Coding Agent CLI for Any LLM Provider</title>
-  <meta name="description" content="Terminal-first AI coding agent CLI. Switch between Anthropic, OpenAI, Gemini, Ollama, and 200+ providers without changing your workflow." />
-  <meta name="keywords" content="AI coding agent, CLI, LLM, Claude, OpenAI, Gemini, Ollama, terminal, developer tools, open source" />
+  <title>Claudin CLI — Terminal AI Coding Agent for Any LLM</title>
+  <meta name="description" content="Claudin CLI is a free, terminal-first AI coding agent. Switch between Anthropic, OpenAI, Gemini, Ollama, and 200+ LLM providers — zero vendor lock-in." />
+  <meta name="keywords" content="claudin, claudin cli, claudin ai, claudin terminal, claudin ai agent, claudin coding agent, AI coding agent, CLI, LLM, Claude, OpenAI, Gemini, Ollama, terminal, developer tools, open source, claude code alternative" />
   <meta name="author" content="Claudio Labs" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <link rel="canonical" href="https://claudiolabs.ai/" />
@@ -15,8 +15,8 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Claudin" />
-  <meta property="og:title" content="Claudin — One coding agent. Any LLM." />
-  <meta property="og:description" content="Terminal-first AI coding agent CLI. Switch between Anthropic, OpenAI, Gemini, Ollama, and 200+ providers without changing your workflow." />
+  <meta property="og:title" content="Claudin CLI — One coding agent. Any LLM." />
+  <meta property="og:description" content="Claudin CLI is a free, terminal-first AI coding agent. Switch between Anthropic, OpenAI, Gemini, Ollama, and 200+ LLM providers — zero vendor lock-in." />
   <meta property="og:url" content="https://claudiolabs.ai/" />
   <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
@@ -26,8 +26,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Claudin — One coding agent. Any LLM." />
-  <meta name="twitter:description" content="Terminal-first AI coding agent CLI. Switch between Anthropic, OpenAI, Gemini, Ollama, and 200+ providers." />
+  <meta name="twitter:title" content="Claudin CLI — One coding agent. Any LLM." />
+  <meta name="twitter:description" content="Claudin CLI: free terminal AI coding agent. Anthropic, OpenAI, Gemini, Ollama, and 200+ providers. Zero vendor lock-in." />
   <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
   <meta name="twitter:image:alt" content="Claudin CLI terminal demo" />
 
@@ -43,6 +43,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Claudin",
+    "alternateName": ["Claudin CLI", "Claudin AI", "claudin"],
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Linux, macOS, Windows",
     "description": "Terminal-first AI coding agent CLI that works with any LLM provider — Anthropic, OpenAI, Gemini, Ollama, and 200+ more.",
@@ -91,6 +92,22 @@
     "mainEntity": [
       {
         "@type": "Question",
+        "name": "What is Claudin AI?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Claudin AI (also called Claudin CLI) is a free, open-source terminal coding agent that brings AI-powered software development to your command line. It provides a full agentic loop — reading and writing files, running bash commands, searching the web, spawning sub-agents, and calling MCP servers — on top of any AI provider. Install with: npm install -g @claudiolabs/claudin@latest"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is the Claudin CLI free and open source?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The Claudin CLI is free to use and the source code is available on GitHub. You only pay for the LLM API calls to whichever provider you configure — or nothing at all if you run a local model via Ollama or LM Studio. There are no subscriptions, no paywalls, and no telemetry."
+        }
+      },
+      {
+        "@type": "Question",
         "name": "What is Claudin and how does it compare to Claude Code or Cursor?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -102,7 +119,7 @@
         "name": "Which LLM providers does the Claudin CLI support?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Claudin supports Anthropic, OpenAI, DeepSeek, Gemini, Mistral, GitHub Copilot, Codex (ChatGPT), Ollama, AWS Bedrock, Google Vertex, Azure Foundry, OpenRouter, Groq, LM Studio, and any OpenAI-compatible endpoint — over 200 providers in total."
+          "text": "Claudin supports Anthropic, OpenAI, DeepSeek, Gemini, Mistral, xAI/Grok, GitHub Copilot, Codex (ChatGPT), Groq, OpenRouter, Together AI, NVIDIA NIM, MiniMax, Moonshot AI, Kimi Code, Azure OpenAI, Alibaba DashScope, Bankr, OpenCode, Ollama, LM Studio, Atomic Chat, AWS Bedrock, Google Vertex AI, Azure AI Foundry, and any OpenAI-compatible endpoint — over 200 providers in total."
         }
       },
       {
@@ -184,6 +201,11 @@
   <section class="hero section--lg container">
     <div class="hero__inner">
       <div class="hero__content">
+
+        <p class="hero__tag" aria-label="Claudin CLI">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          Claudin CLI
+        </p>
 
         <h1 class="hero__heading">
           One coding<br />agent. <em>Any LLM.</em>
@@ -288,7 +310,7 @@
         <article class="provider-card" role="listitem">
           <div class="provider-name">Gemini</div>
           <div class="provider-preset">gemini</div>
-          <span class="provider-badge provider-badge--apikey">API key</span>
+          <span class="provider-badge provider-badge--apikey">API key / ADC</span>
         </article>
 
         <article class="provider-card" role="listitem">
@@ -304,21 +326,99 @@
         </article>
 
         <article class="provider-card" role="listitem">
+          <div class="provider-name">xAI / Grok</div>
+          <div class="provider-preset">xai-oauth</div>
+          <span class="provider-badge provider-badge--oauth">xAI OAuth</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
           <div class="provider-name">GitHub Copilot</div>
-          <div class="provider-preset">copilot</div>
+          <div class="provider-preset">github-onboard</div>
           <span class="provider-badge provider-badge--oauth">GitHub OAuth</span>
         </article>
 
         <article class="provider-card" role="listitem">
           <div class="provider-name">Codex / ChatGPT</div>
-          <div class="provider-preset">codex</div>
-          <span class="provider-badge provider-badge--oauth">OAuth</span>
+          <div class="provider-preset">codex-oauth</div>
+          <span class="provider-badge provider-badge--oauth">ChatGPT OAuth</span>
         </article>
 
         <article class="provider-card" role="listitem">
-          <div class="provider-name">Ollama</div>
-          <div class="provider-preset">ollama</div>
-          <span class="provider-badge provider-badge--local">Local &middot; Free</span>
+          <div class="provider-name">Groq</div>
+          <div class="provider-preset">groq</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">OpenRouter</div>
+          <div class="provider-preset">openrouter</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">Together AI</div>
+          <div class="provider-preset">together</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">NVIDIA NIM</div>
+          <div class="provider-preset">nvidia-nim</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">MiniMax</div>
+          <div class="provider-preset">minimax</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">Moonshot AI</div>
+          <div class="provider-preset">moonshotai</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">Kimi Code</div>
+          <div class="provider-preset">kimi-code</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">Azure OpenAI</div>
+          <div class="provider-preset">azure-openai</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">Alibaba DashScope</div>
+          <div class="provider-preset">dashscope-intl</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">Alibaba DashScope CN</div>
+          <div class="provider-preset">dashscope-cn</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">Bankr</div>
+          <div class="provider-preset">bankr</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">OpenCode Zen</div>
+          <div class="provider-preset">opencode-zen</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
+        </article>
+
+        <article class="provider-card" role="listitem">
+          <div class="provider-name">OpenCode GO</div>
+          <div class="provider-preset">opencode-go</div>
+          <span class="provider-badge provider-badge--apikey">API key</span>
         </article>
 
         <article class="provider-card" role="listitem">
@@ -340,15 +440,9 @@
         </article>
 
         <article class="provider-card" role="listitem">
-          <div class="provider-name">OpenRouter</div>
-          <div class="provider-preset">openrouter</div>
-          <span class="provider-badge provider-badge--apikey">API key</span>
-        </article>
-
-        <article class="provider-card" role="listitem">
-          <div class="provider-name">Groq</div>
-          <div class="provider-preset">groq</div>
-          <span class="provider-badge provider-badge--apikey">API key</span>
+          <div class="provider-name">Ollama</div>
+          <div class="provider-preset">ollama</div>
+          <span class="provider-badge provider-badge--local">Local &middot; Free</span>
         </article>
 
         <article class="provider-card" role="listitem">
@@ -358,9 +452,9 @@
         </article>
 
         <article class="provider-card" role="listitem">
-          <div class="provider-name">Together AI</div>
-          <div class="provider-preset">together</div>
-          <span class="provider-badge provider-badge--apikey">API key</span>
+          <div class="provider-name">Atomic Chat</div>
+          <div class="provider-preset">atomic-chat</div>
+          <span class="provider-badge provider-badge--local">Local &middot; Free</span>
         </article>
 
         <article class="provider-card" role="listitem">
@@ -498,13 +592,23 @@
 
       <div class="faq-list">
         <details class="faq-item">
+          <summary>What is Claudin AI?</summary>
+          <p>Claudin AI (also called Claudin CLI) is a free, open-source terminal coding agent that brings AI-powered software development to your command line. It provides a full agentic loop — reading and writing files, running bash commands, searching the web, spawning sub-agents, and calling MCP servers — on top of any AI provider. You can power Claudin AI with Anthropic's Claude, OpenAI's GPT models, Google Gemini, DeepSeek, Mistral, or any local model via Ollama. Install with <code>npm install -g @claudiolabs/claudin@latest</code>.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Is the Claudin CLI free and open source?</summary>
+          <p>Yes. The Claudin CLI is free to use and the source code is available on GitHub at <a href="https://github.com/claudio-labs/claudin" target="_blank" rel="noopener noreferrer">github.com/claudio-labs/claudin</a>. You only pay for the LLM API calls you make to whichever provider you configure — or nothing at all if you run a local model via Ollama or LM Studio. There are no subscriptions, no paywalls, and no telemetry.</p>
+        </details>
+
+        <details class="faq-item">
           <summary>What is Claudin and how does it compare to Claude Code or Cursor?</summary>
           <p>Claudin is a terminal-first AI coding agent CLI that gives you a full agentic workflow — bash, files, grep, glob, sub-agents, MCP, and web search — on top of <strong>any LLM provider</strong>. Unlike Claude Code (Anthropic-only) or Cursor (IDE-only), Claudin runs in your terminal and lets you switch between Anthropic, OpenAI, Gemini, DeepSeek, Mistral, Ollama, AWS Bedrock, Google Vertex, OpenRouter, Groq and 200+ other endpoints without changing your workflow. The project originated from the Claude Code codebase and has been substantially modified to support any provider.</p>
         </details>
 
         <details class="faq-item">
           <summary>Which LLM providers does the Claudin CLI support?</summary>
-          <p>Claudin supports Anthropic, OpenAI, DeepSeek, Gemini, Mistral, GitHub Copilot, Codex (ChatGPT), Ollama, AWS Bedrock, Google Vertex, Azure Foundry, OpenRouter, Groq, LM Studio, and any OpenAI-compatible endpoint — over 200 providers in total. Configure any of them interactively with the <code>/provider</code> command — no environment variables, no config files, no restarts required.</p>
+          <p>Claudin supports Anthropic, OpenAI, DeepSeek, Gemini, Mistral, xAI/Grok, GitHub Copilot, Codex (ChatGPT), Groq, OpenRouter, Together AI, NVIDIA NIM, MiniMax, Moonshot AI, Kimi Code, Azure OpenAI, Alibaba DashScope, Bankr, OpenCode Zen/GO, Ollama, LM Studio, Atomic Chat, AWS Bedrock, Google Vertex AI, Azure AI Foundry, and any OpenAI-compatible endpoint — over 200 providers in total. Configure any of them interactively with the <code>/provider</code> command — no environment variables, no config files, no restarts required.</p>
         </details>
 
         <details class="faq-item">
