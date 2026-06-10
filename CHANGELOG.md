@@ -1,3 +1,16 @@
+## v0.5.13 — 2026-06-10
+
+- feat(outline): extend Smart Code Navigation to Java, Kotlin, C#, Rust, and Markdown (12fb374)
+- fix(read): never cache the file_unchanged dedup stub in the tool-result cache (#74) (0cf6a30)
+- fix(read): stand down dedup when the prior Read tool_result was clipped client-side (#73) (e7f3c16)
+- fix(read): stand down dedup once server-side clear_tool_uses has fired (#72) (bf79ef8)
+- fix(read): cat -n line semantics — no phantom trailing line, offset 0, real empty-file warning (05911c1)
+- feat(cache): clip-frontier cache policy — per-provider profiles, default on (#71) (84036b0)
+- fix(profile): make cache-ab-bench per-turn deltas real, surface BLOCKED on exit≠0 (1370202)
+- test(profile): expand cache-ab-bench to 30 mixed-size files (8e8f5d2)
+- fix(agent): surface error summary + live activity in agent footer rows (91bd63b)
+- fix(startup): make update banner reactive + harden version-check throttle (a19b224)
+
 ## v0.5.12 — 2026-06-08
 
 - fix(agent): unpin footer agent rows from 'Starting…' in default TUI (3ee17c6)
