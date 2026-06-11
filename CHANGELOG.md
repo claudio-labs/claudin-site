@@ -1,3 +1,15 @@
+## v0.5.14 — 2026-06-11
+
+- feat(effort): default Opus 4.8 and Fable 5 to high effort on Anthropic (1012bf8)
+- fix(launcher): stop leaking jemalloc LD_PRELOAD into child processes (b99e4a5)
+- feat(model): enable Claude Fable 5 (claude-fable-5) on the Anthropic provider (353e732)
+- feat(copilot): dynamic models, billing/vision headers, native-route gating, GitHub Enterprise (#77) (3f5b768)
+- feat(goal): /goal stopping condition via Stop hook with LLM judge (#75) (48c7703)
+- feat(loop): ScheduleWakeup tool and sentinel expansion for dynamic /loop (#76) (c3b5248)
+- fix(bash-filter): close review findings — raw-stdout consumers, background rewrite disclosure, semantic error gate, docs (ed1627e)
+- feat(bash-filter): canonicalize runner prefixes so existing filters cover npx/poetry/uv/pnpm-dlx forms (2c8764b)
+- fix(bash-filter): execute rewrites for real, gate matchOutput to atomic commands, harden ReDoS heuristic (4b6786b)
+
 ## v0.5.13 — 2026-06-10
 
 - feat(outline): extend Smart Code Navigation to Java, Kotlin, C#, Rust, and Markdown (12fb374)
