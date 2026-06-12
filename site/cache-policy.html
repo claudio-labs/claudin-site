@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary meta -->
+  <title>Prompt-Cache Policy — Claudin Features</title>
+  <meta name="description" content="Claudin's prompt-cache policy uses a clip-frontier invariant and a per-provider cache profile so history management never silently breaks the cached prefix. 24% cheaper than Claude Code at identical pacing." />
+  <meta name="keywords" content="claudin prompt cache, clip frontier, cache profile, prompt caching, token cost, cache read, cache write, byte stability, claudin features" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://claudiolabs.ai/cache-policy.html" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Claudin" />
+  <meta property="og:title" content="Prompt-Cache Policy — Claudin Features" />
+  <meta property="og:description" content="A clip-frontier invariant and per-provider cache profile keep history management from breaking the cached prefix — 24% cheaper at identical pacing and request counts." />
+  <meta property="og:url" content="https://claudiolabs.ai/cache-policy.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Claudin CLI — Prompt-Cache Policy" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Prompt-Cache Policy — Claudin Features" />
+  <meta name="twitter:description" content="Clip-frontier invariant + per-provider cache profile. History trimming never silently breaks the cached prefix." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Prompt-Cache Policy — Claudin Features",
+    "description": "Claudin's clip-frontier invariant and per-provider cache profile guarantee that history management never silently invalidates the cached prefix.",
+    "url": "https://claudiolabs.ai/cache-policy.html",
+    "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
+  }
+  </script>
+
+  <!-- Theme & favicon -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    .filter-stats {
+      display: flex;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+      margin: var(--space-8) 0;
+      padding: var(--space-6) var(--space-8);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-accent);
+      border-radius: var(--radius-lg);
+    }
+    .filter-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+    .filter-stat-value {
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-accent);
+      font-family: var(--font-mono);
+      line-height: 1;
+    }
+    .filter-stat-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+    @media (max-width: 768px) {
+      .filter-stats {
+        gap: var(--space-5);
+        padding: var(--space-5);
+        margin: var(--space-6) 0;
+      }
+      .filter-stat-value { font-size: var(--text-xl); }
+      .filter-stat-desc { font-size: var(--text-xs); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+        claudin
+      </a>
+
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__links" id="nav-links" role="list">
+        <li>
+          <a href="https://github.com/claudio-labs/claudin" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+        </li>
+        <li><a href="docs.html" class="nav__link" style="color: var(--color-accent)">Docs</a></li>
+        <li><a href="changelog.html" class="nav__link">Changelog</a></li>
+        <li><a href="install.html" class="nav__cta">Install</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="docs-layout">
+
+      <!-- Sidebar -->
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <nav>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Getting started</div>
+            <a href="install.html" class="docs-nav-link">Install</a>
+            <a href="install.html#quickstart" class="docs-nav-link">Quick start</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Providers</div>
+            <a href="providers.html#all-providers" class="docs-nav-link">All providers</a>
+            <a href="providers.html#local" class="docs-nav-link">Local models</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Features</div>
+            <a href="bash-output-filter.html" class="docs-nav-link">Bash output filter</a>
+            <a href="cache-policy.html" class="docs-nav-link active">Cache policy</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
+            <a href="web-researcher.html" class="docs-nav-link">Web researcher</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">On this page</div>
+            <a href="#overview" class="docs-nav-link">Overview</a>
+            <a href="#problem" class="docs-nav-link">The problem</a>
+            <a href="#different" class="docs-nav-link">What Claudin does differently</a>
+            <a href="#gain" class="docs-nav-link">The gain</a>
+            <a href="#autocompact" class="docs-nav-link">Vs. autocompact</a>
+            <a href="#wins" class="docs-nav-link">Smaller design wins</a>
+            <a href="#observability" class="docs-nav-link">Observability</a>
+            <a href="#limitations" class="docs-nav-link">Limitations</a>
+            <a href="#configuration" class="docs-nav-link">Configuration</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Reference</div>
+            <a href="changelog.html" class="docs-nav-link">Changelog</a>
+            <a href="https://github.com/claudio-labs/claudin" class="docs-nav-link" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <main class="docs-content" id="main-content">
+
+        <div class="page-hero">
+          <h1>Prompt-Cache Policy</h1>
+          <p class="page-hero__sub">Clip-frontier invariant + per-provider profile — history trimming never silently breaks the cached prefix.</p>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+
+        <p>Claudin treats the provider's prompt cache as a first-class cost surface. Two coupled mechanisms — the <strong>clip-frontier breakpoint</strong> and the <strong>per-provider cache profile</strong> — guarantee that history management (stubbing, redaction, eviction) never silently invalidates the cached prefix, and that how aggressively history is trimmed matches each provider's actual cache pricing.</p>
+
+        <p><strong>On by default. No configuration required.</strong></p>
+
+        <div class="filter-stats">
+          <div class="filter-stat-item">
+            <span class="filter-stat-value">24%</span>
+            <span class="filter-stat-desc">cheaper than Claude Code at identical pacing &amp; request counts</span>
+          </div>
+          <div class="filter-stat-item">
+            <span class="filter-stat-value">&minus;90%</span>
+            <span class="filter-stat-desc">cache writes vs. its own pre-feature baseline</span>
+          </div>
+          <div class="filter-stat-item">
+            <span class="filter-stat-value">~45%</span>
+            <span class="filter-stat-desc">smaller retained prefix re-read every request</span>
+          </div>
+        </div>
+
+        <h2 id="problem">The problem</h2>
+
+        <p>Prompt caches are prefix-based and byte-exact: one changed byte at position X invalidates everything from X to the end of the cached prefix. Every coding-agent CLI mutates its own history — stubbing old tool results to bound memory, stripping aged-out thinking blocks, compacting. If any of those rewrites lands <em>behind</em> the cache marker, the provider re-bills the whole tail as a cache <strong>write</strong> (1.25&times; input price on Anthropic) instead of a cache <strong>read</strong> (0.1&times;).</p>
+
+        <p>This is not hypothetical — it is what the upstream design does, and what Claudin's own baseline did before this feature:</p>
+
+        <ul>
+          <li>The age-prune stubs the previous turn's <code>tool_result</code> every turn — always <em>before</em> the marker &rarr; a recurring per-turn cache break.</li>
+          <li>Thinking/narration redaction rewrites assistant messages as they age out of their keep window &rarr; same sawtooth, different block type.</li>
+          <li>The cost <strong>scales with session length</strong>: on a 38-read benchmark workload the per-turn break took the baseline from ~$1/run at 9 requests to <strong>$12.67</strong> at 51 requests, with cache reads repeatedly collapsing to the bare system checkpoint followed by 20&ndash;55k-token re-writes.</li>
+        </ul>
+
+        <p>Other CLIs avoid the sawtooth by simply never trimming (keep everything, cache it all) — which buys a high hit ratio at the price of a huge prefix: every eviction re-write is enormous, and providers without cheap cached reads bill the whole retained history at full input price every turn.</p>
+
+        <h2 id="different">What Claudin does differently</h2>
+
+        <h3 id="clip-frontier">1. The clip-frontier invariant</h3>
+
+        <p>The cache marker is capped at the <strong>clip frontier</strong> — the largest index F such that <code>messages[0..F]</code> are byte-stable for the rest of the session. Anything that is <em>going to mutate later</em> (a full <code>tool_result</code> the age-prune will stub, an assistant message still carrying strippable thinking) is kept <strong>outside</strong> the frozen prefix until it has reached its final byte form.</p>
+
+        <p>Mutation and prefix-freezing become the same atomic event: bytes only ever change in the uncached tail (re-billed every turn anyway), and what enters the frozen prefix is the ~10-token stub, never the full content that would later flip. The recurring per-turn break is structurally impossible, not just unlikely.</p>
+
+        <h3 id="cache-profile">2. Per-provider cache profile</h3>
+
+        <p><code>auto</code> (the default) resolves how eagerly to trim by what the provider's cache actually costs:</p>
+
+        <table>
+          <thead>
+            <tr><th>Profile</th><th>Providers</th><th>Behavior</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>retain</strong></td>
+              <td>Anthropic, Bedrock, Vertex, DeepSeek, official OpenAI, Codex/ChatGPT OAuth, GitHub Copilot</td>
+              <td>Keep <code>tool_results</code> full (cached reads are cheap — let them pay), age clipping off, RSS bounded by a byte-guard that stubs oldest-first, microcompact only near the window ceiling, server-side <code>clear_tool_uses</code> as the near-ceiling backstop</td>
+            </tr>
+            <tr>
+              <td><strong>aggressive</strong></td>
+              <td>Everything else (generic OpenAI-compatible routers, Azure, local models — caching behavior unknown)</td>
+              <td>Clip per turn; small prompts beat speculative retention when cached reads aren't discounted</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>One policy knob, resolved per transport — instead of one hardcoded strategy that is wrong for half the providers Claudin supports.</p>
+
+        <h3 id="byte-stability">3. Byte-stability everywhere (shims included)</h3>
+
+        <p>Three rules back the invariant, each pinned by the regression suite:</p>
+
+        <ul>
+          <li><strong>Stub bytes are first-write-wins</strong> — the first stub emitted for a <code>tool_use_id</code> records its exact bytes and every later rewriter replays them; two views of the same id can never flip the wire bytes.</li>
+          <li><strong>History deletions are amortized and announced</strong> — evictions fire in batches, never one-at-a-time churn.</li>
+          <li><strong>The tool pool never churns bytes gratuitously</strong> — MCP tool updates replace in place, schemas survive transient failures, deferred-tool announcements ride persisted attachments instead of mutating the system prompt.</li>
+        </ul>
+
+        <p>Because OpenAI-style providers match by <em>longest unchanged prefix</em> with no explicit marker, byte-stability alone is the whole win there — the shim paths (OpenAI-compatible, Codex) inherit the benefit with zero provider-specific code. On official OpenAI, the shim additionally sends a session-stable <code>prompt_cache_key</code> and <code>prompt_cache_retention: '24h'</code>.</p>
+
+        <h3 id="head-preserving">4. Head-preserving stubs</h3>
+
+        <p>When a <code>tool_result</code> is stubbed, the first N chars survive (<code>aggressive</code> 1000 / <code>retain</code> 2000): <code>&lt;head&gt;\n[clipped: ~N tokens from &lt;tool&gt; — head preserved]</code>. Same single-mutation break cost as a pure stub, but the model keeps file headers and top grep hits — cutting the re-reads that dominate revisit-heavy sessions, and fixing the quality failure where the model "summarized" files it could no longer see.</p>
+
+        <h2 id="gain">The gain</h2>
+
+        <p>Measured on a lockstep benchmark — one user turn per file, so pacing is identical by construction; 58 turns, both sides verified serving claude-sonnet-4-6 (2026-06-10):</p>
+
+        <table>
+          <thead>
+            <tr><th>side</th><th>api reqs</th><th>cache read</th><th>cache write</th><th>cost</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Claude Code</td><td>116</td><td>11.59m</td><td>494.8k</td><td>$5.91</td></tr>
+            <tr><td><strong>Claudin</strong></td><td>118</td><td>6.43m</td><td>379.0k</td><td><strong>$4.49</strong></td></tr>
+          </tbody>
+        </table>
+
+        <ul>
+          <li><strong>24% cheaper at identical pacing and identical request counts.</strong> The saving is structural: Claudin's retained prefix stays ~45% smaller (outline-reads contribute here too), so every request re-reads far fewer cached tokens and each server-side eviction re-write is cheaper.</li>
+          <li>Both sides suffered the same 3 server-side evictions (~every 5 min of session age on this access pattern) — that reset is the server's behavior for <em>any</em> client; Claudin's smaller prefix just makes each one cost less.</li>
+          <li>Wall-clock: ~2&times; faster per turn (smaller prompts).</li>
+          <li>Versus its own pre-feature baseline, the clip-frontier alone cut cache writes <strong>&minus;90%</strong> and per-run cost &minus;23..&minus;51% on the directional bench, and eliminated the $12.67 session-scaling blow-up entirely.</li>
+          <li>Honest caveat: a higher read:write ratio is <em>not</em> the goal and Claudin doesn't chase it — on the lockstep run Claude Code had the better ratio (23.4:1 vs 17.0:1) and the higher bill. The metric that matters is dollars per task.</li>
+        </ul>
+
+        <h2 id="autocompact">Why this beats autocompact (graceful degradation vs the cliff)</h2>
+
+        <p>Autocompact — the upstream pressure valve — fires at ~92% of the context window and summarizes the <strong>entire conversation</strong> into one message. It is a cliff: one catastrophic, irreversible, lossy event. The model loses the exact bytes of everything at once, and worse, <strong>it doesn't know what it doesn't know</strong> — a summary carries no manifest of what was omitted, so nothing lost can be deliberately recovered. It is also a full cache reset (the whole prefix is rewritten), plus the cost of the summarization request itself.</p>
+
+        <p>Claudin's layers degrade context <strong>selectively, incrementally, and recoverably</strong> instead. The key observation is that history holds two classes of content:</p>
+
+        <table>
+          <thead>
+            <tr><th>Class</th><th>Recoverable?</th><th>What Claudin does</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Tool outputs</strong> (Read, Grep, Bash results)</td>
+              <td>Yes — the file is still on disk, the command can be re-run</td>
+              <td>Degrade oldest-first to a head-preserving stub. The stub names the tool and the size of what was cut, so the model knows <em>exactly</em> what it lost and can re-fetch surgically if needed</td>
+            </tr>
+            <tr>
+              <td><strong>Conversation text</strong> (user instructions, decisions, the model's own conclusions)</td>
+              <td>No — it exists only in the history</td>
+              <td>Never touched by any layer</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Autocompact destroys both classes indiscriminately — including the only one that cannot be re-fetched. Claudin's layers only ever spend the recoverable class.</p>
+
+        <p>The layers form a ladder, each deferring the next, with autocompact demoted to last resort:</p>
+
+        <ol>
+          <li><strong>Outline reads</strong> — large files enter context as a skeleton, not a body (less pressure in the first place)</li>
+          <li><strong>Age prune / RSS byte-guard</strong> — oldest tool outputs degrade to head+stub</li>
+          <li><strong>Microcompact at 85%</strong> (retain) — explicit <code>tool_result</code> clips; still no summary, conversation intact</li>
+          <li><strong>Server-side <code>clear_tool_uses</code> at 140k real tokens</strong> — near-ceiling backstop</li>
+          <li><strong>Autocompact at 92%</strong> — last resort only</li>
+        </ol>
+
+        <p>Measured consequence: the benchmark runs (38- and 58-read workloads) finished with <strong>zero compactions</strong> on the Claudin side, while the baseline/Claude Code runs hit autocompact mid-run — visible in the cache traces as the ~13.3k checkpoint collapse, which is the summarization request itself reading only the system block. The cliff never fired because the ladder kept it out of reach.</p>
+
+        <h2 id="wins">Smaller design wins riding the same invariants</h2>
+
+        <ul>
+          <li><strong>Clipping is free when the cache is already cold.</strong> Under <code>retain</code>, the time-based microcompact fires only after an idle gap &ge; the 1h cache TTL — the server entry has already expired, so the next request re-writes the prefix regardless; the clip costs nothing extra. Under <code>aggressive</code> it stays off (everything old is already a stub).</li>
+          <li><strong>Forks don't pollute the cache.</strong> Fire-and-forget sub-agent forks shift their marker to the last <em>shared-prefix</em> message: the write is a no-op merge on the server and the fork never registers its own tail. The flip side: a default <code>Agent(...)</code> spawn inherits the parent's full context <strong>and its warm prompt cache</strong>, so sub-agents start from cache hits instead of a cold prefix.</li>
+          <li><strong>One marker, 1h TTL, on purpose.</strong> Claudin places exactly one message-level marker (two markers pin server-side KV pages that nothing will ever resume from) and annotates 1h TTL on first-party Anthropic, deferred until &ge;2048 trailing tokens accumulate so every write registers a usable entry.</li>
+        </ul>
+
+        <h2 id="observability">Observability — how to tell it's working</h2>
+
+        <ul>
+          <li><strong>Built-in break detection</strong>: every request's prompt state is hashed per-section (system, tools, per-message); when <code>cache_read</code> drops unexpectedly, the detector classifies the break — <em>client-side</em> (which section's bytes changed) vs <em>likely server-side</em> ("prompt unchanged, &lt;5min gap") — so an unexpected cost is attributable, not a mystery.</li>
+          <li><strong>Wire dumps for deep debugging</strong>: <code>CLAUDIN_DUMP_CACHE_ANNOTATIONS</code> logs every <code>cache_control</code> annotation actually sent (marker position, TTL); <code>CLAUDIN_DUMP_PREFIX_HASHES</code> dumps block-level hashes per request to diff the exact mutating block across turns.</li>
+          <li><strong>In-session</strong>: <code>/cost</code> prices cache reads/writes per the actually-served model.</li>
+        </ul>
+
+        <h2 id="limitations">Limitations &amp; honest notes</h2>
+
+        <ul>
+          <li><strong>Server-side eviction is out of our hands.</strong> On read-heavy access patterns the Anthropic server evicts the entry roughly every 5 minutes of session age (~$0.42/event, instant recovery). It hits <em>any</em> client — Claude Code suffered the identical 3 resets on the lockstep run — and Claudin's smaller prefix only makes each one cheaper, not avoidable.</li>
+          <li><strong><code>retain</code> trades memory for cost</strong>: full <code>tool_results</code> stay in history until the RSS byte-guard (~250k estimated tokens of retained results) stubs oldest-first. Bounded, but a long retain session holds more than an aggressive one.</li>
+          <li><strong><code>aggressive</code> is a guess for unknown backends.</strong> Generic OpenAI-compatible routers, Azure, and local models get <code>aggressive</code> because their caching behavior is unverified — if your backend does discount cached input, <code>CLAUDIN_CACHE_PROFILE=retain</code> may be the better setting.</li>
+          <li><strong>On subscription billing (Codex/ChatGPT OAuth) clipping saves no money at all</strong> — which is exactly why those transports resolve to <code>retain</code>: keep the context, there is nothing to save by trimming.</li>
+          <li><strong>Cross-CLI cost numbers are end-to-end product comparisons</strong>, not isolated cache A/Bs — outline-reads and prompt-size differences contribute alongside the cache policy. The numbers above come from the lockstep harness, where pacing and request counts are equalized by construction.</li>
+        </ul>
+
+        <h2 id="configuration">Configuration</h2>
+
+        <p>Everything is on by default. Overrides, per knob, via environment variable or <code>~/.claudin/settings.json</code>:</p>
+
+        <table>
+          <thead>
+            <tr><th>Override</th><th>Effect</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>CLAUDIN_CLIP_FRONTIER=0</code></td><td>revert to uncapped (defer-walk-only) marker placement</td></tr>
+            <tr><td><code>CLAUDIN_CACHE_PROFILE=aggressive|retain</code></td><td>force a profile instead of <code>auto</code> per-provider resolution</td></tr>
+            <tr><td><code>CLAUDIN_STUB_HEAD_CHARS=&lt;n|0&gt;</code></td><td>head-preserved chars per stub (<code>0</code> = pure stubs)</td></tr>
+          </tbody>
+        </table>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div>
+          <div class="footer__brand">
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+            claudin
+          </div>
+          <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__links-title">Project</div>
+          <a href="https://github.com/claudio-labs/claudin" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="changelog.html" class="footer__link">Changelog</a>
+          <a href="docs.html" class="footer__link">Docs</a>
+          <a href="https://github.com/claudio-labs/claudin/issues" class="footer__link" target="_blank" rel="noopener noreferrer">Issues</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span>claudiolabs.ai</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
