@@ -1,3 +1,26 @@
+## v0.6.0 — 2026-06-12
+
+- fix(query): mid-stream-retry P1s + tombstone persistence race (review follow-ups) (#79) (83d368b)
+- feat(effort): cycle effort with Shift+←/→ from the prompt (bf6d642)
+- feat(skills): port upstream /code-review (effort levels, cleanups, --fix) (dae2dc5)
+- fix(permissions): route always-on-thinking models to the XML auto-mode classifier (3252c43)
+- test(cache): harden wiring guards caught weak in review (67c3b67)
+- fix(cache): scope the legacy deferred-delta latch to the conversation (A2 review follow-up 3) (d833b8a)
+- fix(cache): persist deferred_tools_delta attachments so warm resumes round-trip (A2 review follow-up 2) (a890ef7)
+- fix(cache): guard the idle-gap sweep against in-flight queries (S1 review follow-up) (172bad3)
+- fix(cache): format-aware legacy latch, settled at the attachments pipeline (A2 review follow-up) (4bbf571)
+- test: fix growthbook module-registry poisoning in full-suite runs (d589ba4)
+- docs(cache): byte-stability rules from the 2026-06 cache-break audit (add29f3)
+- test(cache): request-determinism invariant suite (d515d1b)
+- fix(cache): enable deferred-tools delta in the open build, with legacy-session latch (A2) (840f0fc)
+- fix(cache): sticky defer latch for LSP tools (A3) (b42a554)
+- fix(cache): byte-stable MCP tool pool across reconnects and failures (A1) (4775bb3)
+- fix(cache): amortize REPL display eviction + idle-gap sweep (S1) (269e99b)
+- fix(cache): persist time-based microcompact via stable stubs (S2) (175c189)
+- fix(cache): first-write-wins stub byte registry (S3) (7fb392c)
+- fix(prompt): close the env_info staleness gaps found in the #78 review (f1b9c6d)
+- feat(prompt): port harness prompt upgrades from upstream, multi-provider aware (#78) (fdb7ec2)
+
 ## v0.5.14 — 2026-06-11
 
 - feat(effort): default Opus 4.8 and Fable 5 to high effort on Anthropic (1012bf8)
