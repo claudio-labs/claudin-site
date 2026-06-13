@@ -1,3 +1,13 @@
+## v0.6.1 — 2026-06-13
+
+- fix(ink): resume offscreen animations when scrolled back into view (2aa4c10)
+- feat(spinner): slow the braille orbit to half speed (3ce8cb2)
+- feat(spinner): Claudin brand C animation (braille orbit → bold C) + animated dots (99a6c4d)
+- perf(streaming): eliminate quadratic re-render work during response streaming (a50ab26)
+- fix(config): persist updater edits to projects + heal dangling provider pointers at startup (febf362)
+- docs(features): add cache-policy and read-outline feature docs (eda6189)
+- fix(update): exempt the default privacy level from the startup version check (918fde9)
+
 ## v0.6.0 — 2026-06-12
 
 - fix(query): mid-stream-retry P1s + tombstone persistence race (review follow-ups) (#79) (83d368b)
