@@ -48,7 +48,7 @@
     "operatingSystem": "Linux, macOS, Windows",
     "description": "Terminal-first AI coding agent CLI that works with any LLM provider — Anthropic, OpenAI, Gemini, Ollama, and 200+ more.",
     "url": "https://claudiolabs.ai/",
-    "downloadUrl": "https://claudiolabs.ai/docs.html#install",
+    "downloadUrl": "https://claudiolabs.ai/install.html",
     "softwareVersion": "0.1.12",
     "license": "https://github.com/claudio-labs/claudin/blob/main/LICENSE",
     "offers": {
@@ -188,10 +188,43 @@
             GitHub
           </a>
         </li>
-        <li><a href="docs.html" class="nav__link">Docs</a></li>
-        <li><a href="changelog.html" class="nav__link">Changelog</a></li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Getting started
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="install.html" class="nav__dropdown-link">Install</a></li>
+            <li><a href="install.html#quickstart" class="nav__dropdown-link">Quick start</a></li>
+            <li><a href="migrate-from-claude-code.html" class="nav__dropdown-link">Migrate from Claude Code</a></li>
+          </ul>
+        </li>
+        <li><a href="providers.html" class="nav__link">Providers</a></li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Features
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="bash-output-filter.html" class="nav__dropdown-link">Bash output filter</a></li>
+            <li><a href="cache-policy.html" class="nav__dropdown-link">Cache policy</a></li>
+            <li><a href="notifications.html" class="nav__dropdown-link">Notifications</a></li>
+            <li><a href="read-outline.html" class="nav__dropdown-link">Read outline</a></li>
+            <li><a href="web-researcher.html" class="nav__dropdown-link">Web researcher</a></li>
+          </ul>
+        </li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Reference
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="changelog.html" class="nav__dropdown-link">Changelog</a></li>
+            <li><a href="https://github.com/claudio-labs/claudin" class="nav__dropdown-link" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a></li>
+          </ul>
+        </li>
         <li>
-          <a href="docs.html#install" class="nav__cta">Install</a>
+          <a href="install.html" class="nav__cta">Install</a>
         </li>
       </ul>
     </div>
@@ -534,7 +567,7 @@
           <h2 class="section-title">Coming from Claude Code?</h2>
           <p class="section-desc section-desc--mb-4">Claudin originated from the Claude Code codebase and has been substantially modified to support any provider. It automatically detects your existing <code>~/.claude/</code> and migrates tokens, settings, theme, plugins, and keybindings.</p>
           <p class="section-desc section-desc--note">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
-          <a href="docs.html#migrate" class="nav__cta nav__cta--inline">Migration guide &rarr;</a>
+          <a href="migrate-from-claude-code.html" class="nav__cta nav__cta--inline">Migration guide &rarr;</a>
         </div>
         <div class="local-code" role="region" aria-label="Migration commands">
           <div><span class="c-comment"># install claudin</span></div>
@@ -562,7 +595,7 @@
           </span>
           <h2 class="section-title">Run any LLM fully offline</h2>
           <p class="section-desc section-desc--mb-6">No API key, no cost, no data sent anywhere. Pull a model with Ollama or LM Studio and start coding in under a minute.</p>
-          <a href="docs.html#local" class="nav__cta nav__cta--inline">Local setup guide &rarr;</a>
+          <a href="providers.html#local" class="nav__cta nav__cta--inline">Local setup guide &rarr;</a>
         </div>
         <div class="local-code" role="region" aria-label="Local model setup commands">
           <div><span class="c-comment"># pull a model with ollama</span></div>
@@ -645,7 +678,7 @@
           <div class="footer__links-title">Project</div>
           <a href="https://github.com/claudio-labs/claudin" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="changelog.html" class="footer__link">Changelog</a>
-          <a href="docs.html" class="footer__link">Docs</a>
+          <a href="install.html" class="footer__link">Install</a>
           <a href="https://github.com/claudio-labs/claudin/issues" class="footer__link" target="_blank" rel="noopener noreferrer">Issues</a>
         </div>
 

@@ -100,6 +100,86 @@
   box-shadow: var(--shadow-accent);
 }
 
+/* ─── Nav dropdown ─────────────────────────────────────────── */
+.nav__dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav__dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+
+.nav__dropdown-caret { transition: transform var(--duration-fast); }
+
+.nav__dropdown-menu {
+  position: absolute;
+  top: calc(100% + var(--space-3));
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-fast), transform var(--duration-fast), visibility var(--duration-fast);
+  z-index: 200;
+}
+
+/* invisible bridge so hover survives the gap between toggle and menu */
+.nav__dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--space-3) * -1);
+  left: 0;
+  right: 0;
+  height: var(--space-3);
+}
+
+.nav__dropdown:hover .nav__dropdown-menu,
+.nav__dropdown:focus-within .nav__dropdown-menu,
+.nav__dropdown.open .nav__dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav__dropdown:hover .nav__dropdown-caret,
+.nav__dropdown:focus-within .nav__dropdown-caret,
+.nav__dropdown.open .nav__dropdown-caret {
+  transform: rotate(180deg);
+}
+
+.nav__dropdown-link {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.nav__dropdown-link:hover {
+  background: var(--color-surface-2);
+  color: var(--color-text);
+}
+
 /* ─── Hero ─────────────────────────────────────────────────── */
 .hero {
   padding-top: var(--space-24);
@@ -872,6 +952,31 @@
     gap: var(--space-5);
   }
   .nav__links.open { display: flex; }
+
+  .nav__dropdown {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .nav__dropdown-menu {
+    position: static;
+    transform: none;
+    display: none;
+    visibility: hidden;
+    min-width: 0;
+    padding: var(--space-3) 0 0 var(--space-4);
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+  .nav__dropdown-menu::before { display: none; }
+  .nav__dropdown.open .nav__dropdown-menu {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+  }
+  .nav__dropdown.open .nav__dropdown-caret { transform: rotate(180deg); }
 }
 
 /* ─── Page hero (docs/changelog) ───────────────────────────── */

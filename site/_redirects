@@ -1,1 +1,3 @@
 https://www.claudiolabs.ai/* https://claudiolabs.ai/:splat 301!
+/docs.html /install.html 301
+/docs /install.html 301

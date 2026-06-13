@@ -105,8 +105,41 @@
             GitHub
           </a>
         </li>
-        <li><a href="docs.html" class="nav__link" style="color: var(--color-accent)">Docs</a></li>
-        <li><a href="changelog.html" class="nav__link">Changelog</a></li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Getting started
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="install.html" class="nav__dropdown-link">Install</a></li>
+            <li><a href="install.html#quickstart" class="nav__dropdown-link">Quick start</a></li>
+            <li><a href="migrate-from-claude-code.html" class="nav__dropdown-link">Migrate from Claude Code</a></li>
+          </ul>
+        </li>
+        <li><a href="providers.html" class="nav__link">Providers</a></li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true" style="color: var(--color-accent)">
+            Features
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="bash-output-filter.html" class="nav__dropdown-link">Bash output filter</a></li>
+            <li><a href="cache-policy.html" class="nav__dropdown-link">Cache policy</a></li>
+            <li><a href="notifications.html" class="nav__dropdown-link">Notifications</a></li>
+            <li><a href="read-outline.html" class="nav__dropdown-link">Read outline</a></li>
+            <li><a href="web-researcher.html" class="nav__dropdown-link">Web researcher</a></li>
+          </ul>
+        </li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Reference
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="changelog.html" class="nav__dropdown-link">Changelog</a></li>
+            <li><a href="https://github.com/claudio-labs/claudin" class="nav__dropdown-link" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a></li>
+          </ul>
+        </li>
         <li><a href="install.html" class="nav__cta">Install</a></li>
       </ul>
     </div>
@@ -122,6 +155,7 @@
             <div class="docs-nav-section-title">Getting started</div>
             <a href="install.html" class="docs-nav-link">Install</a>
             <a href="install.html#quickstart" class="docs-nav-link">Quick start</a>
+            <a href="migrate-from-claude-code.html" class="docs-nav-link">Migrate from Claude Code</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Providers</div>
@@ -313,7 +347,7 @@
           <div class="footer__links-title">Project</div>
           <a href="https://github.com/claudio-labs/claudin" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="changelog.html" class="footer__link">Changelog</a>
-          <a href="docs.html" class="footer__link">Docs</a>
+          <a href="install.html" class="footer__link">Install</a>
           <a href="https://github.com/claudio-labs/claudin/issues" class="footer__link" target="_blank" rel="noopener noreferrer">Issues</a>
         </div>
 

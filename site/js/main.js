@@ -74,6 +74,29 @@ function initHamburger() {
   });
 }
 
+/* ── Nav features dropdown ───────────────────────────────────── */
+function initDropdown() {
+  document.querySelectorAll('.nav__dropdown-toggle').forEach(toggle => {
+    const dropdown = toggle.closest('.nav__dropdown');
+    if (!dropdown) return;
+    toggle.addEventListener('click', e => {
+      e.preventDefault();
+      const open = dropdown.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  });
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    document.querySelectorAll('.nav__dropdown.open').forEach(dropdown => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+        dropdown.querySelector('.nav__dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+}
+
 /* ── Docs sidebar active link ────────────────────────────────── */
 function initDocsNav() {
   const navLinks = document.querySelectorAll('.docs-nav-link[href^="#"]');
@@ -270,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTabs();
   initCopyButtons();
   initHamburger();
+  initDropdown();
   initDocsNav();
   initTerminal();
   initAnnounceBar();

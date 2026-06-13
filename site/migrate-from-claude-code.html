@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary meta -->
+  <title>Migrate from Claude Code to Claudin — Automatic Import</title>
+  <meta name="description" content="Switch from Claude Code to Claudin with zero friction. On first launch Claudin detects your existing ~/.claude/ directory and migrates tokens, settings, theme, plugins, keybindings, and memory — then lets you use any LLM provider." />
+  <meta name="keywords" content="migrate claude code, claude code to claudin, claude code alternative, import claude code settings, claudin migration, switch from claude code, any llm coding agent" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://claudiolabs.ai/migrate-from-claude-code.html" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Claudin" />
+  <meta property="og:title" content="Migrate from Claude Code to Claudin — Automatic Import" />
+  <meta property="og:description" content="On first launch Claudin detects your existing ~/.claude/ and migrates tokens, settings, theme, plugins, keybindings, and memory. Then run any LLM provider." />
+  <meta property="og:url" content="https://claudiolabs.ai/migrate-from-claude-code.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Claudin CLI — Migrate from Claude Code" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Migrate from Claude Code to Claudin — Automatic Import" />
+  <meta name="twitter:description" content="Zero-friction migration: Claudin imports your ~/.claude/ on first launch, then runs on any LLM provider." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
+
+  <!-- JSON-LD: TechArticle -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Migrate from Claude Code to Claudin",
+    "description": "Claudin detects an existing ~/.claude/ directory on first launch and migrates tokens, settings, theme, plugins, keybindings, and memory automatically.",
+    "url": "https://claudiolabs.ai/migrate-from-claude-code.html",
+    "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is migrating from Claude Code to Claudin automatic?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. On first launch Claudin detects your existing ~/.claude/ directory and migrates your tokens, settings, theme, plugins, keybindings, and memory. There are no manual export or import steps."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does migrating to Claudin change or delete my Claude Code setup?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Claudin reads from ~/.claude/ and writes its own configuration to ~/.claudin/. Your original Claude Code directory is left in place, so you can keep using both."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use a provider other than Anthropic after migrating?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. That is the point of migrating. After your settings are imported, run /provider to add or switch to OpenAI, Gemini, DeepSeek, Mistral, Ollama, AWS Bedrock, Google Vertex, OpenRouter, Groq, or any of 200+ OpenAI-compatible endpoints — without changing your workflow."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Theme & favicon -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+        claudin
+      </a>
+
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__links" id="nav-links" role="list">
+        <li>
+          <a href="https://github.com/claudio-labs/claudin" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+        </li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true" style="color: var(--color-accent)">
+            Getting started
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="install.html" class="nav__dropdown-link">Install</a></li>
+            <li><a href="install.html#quickstart" class="nav__dropdown-link">Quick start</a></li>
+            <li><a href="migrate-from-claude-code.html" class="nav__dropdown-link">Migrate from Claude Code</a></li>
+          </ul>
+        </li>
+        <li><a href="providers.html" class="nav__link">Providers</a></li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Features
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="bash-output-filter.html" class="nav__dropdown-link">Bash output filter</a></li>
+            <li><a href="cache-policy.html" class="nav__dropdown-link">Cache policy</a></li>
+            <li><a href="notifications.html" class="nav__dropdown-link">Notifications</a></li>
+            <li><a href="read-outline.html" class="nav__dropdown-link">Read outline</a></li>
+            <li><a href="web-researcher.html" class="nav__dropdown-link">Web researcher</a></li>
+          </ul>
+        </li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Reference
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="changelog.html" class="nav__dropdown-link">Changelog</a></li>
+            <li><a href="https://github.com/claudio-labs/claudin" class="nav__dropdown-link" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a></li>
+          </ul>
+        </li>
+        <li><a href="install.html" class="nav__cta">Install</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="docs-layout">
+
+      <!-- Sidebar -->
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <nav>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Getting started</div>
+            <a href="install.html" class="docs-nav-link">Install</a>
+            <a href="install.html#quickstart" class="docs-nav-link">Quick start</a>
+            <a href="migrate-from-claude-code.html" class="docs-nav-link active">Migrate from Claude Code</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Providers</div>
+            <a href="providers.html#all-providers" class="docs-nav-link">All providers</a>
+            <a href="providers.html#local" class="docs-nav-link">Local models</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Features</div>
+            <a href="bash-output-filter.html" class="docs-nav-link">Bash output filter</a>
+            <a href="cache-policy.html" class="docs-nav-link">Cache policy</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
+            <a href="read-outline.html" class="docs-nav-link">Read outline</a>
+            <a href="web-researcher.html" class="docs-nav-link">Web researcher</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">On this page</div>
+            <a href="#overview" class="docs-nav-link">Overview</a>
+            <a href="#what" class="docs-nav-link">What gets migrated</a>
+            <a href="#how" class="docs-nav-link">How it works</a>
+            <a href="#after" class="docs-nav-link">After you migrate</a>
+            <a href="#keep-both" class="docs-nav-link">Nothing is overwritten</a>
+            <a href="#faq" class="docs-nav-link">FAQ</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Reference</div>
+            <a href="changelog.html" class="docs-nav-link">Changelog</a>
+            <a href="https://github.com/claudio-labs/claudin" class="docs-nav-link" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <main class="docs-content" id="main-content">
+
+        <div class="page-hero">
+          <h1>Migrate from Claude Code</h1>
+          <p class="page-hero__sub">Keep your setup, lose the lock-in. Claudin imports your existing configuration on first launch — then runs on any LLM provider.</p>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+
+        <p>Claudin originated from the Claude Code codebase and has been substantially modified to support any provider. Because of that shared lineage, moving over is not a fresh setup — it is an <strong>import</strong>. On its first launch, Claudin detects your existing <code>~/.claude/</code> directory and brings your configuration across automatically.</p>
+
+        <p><strong>No export step. No config files to copy. No workflow to relearn.</strong></p>
+
+        <pre><code># install claudin
+npm install -g @claudiolabs/claudin@latest
+
+# run — migration happens automatically on first launch
+claudin
+
+✓ Migrated settings from ~/.claude/
+✓ Tokens, theme, plugins restored
+✓ Ready — switch provider with /provider</code></pre>
+
+        <h2 id="what">What gets migrated</h2>
+
+        <p>On first launch Claudin reads your Claude Code directory and carries over:</p>
+
+        <table>
+          <thead>
+            <tr><th>What</th><th>Migrated</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Auth tokens &amp; API keys</strong></td><td>Restored and ready to use</td></tr>
+            <tr><td><strong>Settings</strong></td><td>Your <code>settings.json</code> preferences are preserved</td></tr>
+            <tr><td><strong>Theme</strong></td><td>Your terminal theme carries over</td></tr>
+            <tr><td><strong>Plugins</strong></td><td>Installed plugins are restored</td></tr>
+            <tr><td><strong>Keybindings</strong></td><td>Your custom key map is preserved</td></tr>
+            <tr><td><strong>Memory</strong></td><td>Project and user memory come with you</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="how">How it works</h2>
+
+        <ol>
+          <li><strong>Install Claudin.</strong> Requires Node.js 20+. Install globally with <code>npm install -g @claudiolabs/claudin@latest</code> (or <code>bun</code>, <code>npx</code>, and the one-line <code>curl</code> installer — see <a href="install.html" style="color: var(--color-accent)">Install</a>).</li>
+          <li><strong>Run <code>claudin</code>.</strong> On the very first launch it looks for <code>~/.claude/</code>. If it finds one, the migration runs before you reach the prompt — no flag required.</li>
+          <li><strong>Start coding.</strong> Everything you configured in Claude Code is already in place. The only new thing is that you can now point Claudin at any model.</li>
+        </ol>
+
+        <h2 id="after">After you migrate</h2>
+
+        <p>The reason to switch is provider freedom. Once your settings are imported, use the <code>/provider</code> wizard to add or switch models at any time — no environment variables, no restarts:</p>
+
+        <pre><code>/provider          # add, edit, or switch provider profiles
+/provider doctor   # health check: reachability, auth, model availability</code></pre>
+
+        <p>You keep the full agentic workflow — bash, files, grep, glob, sub-agents, MCP, web search — but now on Anthropic, OpenAI, Gemini, DeepSeek, Mistral, Ollama, AWS Bedrock, Google Vertex, OpenRouter, Groq, or any of <a href="providers.html#all-providers" style="color: var(--color-accent)">200+ OpenAI-compatible endpoints</a>. Prefer to stay fully offline? Pull a model with Ollama or LM Studio and run with no API key at all (see <a href="providers.html#local" style="color: var(--color-accent)">Local models</a>).</p>
+
+        <h2 id="keep-both">Nothing is overwritten</h2>
+
+        <p>Migration is a read, not a move. Claudin reads from <code>~/.claude/</code> and writes its own configuration to <code>~/.claudin/</code>. Your original Claude Code directory is left untouched, so you can keep both tools installed and fall back at any time — the migration just gives Claudin a running start.</p>
+
+        <h2 id="faq">FAQ</h2>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Is migrating automatic?</summary>
+            <p>Yes. On first launch Claudin detects your existing <code>~/.claude/</code> directory and migrates your tokens, settings, theme, plugins, keybindings, and memory. There are no manual export or import steps — just install and run.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Does it change or delete my Claude Code setup?</summary>
+            <p>No. Claudin reads from <code>~/.claude/</code> and stores its own config in <code>~/.claudin/</code>. The original directory is left in place, so both tools can coexist.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Can I use a provider other than Anthropic after migrating?</summary>
+            <p>Yes — that is the point. After your settings import, run <code>/provider</code> to add or switch to OpenAI, Gemini, DeepSeek, Mistral, Ollama, AWS Bedrock, Google Vertex, OpenRouter, Groq, or any of 200+ OpenAI-compatible endpoints, without changing your workflow.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Is Claudin affiliated with Anthropic or Claude Code?</summary>
+            <p>No. Claudin is an independent project. It is not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+          </details>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div>
+          <div class="footer__brand">
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+            claudin
+          </div>
+          <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__links-title">Project</div>
+          <a href="https://github.com/claudio-labs/claudin" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="changelog.html" class="footer__link">Changelog</a>
+          <a href="install.html" class="footer__link">Install</a>
+          <a href="https://github.com/claudio-labs/claudin/issues" class="footer__link" target="_blank" rel="noopener noreferrer">Issues</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span>claudiolabs.ai</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
