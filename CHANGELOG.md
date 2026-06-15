@@ -1,3 +1,7 @@
+## v0.6.2 — 2026-06-15
+
+- feat(tui): collapse parallel file edits under one Update header (2d8261c)
+
 ## v0.6.1 — 2026-06-13
 
 - fix(ink): resume offscreen animations when scrolled back into view (2aa4c10)
