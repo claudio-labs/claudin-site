@@ -1,3 +1,13 @@
+## v0.6.3 — 2026-06-16
+
+- feat(tui): multi-host PR/MR status pill (GitHub/GitLab/Gitea) (#81) (edde790)
+- feat(tui): connect status-row sides with a dim rule filling the gap (c61bdbc)
+- feat(tui): move token/cost row onto the footer byline with Nerd Font dividers (68ecaac)
+- feat(tui): effort indicator as a colored Powerline pill beside the model (ee21788)
+- feat(tui): square-left/pointed-right pills with seamless junctions (dfb9e5d)
+- feat(tui): add color themes with per-theme syntax + stalled-spinner colors (ab76d5c)
+- feat(tui): Nerd Font icons + ls-la ordering for @ mention menu (#80) (2247bc8)
+
 ## v0.6.2 — 2026-06-15
 
 - feat(tui): collapse parallel file edits under one Update header (2d8261c)
