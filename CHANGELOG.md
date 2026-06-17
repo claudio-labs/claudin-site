@@ -1,3 +1,9 @@
+## v0.6.4 — 2026-06-17
+
+- fix(tools): strip bash-output-filter markers before git-op parsing (0b734f1)
+- fix(tui): remove blank lines between /context usage grid rows (1546543)
+- feat(tools): lean tool prompts for capable model families (#82) (59e9c0c)
+
 ## v0.6.3 — 2026-06-16
 
 - feat(tui): multi-host PR/MR status pill (GitHub/GitLab/Gitea) (#81) (edde790)
