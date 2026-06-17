@@ -1,3 +1,10 @@
+## v0.6.5 — 2026-06-17
+
+- fix(ink): clear vacated rows with end-of-line erase to kill width-drift ghosts (a6c0dd2)
+- feat(bridge): enable Remote Control via local credential gate (#84) (7403cc2)
+- chore(commands): remove /mobile QR command (5c8bd3d)
+- feat(tools): reintroduce LSP tool as read-only, cache-safe (#83) (60bf1ea)
+
 ## v0.6.4 — 2026-06-17
 
 - fix(tools): strip bash-output-filter markers before git-op parsing (0b734f1)
