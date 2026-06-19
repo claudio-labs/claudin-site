@@ -1,3 +1,11 @@
+## v0.6.6 — 2026-06-19
+
+- feat(diff): tabbed split-pane /diff reviewer (#85) (5a743bf)
+- feat(typeahead): make @-mention Enter/Tab navigate into directories (dca77a5)
+- chore(deps): bump remaining outdated deps to latest (c20cabc)
+- chore(deps): bump Anthropic SDKs to latest (middleware + new models) (f1c5434)
+- test(suite): make full `bun test` run deterministic (134→0 cross-file leaks) (f225110)
+
 ## v0.6.5 — 2026-06-17
 
 - fix(ink): clear vacated rows with end-of-line erase to kill width-drift ghosts (a6c0dd2)
