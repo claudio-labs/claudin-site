@@ -1,3 +1,15 @@
+## v0.6.7 — 2026-06-21
+
+- docs(readme): refresh providers, features, and headless mode (4494cce)
+- chore(rebrand): Claudin in error/TUI copy and new explorer/diff tips (4da234d)
+- feat(cloudflare): add Workers AI and AI Gateway provider presets (c6b2d20)
+- feat(zai): add Z.AI GLM Coding Plan provider preset (980aabd)
+- feat(keybindings): bind ctrl+g/ctrl+e to /diff and /explorer (5cfc768)
+- feat(explorer): /explorer file tree + nvim-lite editor (#86) (e2f76e8)
+- feat(clear): rename /clear to /new and zero the footer token/cost pill (3126fe2)
+- feat(diff): draw tree indent guides in the file pane (cde0fe1)
+- fix(goal): align footer token count with agents and truncate long conditions (8cd1f1b)
+
 ## v0.6.6 — 2026-06-19
 
 - feat(diff): tabbed split-pane /diff reviewer (#85) (5a743bf)
