@@ -1,3 +1,7 @@
+## v0.6.8 — 2026-06-21
+
+- chore(rebrand): Claudin's in UI copy for questions, plan, btw tip, /copy (f2e288c)
+
 ## v0.6.7 — 2026-06-21
 
 - docs(readme): refresh providers, features, and headless mode (4494cce)
