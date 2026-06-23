@@ -1,3 +1,9 @@
+## v0.6.9 — 2026-06-23
+
+- feat(explorer): add create/delete/rename file shortcuts (baeb185)
+- chore(rebrand): Claudin in plan-approval feedback placeholder (0daf15a)
+- feat(plan-mode): instruct plans to include an ordered Tasks checklist (2b9b990)
+
 ## v0.6.8 — 2026-06-21
 
 - chore(rebrand): Claudin's in UI copy for questions, plan, btw tip, /copy (f2e288c)
