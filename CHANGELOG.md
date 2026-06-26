@@ -1,3 +1,9 @@
+## v0.6.10 — 2026-06-26
+
+- feat: apply_patch tool (Codex envelope) + read-cache invalidation (#87) (2fcbf9f)
+- feat(continuation-nudge): detect EN/PT-BR/ES intent + unclosed code fences (c10da60)
+- chore(rebrand): Claudin in plan-mode exploring message (4ed65a2)
+
 ## v0.6.9 — 2026-06-23
 
 - feat(explorer): add create/delete/rename file shortcuts (baeb185)
