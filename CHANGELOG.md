@@ -1,3 +1,12 @@
+## v0.6.11 — 2026-06-29
+
+- feat(memory): repeated-error loop → memory-extraction trigger (#92) (5d33edf)
+- feat: verbosity steering (default-on) + prose A/B harness (#91) (fcf5d61)
+- feat(usage): "Context tokens saved" line in /usage Session tab (#90) (ba77d26)
+- feat(tool-results): enable JSON compression by default (71c44dc)
+- feat(tool-results): reversible JSON/array compression (gated, default off) (#89) (108d517)
+- feat(bash-filter): Phase 13 language filters + warning-omission/blank-run fixes (#88) (e1ed5d9)
+
 ## v0.6.10 — 2026-06-26
 
 - feat: apply_patch tool (Codex envelope) + read-cache invalidation (#87) (2fcbf9f)
