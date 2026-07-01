@@ -1,3 +1,12 @@
+## v0.6.12 — 2026-07-01
+
+- feat(provider): discover models for OpenAI-compatible providers (#97) (b00f7dc)
+- Add Claude Sonnet 5 + trim first-party model picker (#96) (6008dd8)
+- feat(code-outline): structural outline for large source-file tool results (#95) (5733f15)
+- feat(json-compress): preserve salient rows when windowing large tool-result arrays (#6) (#94) (c13d67a)
+- feat(json-compress): hoist constant fields out of the tool-result grid (#7) (#93) (37ae9ca)
+- docs: add ROADMAP.md (token-efficiency roadmap) (38b1215)
+
 ## v0.6.11 — 2026-06-29
 
 - feat(memory): repeated-error loop → memory-extraction trigger (#92) (5d33edf)
