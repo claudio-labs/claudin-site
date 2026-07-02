@@ -1,3 +1,7 @@
+## v0.6.14 — 2026-07-02
+
+- fix(usage): stop dropping cache_creation_input_tokens in OpenAI-compat usage (d89c2ce)
+
 ## v0.6.13 — 2026-07-02
 
 - fix(context): fall back to local token estimation when the provider has no countTokens endpoint (4add795)
