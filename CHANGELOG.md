@@ -1,3 +1,7 @@
+## v0.6.13 — 2026-07-02
+
+- fix(context): fall back to local token estimation when the provider has no countTokens endpoint (4add795)
+
 ## v0.6.12 — 2026-07-01
 
 - feat(provider): discover models for OpenAI-compatible providers (#97) (b00f7dc)
