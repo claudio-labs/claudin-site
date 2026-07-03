@@ -1,3 +1,9 @@
+## v0.7.0 — 2026-07-03
+
+- chore(deps): bump @types/node to 26 (f35071d)
+- chore(deps): update minor and patch dependencies (123d3bc)
+- feat(effort): enable xhigh and max effort tiers for Sonnet 5 (b8ec14a)
+
 ## v0.6.14 — 2026-07-02
 
 - fix(usage): stop dropping cache_creation_input_tokens in OpenAI-compat usage (d89c2ce)
