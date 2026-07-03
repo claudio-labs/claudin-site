@@ -1,3 +1,7 @@
+## v0.7.1 — 2026-07-03
+
+- feat(skills): bundled /create skill — author skills, rules, and agents (#98) (d390005)
+
 ## v0.7.0 — 2026-07-03
 
 - chore(deps): bump @types/node to 26 (f35071d)
