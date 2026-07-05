@@ -1,3 +1,14 @@
+## v0.7.2 — 2026-07-05
+
+- fix(cache): keep auto_mode on the 1h TTL tier (44e197f)
+- feat(cache): 5m TTL for short-lived subagent and utility query sources (6257f0f)
+- fix(agents): honor omitClaudeMd/omitGitStatus in the attachment pipeline (c43aab2)
+- experiment(cache): trailing marker CLAUDIN_TRAIL_CACHE_MARKER — measured, off by default (3d0ed16)
+- feat(review): ReportFindings tool for typed code-review output (0fc89b2)
+- docs(features): spec ReportFindings tool and Workflow orchestrator (222391f)
+- fix(errors): use isSdk* guards instead of instanceof for SDK errors (68b4415)
+- fix(ripgrep): package @vscode/ripgrep so file search works without a system rg (#99) (6a0ec20)
+
 ## v0.7.1 — 2026-07-03
 
 - feat(skills): bundled /create skill — author skills, rules, and agents (#98) (d390005)
