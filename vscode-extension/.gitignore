@@ -1,6 +1,0 @@
-node_modules/
-*.vsix
-out/
-dist/
-bun.lock
-package-lock.json
