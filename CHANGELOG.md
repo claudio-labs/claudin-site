@@ -1,3 +1,11 @@
+## v1.0.2 — 2026-07-14
+
+- ci(release): build linux-arm64-musl via docker, not an arm64 Alpine job container (2ee530f)
+
+### Contributors
+
+- <a href="https://github.com/andersonviudes"><img src="https://github.com/andersonviudes.png?size=40" width="20" height="20" alt="@andersonviudes"></a> <a href="https://github.com/andersonviudes">@andersonviudes</a>
+
 ## v1.0.1 — 2026-07-14
 
 - ci(release): unify on the native-binary release, remove the Node-bundle flow (67b13b1)
