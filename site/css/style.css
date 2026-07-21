@@ -907,6 +907,7 @@
 }
 
 .changelog-version-num {
+  margin: 0;
   font-family: var(--font-mono);
   font-size: var(--text-2xl);
   font-weight: var(--weight-bold);

@@ -13,8 +13,8 @@
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Claudin" />
-  <meta property="og:title" content="Claudin Changelog — Release History, Features & Fixes" />
-  <meta property="og:description" content="Full Claudin release history — every feature, bug fix, and performance improvement across all versions." />
+  <meta property="og:title" content="What's New in Claudin" />
+  <meta property="og:description" content="Every feature, bug fix, and performance improvement, version by version." />
   <meta property="og:url" content="https://claudiolabs.ai/changelog.html" />
   <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
@@ -24,10 +24,24 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Claudin Changelog — Release History, Features & Fixes" />
-  <meta name="twitter:description" content="Full Claudin release history — every feature, bug fix, and performance improvement across all versions." />
+  <meta name="twitter:title" content="What's New in Claudin" />
+  <meta name="twitter:description" content="Every feature, bug fix, and performance improvement, version by version." />
   <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
   <meta name="twitter:image:alt" content="Claudin CLI — Changelog" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Claudin Changelog — Release History, Features & Fixes",
+    "description": "Full Claudin release history — every feature, bug fix, and performance improvement across all versions.",
+    "url": "https://claudiolabs.ai/changelog.html",
+    "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
+  }
+  </script>
 
   <!-- Theme & favicon -->
   <meta name="theme-color" content="#0a0a0a" />
@@ -88,15 +102,21 @@
   </nav>
 
   <div class="container">
-    <div class="page-hero">
-      <h1 class="page-hero__title">Changelog</h1>
-      <p class="page-hero__sub">Release history for <code>@claudiolabs/claudin</code></p>
-    </div>
+    <main id="main-content">
+      <div class="page-hero">
+        <h1 class="page-hero__title">Changelog</h1>
+        <p class="page-hero__sub">Release history for <code>@claudiolabs/claudin</code></p>
+      </div>
 
-    <div class="changelog-list" id="changelog-list">
-      <p style="color: var(--color-text-dim); font-family: var(--font-mono); font-size: var(--text-sm);">Loading...</p>
-    </div>
-    <nav class="changelog-pager" id="changelog-pager" aria-label="Changelog pagination" hidden></nav>
+      <div class="changelog-list" id="changelog-list">
+        <p style="color: var(--color-text-dim); font-family: var(--font-mono); font-size: var(--text-sm);">Loading...</p>
+        <noscript>
+          <p>This page renders release notes with JavaScript. View the full history directly on
+            <a href="https://github.com/claudio-labs/claudin/blob/main/CHANGELOG.md" style="color: var(--color-accent)">GitHub</a>.</p>
+        </noscript>
+      </div>
+      <nav class="changelog-pager" id="changelog-pager" aria-label="Changelog pagination" hidden></nav>
+    </main>
   </div>
 
   <script>
@@ -115,7 +135,7 @@
           }).join('');
       return `<article class="changelog-entry" id="${id}">
         <div class="changelog-version">
-          <span class="changelog-version-num">${r.version}</span>
+          <h2 class="changelog-version-num">${r.version}</h2>
           <span class="changelog-date">${r.date}</span>
         </div>
         ${r.items.length > 0 ? `<div class="changelog-items">${items}</div>` : items}
