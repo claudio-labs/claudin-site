@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary meta -->
+  <title>Agents — Claudin Docs</title>
+  <meta name="description" content="Claudin agents: subagents with their own context window, tools, and model. Built-in agents (Explore, Plan, WebResearcher...), custom agents in .claudin/agents/, fork mode, background execution, and worktree isolation." />
+  <meta name="keywords" content="claudin agents, subagents, custom agents, AgentTool, .claudin/agents, fork mode, background agents, worktree isolation, claudin features" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://claudiolabs.ai/docs/agents.html" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Claudin" />
+  <meta property="og:title" content="Agents — Claudin Docs" />
+  <meta property="og:description" content="Subagents with their own context, tools, and model — built in, or defined as a markdown file in .claudin/agents/." />
+  <meta property="og:url" content="https://claudiolabs.ai/docs/agents.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Claudin CLI — Agents" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Agents — Claudin Docs" />
+  <meta name="twitter:description" content="Built-in and custom subagents, each with their own context, tools, and model." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Agents — Claudin Docs",
+    "description": "Claudin's Agent tool delegates work to built-in or custom subagents, each with its own context window, tool access, and model.",
+    "url": "https://claudiolabs.ai/docs/agents.html",
+    "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
+  }
+  </script>
+
+  <!-- Theme & favicon -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+        claudin
+      </a>
+
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__links" id="nav-links" role="list">
+        <li>
+          <a href="https://github.com/claudio-labs/claudin" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+        </li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Getting started
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="../install.html" class="nav__dropdown-link">Install</a></li>
+            <li><a href="../install.html#quickstart" class="nav__dropdown-link">Quick start</a></li>
+            <li><a href="../migrate-from-claude-code.html" class="nav__dropdown-link">Migrate from Claude Code</a></li>
+          </ul>
+        </li>
+        <li><a href="../providers.html" class="nav__link">Providers</a></li>
+        <li><a href="index.html" class="nav__link" style="color: var(--color-accent)">Docs</a></li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Reference
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="../changelog.html" class="nav__dropdown-link">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../install.html" class="nav__cta">Install</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Section tabs -->
+  <nav class="section-tabs section-tabs--subjects" aria-label="Doc sections">
+    <div class="section-tabs__inner">
+      <a href="index.html" class="section-tabs__link">Overview</a>
+      <a href="index.html#performance" class="section-tabs__link">Performance</a>
+      <a href="agents.html" class="section-tabs__link active">Agents</a>
+      <a href="skills.html" class="section-tabs__link">Extensibility</a>
+      <a href="hooks.html" class="section-tabs__link">Automation</a>
+      <a href="notifications.html" class="section-tabs__link">Notifications</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="docs-layout docs-layout--with-toc">
+
+      <!-- Sidebar -->
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <nav>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Getting started</div>
+            <a href="../install.html" class="docs-nav-link">Install</a>
+            <a href="../install.html#quickstart" class="docs-nav-link">Quick start</a>
+            <a href="../migrate-from-claude-code.html" class="docs-nav-link">Migrate from Claude Code</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Providers</div>
+            <a href="../providers.html#all-providers" class="docs-nav-link">All providers</a>
+            <a href="../providers.html#local" class="docs-nav-link">Local models</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Docs</div>
+            <a href="index.html" class="docs-nav-link">Overview</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Performance</div>
+            <a href="bash-output-filter.html" class="docs-nav-link">Bash output filter</a>
+            <a href="cache-policy.html" class="docs-nav-link">Cache policy</a>
+            <a href="read-outline.html" class="docs-nav-link">Read outline</a>
+            <a href="web-researcher.html" class="docs-nav-link">Web researcher</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Agents &amp; workflows</div>
+            <a href="agents.html" class="docs-nav-link active">Agents</a>
+            <a href="workflows.html" class="docs-nav-link">Workflows</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Extensibility</div>
+            <a href="skills.html" class="docs-nav-link">Skills</a>
+            <a href="plugins.html" class="docs-nav-link">Plugins</a>
+            <a href="mcp.html" class="docs-nav-link">MCP</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Automation</div>
+            <a href="hooks.html" class="docs-nav-link">Hooks</a>
+            <a href="automation.html" class="docs-nav-link">Automation</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Reference</div>
+            <a href="../changelog.html" class="docs-nav-link">Changelog</a>
+            <a href="https://github.com/claudio-labs/claudin" class="docs-nav-link" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <main class="docs-content" id="main-content">
+
+        <div class="page-hero">
+          <h1>Agents</h1>
+          <p class="page-hero__sub">Subagents with their own context window, tool access, and model — built in, or defined as a markdown file.</p>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+
+        <p>The <code>Agent</code> tool (aliased as <code>Task</code> for compatibility) lets the main model delegate a piece of work to a subagent instead of doing it inline. By default a subagent runs in an <strong>isolated context window</strong> — it only sees the prompt it was given, does its own tool calls, and returns a single report. The parent never sees the intermediate search results, browsing, or file reads that got the subagent there, which keeps the main session's context clean.</p>
+
+        <p>Subagents come in two flavors: a small set of <strong>built-in</strong> agents that ship with Claudin, and <strong>custom</strong> agents you define yourself as a markdown file with YAML frontmatter — the same shape Claude Code uses for its subagents, adapted to Claudin's directory layout and provider-agnostic model handling.</p>
+
+        <h2 id="built-in">Built-in agents</h2>
+
+        <p>These are always available as <code>subagent_type</code> values, no configuration required. A project or personal agent with the same <code>name</code> overrides a built-in of the same type — see <a href="#custom">Writing a custom agent</a>.</p>
+
+        <table>
+          <thead>
+            <tr><th>Agent type</th><th>Model</th><th>Tools</th><th>Purpose</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>Code</code></td>
+              <td><code>inherit</code></td>
+              <td>all</td>
+              <td>General-purpose agent for researching complex questions, searching code, and executing multi-step tasks.</td>
+            </tr>
+            <tr>
+              <td><code>Explore</code></td>
+              <td><code>haiku</code></td>
+              <td>read-only</td>
+              <td>Fast codebase-search specialist. Supports "quick" / "medium" / "very thorough" thoroughness levels.</td>
+            </tr>
+            <tr>
+              <td><code>Plan</code></td>
+              <td><code>inherit</code></td>
+              <td>read-only</td>
+              <td>Software-architect agent that designs step-by-step implementation plans without editing anything.</td>
+            </tr>
+            <tr>
+              <td><code>WebResearcher</code></td>
+              <td><code>haiku</code></td>
+              <td><code>WebSearch</code>, <code>WebFetch</code></td>
+              <td>Multi-page web research in isolation, returns a cited synthesis. See the <a href="web-researcher.html">dedicated page</a>.</td>
+            </tr>
+            <tr>
+              <td><code>WebResearcherManager</code></td>
+              <td><code>sonnet</code></td>
+              <td><code>Agent(WebResearcher)</code>, <code>WebSearch</code>, <code>WebFetch</code></td>
+              <td>Orchestrates several <code>WebResearcher</code> workers in parallel and fact-checks the claims before reporting back.</td>
+            </tr>
+            <tr>
+              <td><code>claudin-guide</code></td>
+              <td><code>haiku</code></td>
+              <td><code>Read</code>, <code>Glob</code>, <code>Grep</code></td>
+              <td>Answers questions about Claudin itself, the Claude Agent SDK, and the Claude API.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>The read-only agents (<code>Explore</code>, <code>Plan</code>) drop <code>Agent</code>, <code>Edit</code>, <code>Write</code>, <code>NotebookEdit</code>, and <code>apply_patch</code> from their tool set — they can search and read, not modify.</p>
+
+        <h2 id="custom">Writing a custom agent</h2>
+
+        <p>A custom agent is a single markdown file: YAML frontmatter for its configuration, then the system prompt as the body.</p>
+
+        <table>
+          <thead>
+            <tr><th>Location</th><th>Path</th><th>Scope</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Project</td><td><code>.claudin/agents/*.md</code></td><td>Committed with the repo, shared with the team.</td></tr>
+            <tr><td>Personal</td><td><code>~/.claudin/agents/*.md</code></td><td>This machine only. Override the location with the <code>CLAUDIN_CONFIG_DIR</code> env var.</td></tr>
+          </tbody>
+        </table>
+
+        <p>The filename is free-form — what matters is the <code>name</code> field in the frontmatter, which becomes the <code>subagent_type</code> the <code>Agent</code> tool is called with. Drop a file whose <code>name</code> matches a built-in (for example <code>.claudin/agents/WebResearcher.md</code>) and it <strong>overrides</strong> that built-in for the project. Merge order, each source winning over the previous one: <code>built-in → plugin → user settings → project settings</code>.</p>
+
+        <table>
+          <thead>
+            <tr><th>Field</th><th>Required</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>name</code></td><td>yes</td><td>Lowercase, hyphenated. Becomes the <code>subagent_type</code>.</td></tr>
+            <tr><td><code>description</code></td><td>yes</td><td>Shown to the parent model so it knows when to delegate to this agent.</td></tr>
+            <tr><td><code>tools</code></td><td>no</td><td>Comma-separated allowlist. Omitted, or <code>*</code>, means it inherits every tool available to the session.</td></tr>
+            <tr><td><code>disallowedTools</code></td><td>no</td><td>Comma-separated denylist, applied after <code>tools</code>.</td></tr>
+            <tr><td><code>model</code></td><td>no</td><td><code>sonnet</code> / <code>opus</code> / <code>haiku</code> / any model string / <code>inherit</code> (default). See <a href="#model">Model selection</a>.</td></tr>
+            <tr><td><code>permissionMode</code></td><td>no</td><td><code>default</code> / <code>acceptEdits</code> / <code>bypassPermissions</code> / <code>dontAsk</code> / <code>plan</code>. Capped by the parent session's mode — an agent can never self-escalate.</td></tr>
+            <tr><td><code>maxTurns</code></td><td>no</td><td>Caps how many agentic turns the run gets.</td></tr>
+            <tr><td><code>effort</code></td><td>no</td><td><code>low</code> / <code>medium</code> / <code>high</code> / <code>xhigh</code> / <code>max</code>, for models that support a reasoning-effort knob.</td></tr>
+            <tr><td><code>isolation</code></td><td>no</td><td><code>worktree</code> — runs the agent against a throwaway git worktree copy of the repo.</td></tr>
+            <tr><td><code>background</code></td><td>no</td><td><code>true</code> forces this agent to always launch asynchronously.</td></tr>
+            <tr><td><code>memory</code></td><td>no</td><td><code>user</code> / <code>project</code> / <code>local</code> — gives the agent persistent memory across separate runs.</td></tr>
+            <tr><td><code>skills</code>, <code>mcpServers</code>, <code>hooks</code>, <code>initialPrompt</code></td><td>no</td><td>Preload skills, attach MCP servers, register hooks, or seed the agent's first turn.</td></tr>
+          </tbody>
+        </table>
+
+        <pre><code>---
+name: reviewer-perf
+description: Reviews a diff for performance regressions only.
+model: haiku
+tools: Read, Grep, Glob, Bash
+---
+
+Review the change for performance regressions only. Be concrete — cite
+file:line, and skip anything that isn't a measurable regression.</code></pre>
+
+        <h2 id="invocation">How agents are invoked</h2>
+
+        <table>
+          <thead>
+            <tr><th>Mode</th><th>How</th><th>Context</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Named subagent</td>
+              <td><code>Agent({ subagent_type: "Explore", description, prompt })</code></td>
+              <td>Isolated — only sees its own prompt and system prompt, returns one report.</td>
+            </tr>
+            <tr>
+              <td>Fork</td>
+              <td>Omit <code>subagent_type</code></td>
+              <td>Inherits the parent's <strong>full conversation</strong>, sharing the prompt cache — for offloading work whose results you'll still need without paying for a cold context. Forking again from inside a fork is blocked.</td>
+            </tr>
+            <tr>
+              <td>Background</td>
+              <td><code>run_in_background: true</code></td>
+              <td>Runs asynchronously; the caller keeps working and is notified when it completes.</td>
+            </tr>
+            <tr>
+              <td>Worktree isolation</td>
+              <td><code>isolation: "worktree"</code></td>
+              <td>Spins up a temporary git worktree so the agent edits an isolated copy of the repo instead of your working tree.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 id="model">Model selection</h2>
+
+        <p>An agent's default model is <code>inherit</code> — it reuses whatever model the parent session is running. Precedence, highest first: an explicit <code>model</code> passed on the <code>Agent</code> call, then the agent definition's own <code>model</code> frontmatter, then <code>inherit</code>.</p>
+
+        <p>On providers that aren't Claude-native — anything routed through the OpenAI-compatible shim, such as OpenRouter, Gemini, DeepSeek, Mistral, or LM Studio — a bare alias like <code>haiku</code> or <code>opus</code> falls back to inheriting the parent's model, since an equivalent tier may not exist on that provider. Fix it without editing the agent file, in <code>~/.claudin/settings.json</code>:</p>
+
+        <pre><code>{
+  "agentModelOverrides": {
+    "built-in:WebResearcher": "deepseek-chat"
+  }
+}</code></pre>
+
+        <h2 id="tools">Tool permissions</h2>
+
+        <ul>
+          <li>No <code>tools</code> field: the agent inherits everything available to the session, minus a small set of interactive-only tools it can't use in isolation (<code>AskUserQuestion</code>, <code>EnterPlanMode</code>/<code>ExitPlanMode</code>, and similar).</li>
+          <li><code>tools:</code> is an allowlist; <code>disallowedTools:</code> is a denylist applied on top of it.</li>
+          <li><code>Agent(TypeA, TypeB)</code> inside a <code>tools:</code> list restricts which <code>subagent_type</code>s that agent may itself spawn. By default, custom agents can't spawn further sub-agents at all — only a few built-in orchestrators (like <code>WebResearcherManager</code>) can fan out to a declared list, which keeps recursion bounded.</li>
+          <li>MCP tools (<code>mcp__*</code>) always pass through regardless of the allow/deny list.</li>
+        </ul>
+
+        <h2 id="cli">Managing agents</h2>
+
+        <ul>
+          <li><code>/agents</code> inside the REPL — browse built-in, project, and personal agents; create or edit one with a guided wizard.</li>
+          <li><code>claudin agents</code> — CLI subcommand that lists every agent visible from the current directory. Takes <code>--setting-sources</code> to scope which of <code>user</code>, <code>project</code>, <code>local</code> to include.</li>
+          <li>The <code>/create</code> skill can also author a new agent (alongside skills and rules) straight into the <code>.claudin/</code> structure from a plain-language description.</li>
+        </ul>
+
+        <h2 id="vs-claude-code">Differences from Claude Code</h2>
+
+        <p>The file format and most of the model — frontmatter fields, delegation by <code>description</code>, tool allow/deny lists — match Claude Code's subagents on purpose. A few things are Claudin-specific:</p>
+
+        <table>
+          <thead>
+            <tr><th></th><th>Claude Code</th><th>Claudin</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Config directory</td><td><code>.claude/agents/</code>, <code>~/.claude/agents/</code></td><td><code>.claudin/agents/</code>, <code>~/.claudin/agents/</code></td></tr>
+            <tr><td>Full-context delegation</td><td>not available — every subagent starts fresh</td><td>omit <code>subagent_type</code> to fork with the full conversation and a shared prompt cache</td></tr>
+            <tr><td>Background execution</td><td>not a subagent-level option</td><td><code>run_in_background</code> is a first-class field on the <code>Agent</code> call</td></tr>
+            <tr><td>Repo isolation</td><td>not built in</td><td><code>isolation: "worktree"</code> per agent</td></tr>
+            <tr><td>Model per agent</td><td>Claude-family aliases</td><td>any model string on any configured provider, mixed freely across agents; <code>agentModelOverrides</code> lets you swap a built-in's model without touching its file</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="testing">Try it</h2>
+
+        <p>Drop a project agent and invoke it directly:</p>
+
+        <pre><code>mkdir -p .claudin/agents
+cat > .claudin/agents/reviewer-perf.md &lt;&lt;'EOF'
+---
+name: reviewer-perf
+description: Reviews a diff for performance regressions only.
+model: haiku
+---
+Review the change for performance regressions only. Be concrete.
+EOF</code></pre>
+
+        <p>Then, inside the Claudin REPL, ask for it by name — "review this diff with reviewer-perf" — or let the main model pick it up on its own once the description matches the task at hand.</p>
+
+      </main>
+
+      <!-- On this page -->
+      <aside class="docs-toc" aria-label="On this page">
+        <div class="docs-toc-header">
+          <div class="docs-nav-section-title">On this page</div>
+          <svg class="docs-toc-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <a href="#overview" class="docs-nav-link">Overview</a>
+        <a href="#built-in" class="docs-nav-link">Built-in agents</a>
+        <a href="#custom" class="docs-nav-link">Writing a custom agent</a>
+        <a href="#invocation" class="docs-nav-link">How agents are invoked</a>
+        <a href="#model" class="docs-nav-link">Model selection</a>
+        <a href="#tools" class="docs-nav-link">Tool permissions</a>
+        <a href="#cli" class="docs-nav-link">Managing agents</a>
+        <a href="#vs-claude-code" class="docs-nav-link">Vs. Claude Code</a>
+        <a href="#testing" class="docs-nav-link">Try it</a>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div>
+          <div class="footer__brand">
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+            claudin
+          </div>
+          <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__links-title">Project</div>
+          <a href="https://github.com/claudio-labs/claudin" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="../changelog.html" class="footer__link">Changelog</a>
+          <a href="../install.html" class="footer__link">Install</a>
+          <a href="https://github.com/claudio-labs/claudin/issues" class="footer__link" target="_blank" rel="noopener noreferrer">Issues</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span>claudiolabs.ai</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

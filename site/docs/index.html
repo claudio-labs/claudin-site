@@ -152,6 +152,9 @@
     <div class="section-tabs__inner">
       <a href="index.html" class="section-tabs__link active">Overview</a>
       <a href="index.html#performance" class="section-tabs__link">Performance</a>
+      <a href="agents.html" class="section-tabs__link">Agents</a>
+      <a href="skills.html" class="section-tabs__link">Extensibility</a>
+      <a href="hooks.html" class="section-tabs__link">Automation</a>
       <a href="notifications.html" class="section-tabs__link">Notifications</a>
     </div>
   </nav>
@@ -176,11 +179,30 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
             <a href="index.html" class="docs-nav-link active">Overview</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Performance</div>
             <a href="bash-output-filter.html" class="docs-nav-link">Bash output filter</a>
             <a href="cache-policy.html" class="docs-nav-link">Cache policy</a>
-            <a href="notifications.html" class="docs-nav-link">Notifications</a>
             <a href="read-outline.html" class="docs-nav-link">Read outline</a>
             <a href="web-researcher.html" class="docs-nav-link">Web researcher</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Agents &amp; workflows</div>
+            <a href="agents.html" class="docs-nav-link">Agents</a>
+            <a href="workflows.html" class="docs-nav-link">Workflows</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Extensibility</div>
+            <a href="skills.html" class="docs-nav-link">Skills</a>
+            <a href="plugins.html" class="docs-nav-link">Plugins</a>
+            <a href="mcp.html" class="docs-nav-link">MCP</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Automation</div>
+            <a href="hooks.html" class="docs-nav-link">Hooks</a>
+            <a href="automation.html" class="docs-nav-link">Automation</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Reference</div>
@@ -200,9 +222,9 @@
 
         <h2 id="overview">Overview</h2>
 
-        <p>This section covers the features that run underneath every Claudin session — the ones you don't configure so much as benefit from automatically. Most of them exist for one reason: LLM context is expensive, and a chatty terminal is the fastest way to burn through it.</p>
+        <p>This section covers the features that run underneath every Claudin session, plus how to extend and automate it. Most of the performance features exist for one reason: LLM context is expensive, and a chatty terminal is the fastest way to burn through it.</p>
 
-        <p>Four of the five pages below are about performance — cutting the tokens a session spends on noise instead of on your actual problem. The fifth, notifications, is about staying in the loop when a long-running session needs you.</p>
+        <p>This section is organized in four groups: <strong>performance</strong> features that cut the tokens a session spends on noise, <strong>agents &amp; workflows</strong> for delegating and orchestrating work, ways to <strong>extend</strong> Claudin with skills, plugins, and MCP servers, and <strong>automation</strong> for running things without you watching. Notifications, at the end, is about staying in the loop when a long session needs you.</p>
 
         <h2 id="performance">Performance</h2>
 
@@ -228,6 +250,62 @@
             <span class="doc-card-stat">~20k tokens/query</span>
             <div class="doc-card-title">Web researcher</div>
             <p class="doc-card-desc">Multi-page web research runs in an isolated subagent context on the cheapest model, so the results come back — not the browsing history.</p>
+          </a>
+        </div>
+
+        <h2 id="agents-workflows">Agents &amp; workflows</h2>
+
+        <p>Delegate work to a subagent with its own context, tools, and model — built in (<code>Explore</code>, <code>Plan</code>, <code>WebResearcher</code>...) or defined as a markdown file in <code>.claudin/agents/</code>. Chain several of them into a phase state machine with agent workflows.</p>
+
+        <div class="doc-card-grid">
+          <a href="agents.html" class="doc-card">
+            <span class="doc-card-stat">6 built-in · unlimited custom</span>
+            <div class="doc-card-title">Agents</div>
+            <p class="doc-card-desc">Fork with full context, run in the background, or isolate in a git worktree — plus custom agents that mix models across providers.</p>
+          </a>
+          <a href="workflows.html" class="doc-card">
+            <span class="doc-card-stat">local or GitHub-triggered</span>
+            <div class="doc-card-title">Workflows</div>
+            <p class="doc-card-desc">A phase state machine that runs agents automatically — from <code>/workflows</code>, or triggered by a labeled GitHub issue with <code>claudin workflow watch</code>.</p>
+          </a>
+        </div>
+
+        <h2 id="extensibility">Extensibility</h2>
+
+        <p>Add capabilities Claudin doesn't ship with: on-demand instructions, shareable bundles of agents and hooks, or a live connection to an external tool.</p>
+
+        <div class="doc-card-grid">
+          <a href="skills.html" class="doc-card">
+            <span class="doc-card-stat">zero cost until invoked</span>
+            <div class="doc-card-title">Skills</div>
+            <p class="doc-card-desc"><code>SKILL.md</code> files invoked with <code>/name</code> or automatically by the model — plus the full list of bundled skills.</p>
+          </a>
+          <a href="plugins.html" class="doc-card">
+            <span class="doc-card-stat">install from a marketplace</span>
+            <div class="doc-card-title">Plugins</div>
+            <p class="doc-card-desc">Shareable bundles of agents, skills, hooks, and MCP servers, namespaced so they never collide with your own.</p>
+          </a>
+          <a href="mcp.html" class="doc-card">
+            <span class="doc-card-stat">project, user, or local scope</span>
+            <div class="doc-card-title">MCP</div>
+            <p class="doc-card-desc">Connect external tools and data as MCP servers — <code>.mcp.json</code>, OAuth, and the <code>claudin mcp</code> CLI.</p>
+          </a>
+        </div>
+
+        <h2 id="automation">Automation</h2>
+
+        <p>Run Claudin without someone watching: deterministic hooks on lifecycle events, plus scheduled prompts, stopping conditions, headless runs, and deep links.</p>
+
+        <div class="doc-card-grid">
+          <a href="hooks.html" class="doc-card">
+            <span class="doc-card-stat">27 lifecycle events</span>
+            <div class="doc-card-title">Hooks</div>
+            <p class="doc-card-desc">Shell commands, prompts, or HTTP calls that fire deterministically — not left to the model's discretion.</p>
+          </a>
+          <a href="automation.html" class="doc-card">
+            <span class="doc-card-stat">cron · goals · headless · deep links</span>
+            <div class="doc-card-title">Automation</div>
+            <p class="doc-card-desc">Scheduled prompts with <code>/loop</code>, stopping conditions with <code>/goal</code>, <code>-p</code> for scripts and CI, and <code>claude-cli://</code> links.</p>
           </a>
         </div>
 
@@ -261,6 +339,9 @@
         </div>
         <a href="#overview" class="docs-nav-link">Overview</a>
         <a href="#performance" class="docs-nav-link">Performance</a>
+        <a href="#agents-workflows" class="docs-nav-link">Agents &amp; workflows</a>
+        <a href="#extensibility" class="docs-nav-link">Extensibility</a>
+        <a href="#automation" class="docs-nav-link">Automation</a>
         <a href="#notifications" class="docs-nav-link">Notifications</a>
         <a href="#next-steps" class="docs-nav-link">Next steps</a>
       </aside>

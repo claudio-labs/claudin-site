@@ -5,39 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary meta -->
-  <title>Notifications — Claudin Docs</title>
-  <meta name="description" content="Claudin sends 'needs attention' notifications through iTerm2, Kitty, Ghostty, Windows Terminal, and native OS toasts. Auto-detects the best channel for your terminal." />
-  <meta name="keywords" content="claudin notifications, terminal notifications, iterm2 OSC 9, kitty OSC 99, ghostty OSC 777, notify-send, windows toast, claudin features" />
+  <title>Workflows — Claudin Docs</title>
+  <meta name="description" content="Claudin agent workflows: a phase state machine that runs agents automatically, triggered locally with /workflows or by GitHub issues and polling with claudin workflow watch." />
+  <meta name="keywords" content="claudin workflows, agent workflows, claudin workflow watch, claudin workflow run, .claudin/workflows, claudin features" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
-  <link rel="canonical" href="https://claudiolabs.ai/docs/notifications.html" />
+  <link rel="canonical" href="https://claudiolabs.ai/docs/workflows.html" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Claudin" />
-  <meta property="og:title" content="Notifications — Claudin Docs" />
-  <meta property="og:description" content="Claudin routes attention-required events through the best channel your terminal supports: OSC sequences, native OS toasts, or terminal bell." />
-  <meta property="og:url" content="https://claudiolabs.ai/docs/notifications.html" />
-  <meta property="og:image" content="https://claudiolabs.ai/og-notifications.png" />
+  <meta property="og:title" content="Workflows — Claudin Docs" />
+  <meta property="og:description" content="A phase state machine that runs agents automatically, triggered locally or by polling GitHub issues." />
+  <meta property="og:url" content="https://claudiolabs.ai/docs/workflows.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Claudin CLI — Notifications" />
+  <meta property="og:image:alt" content="Claudin CLI — Workflows" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Notifications — Claudin Docs" />
-  <meta name="twitter:description" content="Auto-detected terminal and OS notifications when Claudin needs your attention." />
-  <meta name="twitter:image" content="https://claudiolabs.ai/og-notifications.png" />
+  <meta name="twitter:title" content="Workflows — Claudin Docs" />
+  <meta name="twitter:description" content="A phase state machine that runs agents automatically, from your terminal or a labeled GitHub issue." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "Notifications — Claudin Docs",
-    "description": "Claudin routes attention-required events through OSC sequences, native OS toasts, or terminal bell — auto-detected per terminal.",
-    "url": "https://claudiolabs.ai/docs/notifications.html",
+    "headline": "Workflows — Claudin Docs",
+    "description": "How Claudin agent workflows work: the phase state machine, the /workflows TUI, and claudin workflow run/watch for local and GitHub-triggered runs.",
+    "url": "https://claudiolabs.ai/docs/workflows.html",
     "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
@@ -107,10 +107,10 @@
     <div class="section-tabs__inner">
       <a href="index.html" class="section-tabs__link">Overview</a>
       <a href="index.html#performance" class="section-tabs__link">Performance</a>
-      <a href="agents.html" class="section-tabs__link">Agents</a>
+      <a href="agents.html" class="section-tabs__link active">Agents</a>
       <a href="skills.html" class="section-tabs__link">Extensibility</a>
       <a href="hooks.html" class="section-tabs__link">Automation</a>
-      <a href="notifications.html" class="section-tabs__link active">Notifications</a>
+      <a href="notifications.html" class="section-tabs__link">Notifications</a>
     </div>
   </nav>
 
@@ -134,7 +134,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
             <a href="index.html" class="docs-nav-link">Overview</a>
-            <a href="notifications.html" class="docs-nav-link active">Notifications</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Performance</div>
@@ -146,7 +146,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="agents.html" class="docs-nav-link">Agents</a>
-            <a href="workflows.html" class="docs-nav-link">Workflows</a>
+            <a href="workflows.html" class="docs-nav-link active">Workflows</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Extensibility</div>
@@ -171,101 +171,88 @@
       <main class="docs-content" id="main-content">
 
         <div class="page-hero">
-          <h1>Notifications</h1>
-          <p class="page-hero__sub">Get pinged when Claudin needs you — through whatever channel your terminal and OS support.</p>
+          <h1>Workflows</h1>
+          <p class="page-hero__sub">A phase state machine that runs agents automatically — from your terminal, or triggered by a labeled GitHub issue.</p>
         </div>
 
         <h2 id="overview">Overview</h2>
 
-        <p>Claudin surfaces "needs attention" events — input required, long task finished, custom hook-driven events — through the best channel available in your environment. The router picks automatically by default, and you can override it via <code>/config</code> at any time.</p>
+        <p>A workflow, defined at <code>.claudin/workflows/&lt;name&gt;.md</code>, is a linear phase state machine — <code>backlog → development → code-review → test → done</code> by default. Each phase runs one or more agents in parallel, referencing the same <code>.claudin/agents/*.md</code> definitions used by the plain <a href="agents.html">Agent tool</a> or a built-in. A <code>main</code> orchestrator agent decides, after each phase, whether to <code>advance</code>, <code>refine</code> the current phase, or <code>handback</code> to an earlier one. Because each agent definition sets its own model, a single workflow can mix a cheap model for one phase with a stronger one for another — across providers, not just within one.</p>
 
-        <p>Identical notifications fired within 2 seconds are coalesced, so you won't get spammed when several tools complete in quick succession.</p>
+        <p>The underlying tools — <code>Workflow</code>, <code>ListWorkflows</code>, <code>WorkflowStatus</code> — are available to the model directly, the same way <code>Agent</code> is.</p>
 
-        <h2 id="channels">Channels</h2>
+        <h2 id="tui">The /workflows TUI</h2>
 
-        <p>Configured via <code>preferredNotifChannel</code> in <code>~/.claudin/settings.json</code> — or pick interactively under <code>/config</code> → <strong>Notifications</strong>.</p>
+        <p><code>/workflows</code> opens the same kind of interactive surface as <code>/agents</code>: a Library tab to create or edit <code>.claudin/workflows/*.md</code> definitions, and a way to watch a run in progress.</p>
 
-        <table>
-          <thead>
-            <tr><th>Channel</th><th>What it does</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>auto</code></td><td>Pick the best available channel for the detected terminal/OS (default).</td></tr>
-            <tr><td><code>iterm2</code></td><td>iTerm2 proprietary OSC 9 sub-protocol.</td></tr>
-            <tr><td><code>iterm2_with_bell</code></td><td>iTerm2 OSC 9 + raw BEL.</td></tr>
-            <tr><td><code>kitty</code></td><td>Kitty OSC 99 (3-part: title / body / focus).</td></tr>
-            <tr><td><code>ghostty</code></td><td>Ghostty OSC 777 <code>notify;…</code>.</td></tr>
-            <tr><td><code>os_native</code></td><td>Desktop toast via <code>notify-send</code> / <code>osascript</code> / Windows Toast XML.</td></tr>
-            <tr><td><code>terminal_bell</code></td><td>Raw <code>\x07</code> BEL.</td></tr>
-            <tr><td><code>notifications_disabled</code></td><td>No-op.</td></tr>
-          </tbody>
-        </table>
+        <h2 id="run">Running one locally</h2>
 
-        <h2 id="auto">Auto resolution</h2>
-
-        <p>The <code>auto</code> channel walks this decision tree:</p>
-
-        <ol>
-          <li><strong>Headless</strong> (<code>!process.stdout.isTTY</code>) → <code>os_native</code> (no terminal to talk to).</li>
-          <li><strong>OSC channel</strong> from the terminal matrix below, if one matches.</li>
-          <li><strong>Apple Terminal</strong> → try <code>os_native</code> (toast), else BEL if the user's Profile has Bell enabled.</li>
-          <li><strong>SSH session without WSL</strong> → skip OS-native (a toast on the remote host is invisible). The terminal-side OSC paths still work — the escape travels over the tty to your local emulator.</li>
-          <li>Otherwise → <code>os_native</code>.</li>
-        </ol>
-
-        <h2 id="matrix">Terminal → channel matrix</h2>
+        <pre><code>claudin workflow run &lt;name&gt; --task "&lt;text&gt;"</code></pre>
 
         <table>
           <thead>
-            <tr><th>Terminal</th><th>Channel chosen by <code>auto</code></th></tr>
+            <tr><th>Flag</th><th>Default</th><th>Meaning</th></tr>
           </thead>
           <tbody>
-            <tr><td>iTerm2</td><td><code>iterm2</code></td></tr>
-            <tr><td>kitty</td><td><code>kitty</code></td></tr>
-            <tr><td>Ghostty</td><td>OSC 777</td></tr>
-            <tr><td>WezTerm</td><td>OSC 777</td></tr>
-            <tr><td>foot (Wayland)</td><td>OSC 777</td></tr>
-            <tr><td>urxvt / rxvt</td><td>OSC 777</td></tr>
-            <tr><td>Windows Terminal</td><td>OSC 9 plain (WT renders raw OSC 9 as a toast)</td></tr>
-            <tr><td>ConEmu</td><td>OSC 9 plain</td></tr>
-            <tr><td>Apple Terminal</td><td><code>os_native</code> (osascript) → fallback BEL</td></tr>
-            <tr><td>Alacritty</td><td><code>os_native</code></td></tr>
-            <tr><td>GNOME Terminal / Konsole / Terminator / Tilix / xterm</td><td><code>os_native</code></td></tr>
-            <tr><td>Anything else</td><td><code>os_native</code> (best-effort)</td></tr>
+            <tr><td><code>--task &lt;text&gt;</code></td><td>required</td><td>The task seeding the workflow.</td></tr>
+            <tr><td><code>--worktree</code></td><td>off</td><td>Run in an isolated git worktree instead of the working tree.</td></tr>
+            <tr><td><code>--pr</code></td><td>off</td><td>On success: commit, push, and open a PR with <code>gh</code>.</td></tr>
+            <tr><td><code>--base &lt;branch&gt;</code></td><td>remote default</td><td>PR base branch.</td></tr>
+            <tr><td><code>--report &lt;file&gt;</code></td><td>temp file</td><td>Where to write the markdown run report.</td></tr>
           </tbody>
         </table>
 
-        <h2 id="os-native">OS-native backends</h2>
+        <p>Exit codes: <code>0</code> reached <code>done</code>, <code>1</code> finished without reaching it (or threw), <code>2</code> unknown or invalid workflow (bad structure, or references an unknown agent), or worktree-creation failure.</p>
+
+        <h2 id="watch">Triggering from external events</h2>
+
+        <p><code>claudin workflow watch</code> polls a source and spawns a <code>workflow run … --worktree --pr</code> for each new trigger, one at a time, each in its own isolated worktree. This is outbound polling only — there's no inbound webhook server and no open port.</p>
+
+        <pre><code>claudin workflow watch --workflow &lt;name&gt; [flags]</code></pre>
 
         <table>
           <thead>
-            <tr><th>Platform</th><th>Primary</th><th>Fallback</th></tr>
+            <tr><th>Flag</th><th>Default</th><th>Meaning</th></tr>
           </thead>
           <tbody>
-            <tr><td>macOS</td><td><code>terminal-notifier</code> (if installed via brew)</td><td><code>osascript -e 'display notification …'</code></td></tr>
-            <tr><td>Linux</td><td><code>notify-send</code> (libnotify)</td><td><code>kdialog --passivepopup</code></td></tr>
-            <tr><td>Windows 10/11</td><td><code>powershell.exe</code> Toast XML via <code>-EncodedCommand</code> (built-in WinRT, no module dep)</td><td>—</td></tr>
-            <tr><td>WSL</td><td>Same Toast XML over <code>powershell.exe</code> interop</td><td>—</td></tr>
+            <tr><td><code>--source &lt;source&gt;</code></td><td><code>github</code></td><td><code>github</code> / <code>url</code> / <code>command</code></td></tr>
+            <tr><td><code>--label &lt;label&gt;</code></td><td><code>claudin</code></td><td>(github) issue label that triggers a run.</td></tr>
+            <tr><td><code>--url &lt;url&gt;</code></td><td>—</td><td>(url) endpoint to poll.</td></tr>
+            <tr><td><code>--command &lt;cmd&gt;</code></td><td>—</td><td>(command) local shell command to poll, reads stdout.</td></tr>
+            <tr><td><code>--match &lt;regex&gt;</code></td><td>—</td><td>Only trigger when title+body matches.</td></tr>
+            <tr><td><code>--interval &lt;seconds&gt;</code></td><td><code>30</code></td><td>Poll interval, floored at 5s.</td></tr>
+            <tr><td><code>--base &lt;branch&gt;</code></td><td>remote default</td><td>Passed through to each run.</td></tr>
           </tbody>
         </table>
 
-        <p>The Windows Toast payload is base64-encoded as UTF-16LE before being passed to <code>powershell.exe -EncodedCommand</code> — that avoids both XML and shell-quoting pitfalls. AppleScript and Toast XML payloads are escaped accordingly.</p>
+        <table>
+          <thead>
+            <tr><th>Source</th><th>Polls</th><th>Reports back</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>github</code></td><td><code>gh issue list --label &lt;label&gt; --state open</code></td><td>Comments the PR URL on the issue.</td></tr>
+            <tr><td><code>url</code></td><td><code>GET &lt;url&gt;</code></td><td>—</td></tr>
+            <tr><td><code>command</code></td><td>Runs <code>&lt;cmd&gt;</code>, reads stdout</td><td>—</td></tr>
+          </tbody>
+        </table>
 
-        <h2 id="hooks">Hooks</h2>
+        <p>GitHub auth goes through your local <code>gh</code> CLI — there's no separate token to configure, just make sure <code>gh auth status</code> is green. Dedup/processed-trigger state is written to <code>.claudin/workflow-watch-state.json</code> (gitignored), so restarting the watcher doesn't replay old triggers.</p>
 
-        <p>Before routing to the channel above, Claudin fires <code>executeNotificationHooks()</code>. That lets you wire any custom backend — Slack, Pushover, ntfy, an internal webhook — via the <code>hooks</code> section of <code>~/.claudin/settings.json</code>. The channel runs <em>in addition to</em>, not <em>instead of</em>, the hook.</p>
+        <pre><code>claudin workflow run dev-flow --task "Add a --json flag to the status command" --worktree --pr
 
-        <p>Useful when you want both a desktop toast and a Slack DM, or when you're on a remote box and want the notification to reach your phone instead.</p>
+claudin workflow watch --workflow dev-flow --label claudin --interval 30
 
-        <h2 id="configuration">Configuration</h2>
+claudin workflow watch --workflow dev-flow --source url --url https://example.com/queue.json
 
-        <p>Open <code>/config</code> inside the Claudin REPL and pick a channel under <strong>Notifications</strong>. Or edit <code>~/.claudin/settings.json</code> directly:</p>
+claudin workflow watch --workflow dev-flow --source command --command './scripts/next-task.sh' --match '^READY:'</code></pre>
 
-        <pre><code>{
-  "preferredNotifChannel": "auto"
-}</code></pre>
+        <h2 id="scope">Scope</h2>
 
-        <p>Set to any of the channels listed above. Omit the key (or leave it at <code>auto</code>) for automatic detection.</p>
+        <p>What's covered today: local polling across the three sources above, <code>--match</code> filtering, per-job worktree isolation, PR-out plus issue-comment report-back, deterministic exit codes, atomic dedup state. Deliberately out of scope: an inbound webhook server, parallel/multi-tenant jobs, non-GitHub forges with report-back, sandbox enforcement, and a committed GitHub Action template.</p>
+
+        <h2 id="vs-claude-code">Differences from Claude Code</h2>
+
+        <p>Claude Code's automation path here is GitHub Actions — a committed workflow YAML, a hosted runner, triggered by an <code>@claude</code> mention. Claudin's watcher runs entirely on a machine you control, with no YAML and no runner: <code>claudin workflow watch</code> is a local process polling a source you choose (GitHub issues by label, a URL, or a command), and every run it spawns is isolated to its own git worktree.</p>
 
       </main>
 
@@ -276,12 +263,11 @@
           <svg class="docs-toc-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <a href="#overview" class="docs-nav-link">Overview</a>
-        <a href="#channels" class="docs-nav-link">Channels</a>
-        <a href="#auto" class="docs-nav-link">Auto resolution</a>
-        <a href="#matrix" class="docs-nav-link">Terminal matrix</a>
-        <a href="#os-native" class="docs-nav-link">OS-native backends</a>
-        <a href="#hooks" class="docs-nav-link">Hooks</a>
-        <a href="#configuration" class="docs-nav-link">Configuration</a>
+        <a href="#tui" class="docs-nav-link">The /workflows TUI</a>
+        <a href="#run" class="docs-nav-link">Running one locally</a>
+        <a href="#watch" class="docs-nav-link">External events</a>
+        <a href="#scope" class="docs-nav-link">Scope</a>
+        <a href="#vs-claude-code" class="docs-nav-link">Vs. Claude Code</a>
       </aside>
     </div>
   </div>

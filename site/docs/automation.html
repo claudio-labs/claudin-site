@@ -5,39 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary meta -->
-  <title>Notifications — Claudin Docs</title>
-  <meta name="description" content="Claudin sends 'needs attention' notifications through iTerm2, Kitty, Ghostty, Windows Terminal, and native OS toasts. Auto-detects the best channel for your terminal." />
-  <meta name="keywords" content="claudin notifications, terminal notifications, iterm2 OSC 9, kitty OSC 99, ghostty OSC 777, notify-send, windows toast, claudin features" />
+  <title>Automation — Claudin Docs</title>
+  <meta name="description" content="Run Claudin without someone watching: scheduled prompts with cron and /loop, stopping conditions with /goal, headless mode for scripts and CI, and claude-cli:// deep links." />
+  <meta name="keywords" content="claudin automation, claudin cron, claudin loop, claudin goal, claudin headless, claude-cli deep link, claudin features" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
-  <link rel="canonical" href="https://claudiolabs.ai/docs/notifications.html" />
+  <link rel="canonical" href="https://claudiolabs.ai/docs/automation.html" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Claudin" />
-  <meta property="og:title" content="Notifications — Claudin Docs" />
-  <meta property="og:description" content="Claudin routes attention-required events through the best channel your terminal supports: OSC sequences, native OS toasts, or terminal bell." />
-  <meta property="og:url" content="https://claudiolabs.ai/docs/notifications.html" />
-  <meta property="og:image" content="https://claudiolabs.ai/og-notifications.png" />
+  <meta property="og:title" content="Automation — Claudin Docs" />
+  <meta property="og:description" content="Scheduled prompts, stopping conditions, headless runs, and deep links." />
+  <meta property="og:url" content="https://claudiolabs.ai/docs/automation.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Claudin CLI — Notifications" />
+  <meta property="og:image:alt" content="Claudin CLI — Automation" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Notifications — Claudin Docs" />
-  <meta name="twitter:description" content="Auto-detected terminal and OS notifications when Claudin needs your attention." />
-  <meta name="twitter:image" content="https://claudiolabs.ai/og-notifications.png" />
+  <meta name="twitter:title" content="Automation — Claudin Docs" />
+  <meta name="twitter:description" content="Scheduled prompts, stopping conditions, headless runs, and deep links." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "Notifications — Claudin Docs",
-    "description": "Claudin routes attention-required events through OSC sequences, native OS toasts, or terminal bell — auto-detected per terminal.",
-    "url": "https://claudiolabs.ai/docs/notifications.html",
+    "headline": "Automation — Claudin Docs",
+    "description": "Claudin's smaller automation surface: cron and /loop scheduling, the /goal stopping condition, headless mode, and claude-cli:// deep links.",
+    "url": "https://claudiolabs.ai/docs/automation.html",
     "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
@@ -109,8 +109,8 @@
       <a href="index.html#performance" class="section-tabs__link">Performance</a>
       <a href="agents.html" class="section-tabs__link">Agents</a>
       <a href="skills.html" class="section-tabs__link">Extensibility</a>
-      <a href="hooks.html" class="section-tabs__link">Automation</a>
-      <a href="notifications.html" class="section-tabs__link active">Notifications</a>
+      <a href="hooks.html" class="section-tabs__link active">Automation</a>
+      <a href="notifications.html" class="section-tabs__link">Notifications</a>
     </div>
   </nav>
 
@@ -134,7 +134,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
             <a href="index.html" class="docs-nav-link">Overview</a>
-            <a href="notifications.html" class="docs-nav-link active">Notifications</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Performance</div>
@@ -157,7 +157,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Automation</div>
             <a href="hooks.html" class="docs-nav-link">Hooks</a>
-            <a href="automation.html" class="docs-nav-link">Automation</a>
+            <a href="automation.html" class="docs-nav-link active">Automation</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Reference</div>
@@ -171,101 +171,65 @@
       <main class="docs-content" id="main-content">
 
         <div class="page-hero">
-          <h1>Notifications</h1>
-          <p class="page-hero__sub">Get pinged when Claudin needs you — through whatever channel your terminal and OS support.</p>
+          <h1>Automation</h1>
+          <p class="page-hero__sub">Scheduled prompts, stopping conditions, headless runs, and deep links — the smaller pieces that make Claudin run without someone watching.</p>
         </div>
 
-        <h2 id="overview">Overview</h2>
+        <h2 id="scheduling">Scheduled prompts</h2>
 
-        <p>Claudin surfaces "needs attention" events — input required, long task finished, custom hook-driven events — through the best channel available in your environment. The router picks automatically by default, and you can override it via <code>/config</code> at any time.</p>
+        <p>Three tools handle it: <code>CronCreate</code> takes a standard 5-field cron expression, a prompt to enqueue when it fires, and two flags — <code>recurring</code> (default <code>true</code>) and <code>durable</code> (default <code>false</code>). A non-durable job lives only in the running process's memory; a durable one is written to <code>.claudin/scheduled_tasks.json</code> and survives a restart. <code>CronList</code> and <code>CronDelete</code> round it out. There's no daemon — everything fires from inside a running Claudin process, on a timer, only while the REPL is idle. If Claudin isn't running, a durable job just waits on disk until the next launch, at which point missed one-shots surface for catch-up. <code>CLAUDE_CODE_DISABLE_CRON=1</code> turns the whole scheduler off.</p>
 
-        <p>Identical notifications fired within 2 seconds are coalesced, so you won't get spammed when several tools complete in quick succession.</p>
+        <p>A related, narrower tool, <code>ScheduleWakeup</code>, handles one-shot, session-only delays — no cron expression, just a delay in seconds and an optional prompt.</p>
 
-        <h2 id="channels">Channels</h2>
-
-        <p>Configured via <code>preferredNotifChannel</code> in <code>~/.claudin/settings.json</code> — or pick interactively under <code>/config</code> → <strong>Notifications</strong>.</p>
+        <p>The <code>/loop</code> skill sits on top of both, picking the right primitive for how it's called:</p>
 
         <table>
           <thead>
-            <tr><th>Channel</th><th>What it does</th></tr>
+            <tr><th>Usage</th><th>What happens</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>auto</code></td><td>Pick the best available channel for the detected terminal/OS (default).</td></tr>
-            <tr><td><code>iterm2</code></td><td>iTerm2 proprietary OSC 9 sub-protocol.</td></tr>
-            <tr><td><code>iterm2_with_bell</code></td><td>iTerm2 OSC 9 + raw BEL.</td></tr>
-            <tr><td><code>kitty</code></td><td>Kitty OSC 99 (3-part: title / body / focus).</td></tr>
-            <tr><td><code>ghostty</code></td><td>Ghostty OSC 777 <code>notify;…</code>.</td></tr>
-            <tr><td><code>os_native</code></td><td>Desktop toast via <code>notify-send</code> / <code>osascript</code> / Windows Toast XML.</td></tr>
-            <tr><td><code>terminal_bell</code></td><td>Raw <code>\x07</code> BEL.</td></tr>
-            <tr><td><code>notifications_disabled</code></td><td>No-op.</td></tr>
+            <tr><td><code>/loop 5m check the deploy</code></td><td>Fixed interval — a recurring <code>CronCreate</code> job.</td></tr>
+            <tr><td><code>/loop check the deploy</code></td><td>Dynamic — the model picks its own delay each iteration via <code>ScheduleWakeup</code>.</td></tr>
+            <tr><td><code>/loop</code> (no arguments)</td><td>Maintenance mode — reads <code>.claudin/loop.md</code> or <code>~/.claudin/loop.md</code> if present, else a built-in maintenance prompt.</td></tr>
           </tbody>
         </table>
 
-        <h2 id="auto">Auto resolution</h2>
+        <h2 id="goals">Stopping conditions</h2>
 
-        <p>The <code>auto</code> channel walks this decision tree:</p>
+        <p><code>/goal &lt;condition&gt;</code> sets a session-scoped stopping condition: every time the assistant tries to stop, an LLM judge checks the transcript against the condition and blocks the stop until it holds, then clears itself automatically. <code>/goal clear</code> ends it early; bare <code>/goal</code> shows the condition, iteration count, elapsed time, and tokens used. It works in headless mode too — there's no user around to say "keep going," so the goal does that instead. Limits: 4,000-character condition, 120-second judge timeout, 50 iterations interactive / 10 non-interactive.</p>
 
-        <ol>
-          <li><strong>Headless</strong> (<code>!process.stdout.isTTY</code>) → <code>os_native</code> (no terminal to talk to).</li>
-          <li><strong>OSC channel</strong> from the terminal matrix below, if one matches.</li>
-          <li><strong>Apple Terminal</strong> → try <code>os_native</code> (toast), else BEL if the user's Profile has Bell enabled.</li>
-          <li><strong>SSH session without WSL</strong> → skip OS-native (a toast on the remote host is invisible). The terminal-side OSC paths still work — the escape travels over the tty to your local emulator.</li>
-          <li>Otherwise → <code>os_native</code>.</li>
-        </ol>
+        <p>This is a different mechanism from Task tracking (<code>TaskCreate</code>/<code>TaskList</code>/<code>TaskGet</code>) — Tasks track discrete units of work; a goal gates whether the session is allowed to stop at all, implemented as a session-scoped <code>Stop</code> hook.</p>
 
-        <h2 id="matrix">Terminal → channel matrix</h2>
+        <h2 id="headless">Headless mode</h2>
+
+        <p><code>-p</code>/<code>--print</code> runs Claudin non-interactively — the prompt is a separate argument (<code>claudin -p "text"</code>) — for scripts, CI, or piping into other tools.</p>
 
         <table>
           <thead>
-            <tr><th>Terminal</th><th>Channel chosen by <code>auto</code></th></tr>
+            <tr><th>Flag</th><th>Meaning</th></tr>
           </thead>
           <tbody>
-            <tr><td>iTerm2</td><td><code>iterm2</code></td></tr>
-            <tr><td>kitty</td><td><code>kitty</code></td></tr>
-            <tr><td>Ghostty</td><td>OSC 777</td></tr>
-            <tr><td>WezTerm</td><td>OSC 777</td></tr>
-            <tr><td>foot (Wayland)</td><td>OSC 777</td></tr>
-            <tr><td>urxvt / rxvt</td><td>OSC 777</td></tr>
-            <tr><td>Windows Terminal</td><td>OSC 9 plain (WT renders raw OSC 9 as a toast)</td></tr>
-            <tr><td>ConEmu</td><td>OSC 9 plain</td></tr>
-            <tr><td>Apple Terminal</td><td><code>os_native</code> (osascript) → fallback BEL</td></tr>
-            <tr><td>Alacritty</td><td><code>os_native</code></td></tr>
-            <tr><td>GNOME Terminal / Konsole / Terminator / Tilix / xterm</td><td><code>os_native</code></td></tr>
-            <tr><td>Anything else</td><td><code>os_native</code> (best-effort)</td></tr>
+            <tr><td><code>--output-format text|json|stream-json</code></td><td>Structured output, including cost.</td></tr>
+            <tr><td><code>--input-format stream-json</code></td><td>Stream input in, requires <code>stream-json</code> output.</td></tr>
+            <tr><td><code>--include-partial-messages</code></td><td>Stream partial assistant messages (requires <code>-p</code> + <code>stream-json</code>).</td></tr>
+            <tr><td><code>--no-session-persistence</code></td><td>Don't write session state to disk.</td></tr>
           </tbody>
         </table>
 
-        <h2 id="os-native">OS-native backends</h2>
+        <pre><code>claudin -p "summarize the failing tests" --output-format json</code></pre>
 
-        <table>
-          <thead>
-            <tr><th>Platform</th><th>Primary</th><th>Fallback</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>macOS</td><td><code>terminal-notifier</code> (if installed via brew)</td><td><code>osascript -e 'display notification …'</code></td></tr>
-            <tr><td>Linux</td><td><code>notify-send</code> (libnotify)</td><td><code>kdialog --passivepopup</code></td></tr>
-            <tr><td>Windows 10/11</td><td><code>powershell.exe</code> Toast XML via <code>-EncodedCommand</code> (built-in WinRT, no module dep)</td><td>—</td></tr>
-            <tr><td>WSL</td><td>Same Toast XML over <code>powershell.exe</code> interop</td><td>—</td></tr>
-          </tbody>
-        </table>
+        <h2 id="deep-links">Launch from a link</h2>
 
-        <p>The Windows Toast payload is base64-encoded as UTF-16LE before being passed to <code>powershell.exe -EncodedCommand</code> — that avoids both XML and shell-quoting pitfalls. AppleScript and Toast XML payloads are escaped accordingly.</p>
+        <p>A <code>claude-cli://open</code> URI opens a new terminal window with Claudin already running:</p>
 
-        <h2 id="hooks">Hooks</h2>
+        <pre><code>claude-cli://open
+claude-cli://open?q=hello+world
+claude-cli://open?q=fix+tests&amp;repo=owner/repo
+claude-cli://open?cwd=/path/to/project</code></pre>
 
-        <p>Before routing to the channel above, Claudin fires <code>executeNotificationHooks()</code>. That lets you wire any custom backend — Slack, Pushover, ntfy, an internal webhook — via the <code>hooks</code> section of <code>~/.claudin/settings.json</code>. The channel runs <em>in addition to</em>, not <em>instead of</em>, the hook.</p>
+        <p><code>q</code> pre-fills the prompt input — it does not submit it, so a link can't silently trigger an instruction without someone pressing Enter. <code>cwd</code> sets the working directory directly; <code>repo</code> resolves an <code>owner/repo</code> slug against locally known clones if <code>cwd</code> isn't given.</p>
 
-        <p>Useful when you want both a desktop toast and a Slack DM, or when you're on a remote box and want the notification to reach your phone instead.</p>
-
-        <h2 id="configuration">Configuration</h2>
-
-        <p>Open <code>/config</code> inside the Claudin REPL and pick a channel under <strong>Notifications</strong>. Or edit <code>~/.claudin/settings.json</code> directly:</p>
-
-        <pre><code>{
-  "preferredNotifChannel": "auto"
-}</code></pre>
-
-        <p>Set to any of the channels listed above. Omit the key (or leave it at <code>auto</code>) for automatic detection.</p>
+        <p>A separate scheme, <code>cc://</code>, is unrelated: it's for connecting to an already-running Claudin session on another machine (<code>claudin open &lt;cc-url&gt;</code>), not for pre-filling a prompt from a webpage.</p>
 
       </main>
 
@@ -275,13 +239,10 @@
           <div class="docs-nav-section-title">On this page</div>
           <svg class="docs-toc-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-        <a href="#overview" class="docs-nav-link">Overview</a>
-        <a href="#channels" class="docs-nav-link">Channels</a>
-        <a href="#auto" class="docs-nav-link">Auto resolution</a>
-        <a href="#matrix" class="docs-nav-link">Terminal matrix</a>
-        <a href="#os-native" class="docs-nav-link">OS-native backends</a>
-        <a href="#hooks" class="docs-nav-link">Hooks</a>
-        <a href="#configuration" class="docs-nav-link">Configuration</a>
+        <a href="#scheduling" class="docs-nav-link">Scheduled prompts</a>
+        <a href="#goals" class="docs-nav-link">Stopping conditions</a>
+        <a href="#headless" class="docs-nav-link">Headless mode</a>
+        <a href="#deep-links" class="docs-nav-link">Launch from a link</a>
       </aside>
     </div>
   </div>

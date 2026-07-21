@@ -5,39 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary meta -->
-  <title>Notifications — Claudin Docs</title>
-  <meta name="description" content="Claudin sends 'needs attention' notifications through iTerm2, Kitty, Ghostty, Windows Terminal, and native OS toasts. Auto-detects the best channel for your terminal." />
-  <meta name="keywords" content="claudin notifications, terminal notifications, iterm2 OSC 9, kitty OSC 99, ghostty OSC 777, notify-send, windows toast, claudin features" />
+  <title>Skills — Claudin Docs</title>
+  <meta name="description" content="Claudin skills: on-demand SKILL.md instructions invoked with /name or automatically by the model. Directory conventions, frontmatter schema, and the full list of bundled skills." />
+  <meta name="keywords" content="claudin skills, SKILL.md, slash commands, .claudin/skills, custom skills, claudin features" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
-  <link rel="canonical" href="https://claudiolabs.ai/docs/notifications.html" />
+  <link rel="canonical" href="https://claudiolabs.ai/docs/skills.html" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Claudin" />
-  <meta property="og:title" content="Notifications — Claudin Docs" />
-  <meta property="og:description" content="Claudin routes attention-required events through the best channel your terminal supports: OSC sequences, native OS toasts, or terminal bell." />
-  <meta property="og:url" content="https://claudiolabs.ai/docs/notifications.html" />
-  <meta property="og:image" content="https://claudiolabs.ai/og-notifications.png" />
+  <meta property="og:title" content="Skills — Claudin Docs" />
+  <meta property="og:description" content="On-demand instructions, invoked by name or by the model, with zero context cost until used." />
+  <meta property="og:url" content="https://claudiolabs.ai/docs/skills.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Claudin CLI — Notifications" />
+  <meta property="og:image:alt" content="Claudin CLI — Skills" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Notifications — Claudin Docs" />
-  <meta name="twitter:description" content="Auto-detected terminal and OS notifications when Claudin needs your attention." />
-  <meta name="twitter:image" content="https://claudiolabs.ai/og-notifications.png" />
+  <meta name="twitter:title" content="Skills — Claudin Docs" />
+  <meta name="twitter:description" content="SKILL.md files, invoked by name or by the model — the bundled list and how to write your own." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "Notifications — Claudin Docs",
-    "description": "Claudin routes attention-required events through OSC sequences, native OS toasts, or terminal bell — auto-detected per terminal.",
-    "url": "https://claudiolabs.ai/docs/notifications.html",
+    "headline": "Skills — Claudin Docs",
+    "description": "How Claudin skills work: SKILL.md directory conventions, frontmatter schema, invocation, and the bundled skill list.",
+    "url": "https://claudiolabs.ai/docs/skills.html",
     "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
@@ -108,9 +108,9 @@
       <a href="index.html" class="section-tabs__link">Overview</a>
       <a href="index.html#performance" class="section-tabs__link">Performance</a>
       <a href="agents.html" class="section-tabs__link">Agents</a>
-      <a href="skills.html" class="section-tabs__link">Extensibility</a>
+      <a href="skills.html" class="section-tabs__link active">Extensibility</a>
       <a href="hooks.html" class="section-tabs__link">Automation</a>
-      <a href="notifications.html" class="section-tabs__link active">Notifications</a>
+      <a href="notifications.html" class="section-tabs__link">Notifications</a>
     </div>
   </nav>
 
@@ -134,7 +134,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
             <a href="index.html" class="docs-nav-link">Overview</a>
-            <a href="notifications.html" class="docs-nav-link active">Notifications</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Performance</div>
@@ -150,7 +150,7 @@
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Extensibility</div>
-            <a href="skills.html" class="docs-nav-link">Skills</a>
+            <a href="skills.html" class="docs-nav-link active">Skills</a>
             <a href="plugins.html" class="docs-nav-link">Plugins</a>
             <a href="mcp.html" class="docs-nav-link">MCP</a>
           </div>
@@ -171,101 +171,119 @@
       <main class="docs-content" id="main-content">
 
         <div class="page-hero">
-          <h1>Notifications</h1>
-          <p class="page-hero__sub">Get pinged when Claudin needs you — through whatever channel your terminal and OS support.</p>
+          <h1>Skills</h1>
+          <p class="page-hero__sub">On-demand instructions, invoked with <code>/name</code> or automatically when the model decides they apply — zero context cost until they run.</p>
         </div>
 
         <h2 id="overview">Overview</h2>
 
-        <p>Claudin surfaces "needs attention" events — input required, long task finished, custom hook-driven events — through the best channel available in your environment. The router picks automatically by default, and you can override it via <code>/config</code> at any time.</p>
+        <p>A skill is a single <code>SKILL.md</code> file: frontmatter for configuration, markdown for the instructions. It only enters the model's context when invoked — either by the user typing <code>/&lt;name&gt;</code>, or by the model itself, if the skill's <code>description</code> matches what's being asked. Reference files sitting next to <code>SKILL.md</code> (scripts, longer docs) aren't auto-loaded either — the skill body reads them on demand, so a skill with a lot of supporting material still costs nothing until the part it needs is actually read.</p>
 
-        <p>Identical notifications fired within 2 seconds are coalesced, so you won't get spammed when several tools complete in quick succession.</p>
-
-        <h2 id="channels">Channels</h2>
-
-        <p>Configured via <code>preferredNotifChannel</code> in <code>~/.claudin/settings.json</code> — or pick interactively under <code>/config</code> → <strong>Notifications</strong>.</p>
+        <h2 id="directories">Directories</h2>
 
         <table>
           <thead>
-            <tr><th>Channel</th><th>What it does</th></tr>
+            <tr><th>Location</th><th>Path</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>auto</code></td><td>Pick the best available channel for the detected terminal/OS (default).</td></tr>
-            <tr><td><code>iterm2</code></td><td>iTerm2 proprietary OSC 9 sub-protocol.</td></tr>
-            <tr><td><code>iterm2_with_bell</code></td><td>iTerm2 OSC 9 + raw BEL.</td></tr>
-            <tr><td><code>kitty</code></td><td>Kitty OSC 99 (3-part: title / body / focus).</td></tr>
-            <tr><td><code>ghostty</code></td><td>Ghostty OSC 777 <code>notify;…</code>.</td></tr>
-            <tr><td><code>os_native</code></td><td>Desktop toast via <code>notify-send</code> / <code>osascript</code> / Windows Toast XML.</td></tr>
-            <tr><td><code>terminal_bell</code></td><td>Raw <code>\x07</code> BEL.</td></tr>
-            <tr><td><code>notifications_disabled</code></td><td>No-op.</td></tr>
+            <tr><td>Project</td><td><code>.claudin/skills/&lt;name&gt;/SKILL.md</code></td></tr>
+            <tr><td>Personal</td><td><code>~/.claudin/skills/&lt;name&gt;/SKILL.md</code></td></tr>
+            <tr><td>Nested categories</td><td><code>.claudin/skills/&lt;category&gt;/&lt;name&gt;/SKILL.md</code></td></tr>
+            <tr><td>Legacy (deprecated)</td><td><code>.claudin/commands/*.md</code> — still loads, prefer <code>skills/</code></td></tr>
           </tbody>
         </table>
 
-        <h2 id="auto">Auto resolution</h2>
+        <p>The file must be named exactly <code>SKILL.md</code>, in its own subdirectory — a stray <code>skills/foo.md</code> at the top level is silently ignored.</p>
 
-        <p>The <code>auto</code> channel walks this decision tree:</p>
-
-        <ol>
-          <li><strong>Headless</strong> (<code>!process.stdout.isTTY</code>) → <code>os_native</code> (no terminal to talk to).</li>
-          <li><strong>OSC channel</strong> from the terminal matrix below, if one matches.</li>
-          <li><strong>Apple Terminal</strong> → try <code>os_native</code> (toast), else BEL if the user's Profile has Bell enabled.</li>
-          <li><strong>SSH session without WSL</strong> → skip OS-native (a toast on the remote host is invisible). The terminal-side OSC paths still work — the escape travels over the tty to your local emulator.</li>
-          <li>Otherwise → <code>os_native</code>.</li>
-        </ol>
-
-        <h2 id="matrix">Terminal → channel matrix</h2>
+        <h2 id="frontmatter">Frontmatter</h2>
 
         <table>
           <thead>
-            <tr><th>Terminal</th><th>Channel chosen by <code>auto</code></th></tr>
+            <tr><th>Field</th><th>Notes</th></tr>
           </thead>
           <tbody>
-            <tr><td>iTerm2</td><td><code>iterm2</code></td></tr>
-            <tr><td>kitty</td><td><code>kitty</code></td></tr>
-            <tr><td>Ghostty</td><td>OSC 777</td></tr>
-            <tr><td>WezTerm</td><td>OSC 777</td></tr>
-            <tr><td>foot (Wayland)</td><td>OSC 777</td></tr>
-            <tr><td>urxvt / rxvt</td><td>OSC 777</td></tr>
-            <tr><td>Windows Terminal</td><td>OSC 9 plain (WT renders raw OSC 9 as a toast)</td></tr>
-            <tr><td>ConEmu</td><td>OSC 9 plain</td></tr>
-            <tr><td>Apple Terminal</td><td><code>os_native</code> (osascript) → fallback BEL</td></tr>
-            <tr><td>Alacritty</td><td><code>os_native</code></td></tr>
-            <tr><td>GNOME Terminal / Konsole / Terminator / Tilix / xterm</td><td><code>os_native</code></td></tr>
-            <tr><td>Anything else</td><td><code>os_native</code> (best-effort)</td></tr>
+            <tr><td><code>name</code></td><td>Display name; defaults to the directory name.</td></tr>
+            <tr><td><code>description</code></td><td>What it does and when to use it — drives the <code>/skills</code> listing and model auto-invocation.</td></tr>
+            <tr><td><code>when_to_use</code></td><td>Extra trigger guidance for auto-invocation.</td></tr>
+            <tr><td><code>allowed-tools</code></td><td>Tool allowlist while the skill runs, e.g. <code>Read, Bash(git diff:*)</code>.</td></tr>
+            <tr><td><code>argument-hint</code></td><td>Composer hint, e.g. <code>[pr-number]</code>.</td></tr>
+            <tr><td><code>arguments</code></td><td>A string or list of names — each becomes a <code>$&lt;name&gt;</code> placeholder in the body.</td></tr>
+            <tr><td><code>disable-model-invocation</code></td><td><code>true</code> — user can invoke it, the model can't.</td></tr>
+            <tr><td><code>user-invocable</code></td><td><code>false</code> — hides it from the <code>/</code> menu; model-only.</td></tr>
+            <tr><td><code>model</code>, <code>effort</code></td><td>Override the model or reasoning effort for this run.</td></tr>
+            <tr><td><code>context: fork</code>, <code>agent</code></td><td>Run the skill in a forked subagent, optionally a named one.</td></tr>
+            <tr><td><code>paths</code></td><td>Glob(s) — only surface this skill when matching files are in play.</td></tr>
+            <tr><td><code>hooks</code></td><td>Skill-scoped hooks, same schema as <code>settings.json</code>.</td></tr>
           </tbody>
         </table>
 
-        <h2 id="os-native">OS-native backends</h2>
+        <p>Body placeholders: <code>$ARGUMENTS</code> (everything typed after the name), <code>$0</code> / positional args, <code>$&lt;name&gt;</code> for a named argument, <code>${CLAUDE_SKILL_DIR}</code> for the skill's own directory, and inline <code>` `!`shell command`` `</code> execution before the prompt is sent (gated by <code>allowed-tools</code>).</p>
+
+        <pre><code>---
+name: my-skill
+description: What it does AND when to use it — this drives auto-invocation.
+---
+
+Instructions for the model...</code></pre>
+
+        <h2 id="invocation">Invocation</h2>
+
+        <ul>
+          <li><code>/&lt;name&gt;</code> — user-invoked, unless hidden by <code>disable-model-invocation</code> or <code>user-invocable: false</code>.</li>
+          <li>The <code>Skill</code> tool — model-invoked, when the <code>description</code> matches.</li>
+          <li><code>/skills</code> — lists everything currently loaded.</li>
+        </ul>
+
+        <p>A new skill dropped into an already-existing <code>skills/</code> directory is picked up by a live file watcher within seconds — no restart needed.</p>
+
+        <h2 id="vs-rules-agents">Skills vs. rules vs. agents</h2>
 
         <table>
           <thead>
-            <tr><th>Platform</th><th>Primary</th><th>Fallback</th></tr>
+            <tr><th></th><th>Skill</th><th>Rule</th><th>Agent</th></tr>
           </thead>
           <tbody>
-            <tr><td>macOS</td><td><code>terminal-notifier</code> (if installed via brew)</td><td><code>osascript -e 'display notification …'</code></td></tr>
-            <tr><td>Linux</td><td><code>notify-send</code> (libnotify)</td><td><code>kdialog --passivepopup</code></td></tr>
-            <tr><td>Windows 10/11</td><td><code>powershell.exe</code> Toast XML via <code>-EncodedCommand</code> (built-in WinRT, no module dep)</td><td>—</td></tr>
-            <tr><td>WSL</td><td>Same Toast XML over <code>powershell.exe</code> interop</td><td>—</td></tr>
+            <tr><td>Path</td><td><code>.claudin/skills/&lt;name&gt;/SKILL.md</code></td><td><code>.claudin/rules/&lt;topic&gt;.md</code></td><td><code>.claudin/agents/&lt;name&gt;.md</code></td></tr>
+            <tr><td>Loaded</td><td>On demand (invoked)</td><td>Every session, always or path-conditional</td><td>When delegated to</td></tr>
+            <tr><td>Frontmatter</td><td>See above</td><td>Just <code>paths</code> (glob); no <code>paths</code>, or <code>paths: "**"</code>, means unconditional</td><td>See the <a href="agents.html">Agents</a> page</td></tr>
           </tbody>
         </table>
 
-        <p>The Windows Toast payload is base64-encoded as UTF-16LE before being passed to <code>powershell.exe -EncodedCommand</code> — that avoids both XML and shell-quoting pitfalls. AppleScript and Toast XML payloads are escaped accordingly.</p>
+        <p>The <code>/create</code> skill authors any of the three from a plain-language description, straight into the right spot under <code>.claudin/</code> or <code>~/.claudin/</code>.</p>
 
-        <h2 id="hooks">Hooks</h2>
+        <h2 id="bundled">Bundled skills</h2>
 
-        <p>Before routing to the channel above, Claudin fires <code>executeNotificationHooks()</code>. That lets you wire any custom backend — Slack, Pushover, ntfy, an internal webhook — via the <code>hooks</code> section of <code>~/.claudin/settings.json</code>. The channel runs <em>in addition to</em>, not <em>instead of</em>, the hook.</p>
+        <table>
+          <thead>
+            <tr><th>Skill</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>update-config</code></td><td>Configure the harness via <code>settings.json</code> — hooks, permissions, env vars.</td></tr>
+            <tr><td><code>code-review</code></td><td>Review the current diff for correctness bugs and cleanup opportunities; supports inline PR comments and auto-fix.</td></tr>
+            <tr><td><code>simplify</code></td><td>Clean up changed code for reuse and clarity — quality only, not bug-hunting.</td></tr>
+            <tr><td><code>verify</code></td><td>Build and run the app, drive it to the changed code, confirm the fix works.</td></tr>
+            <tr><td><code>run</code></td><td>Launch the project's app and drive it to the change, end to end.</td></tr>
+            <tr><td><code>batch</code></td><td>Research/plan a large-scale change, then execute it in parallel across 5–30 isolated worktree agents that each open a PR.</td></tr>
+            <tr><td><code>fewer-permission-prompts</code></td><td>Scan recent transcripts for common read-only calls and allowlist them.</td></tr>
+            <tr><td><code>create</code></td><td>Author or refine skills, rules, and agents in <code>.claudin/</code>.</td></tr>
+            <tr><td><code>loop</code></td><td>Run a prompt on a fixed or dynamic interval — see <a href="automation.html#scheduling">Automation</a>.</td></tr>
+            <tr><td><code>debug</code></td><td>Turn on debug logging and help diagnose an issue.</td></tr>
+            <tr><td><code>keybindings-help</code></td><td>Customize keyboard shortcuts via <code>~/.claudin/keybindings.json</code>. Model-only, hidden from the <code>/</code> menu. Currently gated to an internal preview — most users will see "not enabled" rather than working customization.</td></tr>
+          </tbody>
+        </table>
 
-        <p>Useful when you want both a desktop toast and a Slack DM, or when you're on a remote box and want the notification to reach your phone instead.</p>
+        <h2 id="try-it">Try it</h2>
 
-        <h2 id="configuration">Configuration</h2>
+        <pre><code>mkdir -p .claudin/skills/summarize-tests
+cat > .claudin/skills/summarize-tests/SKILL.md &lt;&lt;'EOF'
+---
+name: summarize-tests
+description: Summarize the last test run's failures in one paragraph.
+---
+Read the most recent test output and summarize only the failures.
+EOF</code></pre>
 
-        <p>Open <code>/config</code> inside the Claudin REPL and pick a channel under <strong>Notifications</strong>. Or edit <code>~/.claudin/settings.json</code> directly:</p>
-
-        <pre><code>{
-  "preferredNotifChannel": "auto"
-}</code></pre>
-
-        <p>Set to any of the channels listed above. Omit the key (or leave it at <code>auto</code>) for automatic detection.</p>
+        <p>Then run <code>/summarize-tests</code>, or just ask for it in plain language and let the model pick it up on its own.</p>
 
       </main>
 
@@ -276,12 +294,12 @@
           <svg class="docs-toc-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <a href="#overview" class="docs-nav-link">Overview</a>
-        <a href="#channels" class="docs-nav-link">Channels</a>
-        <a href="#auto" class="docs-nav-link">Auto resolution</a>
-        <a href="#matrix" class="docs-nav-link">Terminal matrix</a>
-        <a href="#os-native" class="docs-nav-link">OS-native backends</a>
-        <a href="#hooks" class="docs-nav-link">Hooks</a>
-        <a href="#configuration" class="docs-nav-link">Configuration</a>
+        <a href="#directories" class="docs-nav-link">Directories</a>
+        <a href="#frontmatter" class="docs-nav-link">Frontmatter</a>
+        <a href="#invocation" class="docs-nav-link">Invocation</a>
+        <a href="#vs-rules-agents" class="docs-nav-link">Vs. rules &amp; agents</a>
+        <a href="#bundled" class="docs-nav-link">Bundled skills</a>
+        <a href="#try-it" class="docs-nav-link">Try it</a>
       </aside>
     </div>
   </div>

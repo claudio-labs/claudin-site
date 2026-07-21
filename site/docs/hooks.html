@@ -5,39 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary meta -->
-  <title>Notifications — Claudin Docs</title>
-  <meta name="description" content="Claudin sends 'needs attention' notifications through iTerm2, Kitty, Ghostty, Windows Terminal, and native OS toasts. Auto-detects the best channel for your terminal." />
-  <meta name="keywords" content="claudin notifications, terminal notifications, iterm2 OSC 9, kitty OSC 99, ghostty OSC 777, notify-send, windows toast, claudin features" />
+  <title>Hooks — Claudin Docs</title>
+  <meta name="description" content="Claudin hooks: deterministic shell commands, prompts, or HTTP calls that fire on 27 lifecycle events, configured in settings.json — not left to the model's discretion." />
+  <meta name="keywords" content="claudin hooks, settings.json hooks, PreToolUse, PostToolUse, claudin automation, claudin features" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
-  <link rel="canonical" href="https://claudiolabs.ai/docs/notifications.html" />
+  <link rel="canonical" href="https://claudiolabs.ai/docs/hooks.html" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Claudin" />
-  <meta property="og:title" content="Notifications — Claudin Docs" />
-  <meta property="og:description" content="Claudin routes attention-required events through the best channel your terminal supports: OSC sequences, native OS toasts, or terminal bell." />
-  <meta property="og:url" content="https://claudiolabs.ai/docs/notifications.html" />
-  <meta property="og:image" content="https://claudiolabs.ai/og-notifications.png" />
+  <meta property="og:title" content="Hooks — Claudin Docs" />
+  <meta property="og:description" content="Deterministic automation on 27 lifecycle events, configured in settings.json." />
+  <meta property="og:url" content="https://claudiolabs.ai/docs/hooks.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Claudin CLI — Notifications" />
+  <meta property="og:image:alt" content="Claudin CLI — Hooks" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Notifications — Claudin Docs" />
-  <meta name="twitter:description" content="Auto-detected terminal and OS notifications when Claudin needs your attention." />
-  <meta name="twitter:image" content="https://claudiolabs.ai/og-notifications.png" />
+  <meta name="twitter:title" content="Hooks — Claudin Docs" />
+  <meta name="twitter:description" content="Shell commands, prompts, or HTTP calls that fire deterministically on lifecycle events." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "Notifications — Claudin Docs",
-    "description": "Claudin routes attention-required events through OSC sequences, native OS toasts, or terminal bell — auto-detected per terminal.",
-    "url": "https://claudiolabs.ai/docs/notifications.html",
+    "headline": "Hooks — Claudin Docs",
+    "description": "How Claudin hooks work: settings.json schema, the full event list, matcher syntax, action types, and blocking behavior.",
+    "url": "https://claudiolabs.ai/docs/hooks.html",
     "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
@@ -109,8 +109,8 @@
       <a href="index.html#performance" class="section-tabs__link">Performance</a>
       <a href="agents.html" class="section-tabs__link">Agents</a>
       <a href="skills.html" class="section-tabs__link">Extensibility</a>
-      <a href="hooks.html" class="section-tabs__link">Automation</a>
-      <a href="notifications.html" class="section-tabs__link active">Notifications</a>
+      <a href="hooks.html" class="section-tabs__link active">Automation</a>
+      <a href="notifications.html" class="section-tabs__link">Notifications</a>
     </div>
   </nav>
 
@@ -134,7 +134,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
             <a href="index.html" class="docs-nav-link">Overview</a>
-            <a href="notifications.html" class="docs-nav-link active">Notifications</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Performance</div>
@@ -156,7 +156,7 @@
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Automation</div>
-            <a href="hooks.html" class="docs-nav-link">Hooks</a>
+            <a href="hooks.html" class="docs-nav-link active">Hooks</a>
             <a href="automation.html" class="docs-nav-link">Automation</a>
           </div>
           <div class="docs-nav-section">
@@ -171,101 +171,121 @@
       <main class="docs-content" id="main-content">
 
         <div class="page-hero">
-          <h1>Notifications</h1>
-          <p class="page-hero__sub">Get pinged when Claudin needs you — through whatever channel your terminal and OS support.</p>
+          <h1>Hooks</h1>
+          <p class="page-hero__sub">Shell commands, prompts, or HTTP calls that fire on lifecycle events — deterministic automation, not left to the model's discretion.</p>
         </div>
 
         <h2 id="overview">Overview</h2>
 
-        <p>Claudin surfaces "needs attention" events — input required, long task finished, custom hook-driven events — through the best channel available in your environment. The router picks automatically by default, and you can override it via <code>/config</code> at any time.</p>
+        <p>A hook is something Claudin runs automatically at a defined point in the session — after a file edit, before a tool call, when a session starts — instead of relying on the model to remember to do it. Hooks live under a <code>hooks</code> key in a settings file, keyed by event name.</p>
 
-        <p>Identical notifications fired within 2 seconds are coalesced, so you won't get spammed when several tools complete in quick succession.</p>
-
-        <h2 id="channels">Channels</h2>
-
-        <p>Configured via <code>preferredNotifChannel</code> in <code>~/.claudin/settings.json</code> — or pick interactively under <code>/config</code> → <strong>Notifications</strong>.</p>
+        <h2 id="config">Config</h2>
 
         <table>
           <thead>
-            <tr><th>Channel</th><th>What it does</th></tr>
+            <tr><th>Source</th><th>Path</th><th>Git</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>auto</code></td><td>Pick the best available channel for the detected terminal/OS (default).</td></tr>
-            <tr><td><code>iterm2</code></td><td>iTerm2 proprietary OSC 9 sub-protocol.</td></tr>
-            <tr><td><code>iterm2_with_bell</code></td><td>iTerm2 OSC 9 + raw BEL.</td></tr>
-            <tr><td><code>kitty</code></td><td>Kitty OSC 99 (3-part: title / body / focus).</td></tr>
-            <tr><td><code>ghostty</code></td><td>Ghostty OSC 777 <code>notify;…</code>.</td></tr>
-            <tr><td><code>os_native</code></td><td>Desktop toast via <code>notify-send</code> / <code>osascript</code> / Windows Toast XML.</td></tr>
-            <tr><td><code>terminal_bell</code></td><td>Raw <code>\x07</code> BEL.</td></tr>
-            <tr><td><code>notifications_disabled</code></td><td>No-op.</td></tr>
+            <tr><td>Project</td><td><code>.claudin/settings.json</code></td><td>Commit</td></tr>
+            <tr><td>Project-local</td><td><code>.claudin/settings.local.json</code></td><td>Gitignore</td></tr>
+            <tr><td>User</td><td><code>~/.claudin/settings.json</code></td><td>—</td></tr>
+            <tr><td>Managed</td><td>OS-specific absolute path, e.g. <code>/etc/claude-code/managed-settings.json</code> on Linux</td><td>Enterprise</td></tr>
           </tbody>
         </table>
 
-        <h2 id="auto">Auto resolution</h2>
-
-        <p>The <code>auto</code> channel walks this decision tree:</p>
-
-        <ol>
-          <li><strong>Headless</strong> (<code>!process.stdout.isTTY</code>) → <code>os_native</code> (no terminal to talk to).</li>
-          <li><strong>OSC channel</strong> from the terminal matrix below, if one matches.</li>
-          <li><strong>Apple Terminal</strong> → try <code>os_native</code> (toast), else BEL if the user's Profile has Bell enabled.</li>
-          <li><strong>SSH session without WSL</strong> → skip OS-native (a toast on the remote host is invisible). The terminal-side OSC paths still work — the escape travels over the tty to your local emulator.</li>
-          <li>Otherwise → <code>os_native</code>.</li>
-        </ol>
-
-        <h2 id="matrix">Terminal → channel matrix</h2>
-
-        <table>
-          <thead>
-            <tr><th>Terminal</th><th>Channel chosen by <code>auto</code></th></tr>
-          </thead>
-          <tbody>
-            <tr><td>iTerm2</td><td><code>iterm2</code></td></tr>
-            <tr><td>kitty</td><td><code>kitty</code></td></tr>
-            <tr><td>Ghostty</td><td>OSC 777</td></tr>
-            <tr><td>WezTerm</td><td>OSC 777</td></tr>
-            <tr><td>foot (Wayland)</td><td>OSC 777</td></tr>
-            <tr><td>urxvt / rxvt</td><td>OSC 777</td></tr>
-            <tr><td>Windows Terminal</td><td>OSC 9 plain (WT renders raw OSC 9 as a toast)</td></tr>
-            <tr><td>ConEmu</td><td>OSC 9 plain</td></tr>
-            <tr><td>Apple Terminal</td><td><code>os_native</code> (osascript) → fallback BEL</td></tr>
-            <tr><td>Alacritty</td><td><code>os_native</code></td></tr>
-            <tr><td>GNOME Terminal / Konsole / Terminator / Tilix / xterm</td><td><code>os_native</code></td></tr>
-            <tr><td>Anything else</td><td><code>os_native</code> (best-effort)</td></tr>
-          </tbody>
-        </table>
-
-        <h2 id="os-native">OS-native backends</h2>
-
-        <table>
-          <thead>
-            <tr><th>Platform</th><th>Primary</th><th>Fallback</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>macOS</td><td><code>terminal-notifier</code> (if installed via brew)</td><td><code>osascript -e 'display notification …'</code></td></tr>
-            <tr><td>Linux</td><td><code>notify-send</code> (libnotify)</td><td><code>kdialog --passivepopup</code></td></tr>
-            <tr><td>Windows 10/11</td><td><code>powershell.exe</code> Toast XML via <code>-EncodedCommand</code> (built-in WinRT, no module dep)</td><td>—</td></tr>
-            <tr><td>WSL</td><td>Same Toast XML over <code>powershell.exe</code> interop</td><td>—</td></tr>
-          </tbody>
-        </table>
-
-        <p>The Windows Toast payload is base64-encoded as UTF-16LE before being passed to <code>powershell.exe -EncodedCommand</code> — that avoids both XML and shell-quoting pitfalls. AppleScript and Toast XML payloads are escaped accordingly.</p>
-
-        <h2 id="hooks">Hooks</h2>
-
-        <p>Before routing to the channel above, Claudin fires <code>executeNotificationHooks()</code>. That lets you wire any custom backend — Slack, Pushover, ntfy, an internal webhook — via the <code>hooks</code> section of <code>~/.claudin/settings.json</code>. The channel runs <em>in addition to</em>, not <em>instead of</em>, the hook.</p>
-
-        <p>Useful when you want both a desktop toast and a Slack DM, or when you're on a remote box and want the notification to reach your phone instead.</p>
-
-        <h2 id="configuration">Configuration</h2>
-
-        <p>Open <code>/config</code> inside the Claudin REPL and pick a channel under <strong>Notifications</strong>. Or edit <code>~/.claudin/settings.json</code> directly:</p>
+        <p>Precedence when the same event/matcher shows up in more than one source: user &lt; project &lt; local &lt; the <code>--settings</code> flag &lt; managed.</p>
 
         <pre><code>{
-  "preferredNotifChannel": "auto"
+  "hooks": {
+    "&lt;EventName&gt;": [
+      { "matcher": "&lt;pattern&gt;", "hooks": [ { "type": "command", "command": "..." } ] }
+    ]
+  }
 }</code></pre>
 
-        <p>Set to any of the channels listed above. Omit the key (or leave it at <code>auto</code>) for automatic detection.</p>
+        <p><code>/hooks</code> opens a read-only browser of everything currently configured.</p>
+
+        <h2 id="events">Events</h2>
+
+        <p>27 event names, grouped by what they're for:</p>
+
+        <table>
+          <thead>
+            <tr><th>Group</th><th>Events</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Tool calls</td><td><code>PreToolUse</code>, <code>PostToolUse</code>, <code>PostToolUseFailure</code>, <code>PermissionRequest</code>, <code>PermissionDenied</code></td></tr>
+            <tr><td>Session lifecycle</td><td><code>SessionStart</code>, <code>SessionEnd</code>, <code>Setup</code>, <code>Stop</code>, <code>StopFailure</code>, <code>InstructionsLoaded</code></td></tr>
+            <tr><td>Subagents &amp; tasks</td><td><code>SubagentStart</code>, <code>SubagentStop</code>, <code>TaskCreated</code>, <code>TaskCompleted</code>, <code>TeammateIdle</code></td></tr>
+            <tr><td>Context &amp; input</td><td><code>UserPromptSubmit</code>, <code>PreCompact</code>, <code>PostCompact</code>, <code>Elicitation</code>, <code>ElicitationResult</code></td></tr>
+            <tr><td>Environment</td><td><code>ConfigChange</code>, <code>WorktreeCreate</code>, <code>WorktreeRemove</code>, <code>CwdChanged</code>, <code>FileChanged</code></td></tr>
+            <tr><td>Misc</td><td><code>Notification</code></td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="matcher">Matcher syntax</h2>
+
+        <p>For tool events, <code>matcher</code> matches a tool name — <code>"Write"</code>, <code>"Write|Edit"</code>, <code>"Bash"</code>, empty for every tool. Non-tool events use their own matcher values, e.g. <code>PreCompact</code>/<code>PostCompact</code> use <code>"manual"</code> or <code>"auto"</code>. Each individual hook can also carry its own <code>if</code> field, using permission-rule syntax (like <code>"Bash(git *)"</code>) to conditionally gate that one hook regardless of the matcher.</p>
+
+        <h2 id="actions">Action types</h2>
+
+        <table>
+          <thead>
+            <tr><th>Type</th><th>Fields</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>command</code></td><td><code>command</code>, <code>if</code>, <code>shell</code>, <code>timeout</code>, <code>once</code>, <code>async</code>, <code>asyncRewake</code></td><td>Runs a shell command. <code>asyncRewake</code> runs it in the background and wakes the model if it exits with code 2.</td></tr>
+            <tr><td><code>prompt</code></td><td><code>prompt</code> (uses <code>$ARGUMENTS</code>), <code>timeout</code>, <code>model</code></td><td>LLM-evaluated condition — works on tool events and lifecycle events like <code>Stop</code>.</td></tr>
+            <tr><td><code>agent</code></td><td><code>prompt</code>, <code>timeout</code> (default 60s), <code>model</code> (default Haiku)</td><td>Agentic verifier hook, runs with tools — works on tool events and lifecycle events like <code>Stop</code>.</td></tr>
+            <tr><td><code>http</code></td><td><code>url</code>, <code>headers</code>, <code>allowedEnvVars</code></td><td>POSTs the hook input JSON to a URL.</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="io">Input &amp; output</h2>
+
+        <p>Every hook gets a common base on stdin — <code>session_id</code>, <code>transcript_path</code>, <code>cwd</code>, <code>hook_event_name</code>, plus optional <code>permission_mode</code>/<code>agent_id</code>/<code>agent_type</code> — with extra fields layered on per event. Tool events (<code>PreToolUse</code>, <code>PostToolUse</code>, and friends) also carry <code>tool_name</code>, <code>tool_input</code>, and <code>tool_response</code>:</p>
+
+        <pre><code>{
+  "session_id": "abc123",
+  "transcript_path": "/path/to/transcript.jsonl",
+  "cwd": "/path/to/project",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Write",
+  "tool_input": { "file_path": "/path/to/file.txt", "content": "..." },
+  "tool_response": { "success": true }
+}</code></pre>
+
+        <p>To block or steer, a hook writes JSON to stdout:</p>
+
+        <pre><code>{
+  "decision": "block",
+  "reason": "Explanation shown to the model",
+  "hookSpecificOutput": {
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "permissionDecisionReason": "..."
+  }
+}</code></pre>
+
+        <h2 id="example">Example</h2>
+
+        <p>Run <code>prettier</code> after every write or edit:</p>
+
+        <pre><code>{
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Write|Edit",
+      "hooks": [{
+        "type": "command",
+        "command": "jq -r '.tool_response.filePath // .tool_input.file_path' | { read -r f; prettier --write \"$f\"; } 2>/dev/null || true"
+      }]
+    }]
+  }
+}</code></pre>
+
+        <h2 id="chains">Hook chains</h2>
+
+        <p>A separate, opt-in layer sits on top of ordinary hooks: instead of a matcher firing a command, a rules engine reacts to hook <em>outcomes</em> — a failed tool call, a completed task — with declarative remediation (spawn a fallback agent, notify the team, warm up remote capacity). Configured at <code>.claudin/hook-chains.json</code>, disabled by default. Most setups won't need this; reach for it only once plain hooks stop being enough.</p>
 
       </main>
 
@@ -276,12 +296,13 @@
           <svg class="docs-toc-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <a href="#overview" class="docs-nav-link">Overview</a>
-        <a href="#channels" class="docs-nav-link">Channels</a>
-        <a href="#auto" class="docs-nav-link">Auto resolution</a>
-        <a href="#matrix" class="docs-nav-link">Terminal matrix</a>
-        <a href="#os-native" class="docs-nav-link">OS-native backends</a>
-        <a href="#hooks" class="docs-nav-link">Hooks</a>
-        <a href="#configuration" class="docs-nav-link">Configuration</a>
+        <a href="#config" class="docs-nav-link">Config</a>
+        <a href="#events" class="docs-nav-link">Events</a>
+        <a href="#matcher" class="docs-nav-link">Matcher syntax</a>
+        <a href="#actions" class="docs-nav-link">Action types</a>
+        <a href="#io" class="docs-nav-link">Input &amp; output</a>
+        <a href="#example" class="docs-nav-link">Example</a>
+        <a href="#chains" class="docs-nav-link">Hook chains</a>
       </aside>
     </div>
   </div>

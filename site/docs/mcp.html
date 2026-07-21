@@ -5,39 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary meta -->
-  <title>Notifications — Claudin Docs</title>
-  <meta name="description" content="Claudin sends 'needs attention' notifications through iTerm2, Kitty, Ghostty, Windows Terminal, and native OS toasts. Auto-detects the best channel for your terminal." />
-  <meta name="keywords" content="claudin notifications, terminal notifications, iterm2 OSC 9, kitty OSC 99, ghostty OSC 777, notify-send, windows toast, claudin features" />
+  <title>MCP — Claudin Docs</title>
+  <meta name="description" content="Connect Claudin to external tools and data over the Model Context Protocol: .mcp.json server configs, project/user/local scopes, OAuth, and the claudin mcp CLI." />
+  <meta name="keywords" content="claudin mcp, model context protocol, .mcp.json, mcp servers, claudin features" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
-  <link rel="canonical" href="https://claudiolabs.ai/docs/notifications.html" />
+  <link rel="canonical" href="https://claudiolabs.ai/docs/mcp.html" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Claudin" />
-  <meta property="og:title" content="Notifications — Claudin Docs" />
-  <meta property="og:description" content="Claudin routes attention-required events through the best channel your terminal supports: OSC sequences, native OS toasts, or terminal bell." />
-  <meta property="og:url" content="https://claudiolabs.ai/docs/notifications.html" />
-  <meta property="og:image" content="https://claudiolabs.ai/og-notifications.png" />
+  <meta property="og:title" content="MCP — Claudin Docs" />
+  <meta property="og:description" content="MCP server configs, scopes, OAuth, and the claudin mcp CLI." />
+  <meta property="og:url" content="https://claudiolabs.ai/docs/mcp.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Claudin CLI — Notifications" />
+  <meta property="og:image:alt" content="Claudin CLI — MCP" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Notifications — Claudin Docs" />
-  <meta name="twitter:description" content="Auto-detected terminal and OS notifications when Claudin needs your attention." />
-  <meta name="twitter:image" content="https://claudiolabs.ai/og-notifications.png" />
+  <meta name="twitter:title" content="MCP — Claudin Docs" />
+  <meta name="twitter:description" content="Connect Claudin to external tools and data over the Model Context Protocol." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "Notifications — Claudin Docs",
-    "description": "Claudin routes attention-required events through OSC sequences, native OS toasts, or terminal bell — auto-detected per terminal.",
-    "url": "https://claudiolabs.ai/docs/notifications.html",
+    "headline": "MCP — Claudin Docs",
+    "description": "How Claudin connects to MCP servers: config scopes, transports, OAuth, and the claudin mcp CLI.",
+    "url": "https://claudiolabs.ai/docs/mcp.html",
     "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
@@ -108,9 +108,9 @@
       <a href="index.html" class="section-tabs__link">Overview</a>
       <a href="index.html#performance" class="section-tabs__link">Performance</a>
       <a href="agents.html" class="section-tabs__link">Agents</a>
-      <a href="skills.html" class="section-tabs__link">Extensibility</a>
+      <a href="skills.html" class="section-tabs__link active">Extensibility</a>
       <a href="hooks.html" class="section-tabs__link">Automation</a>
-      <a href="notifications.html" class="section-tabs__link active">Notifications</a>
+      <a href="notifications.html" class="section-tabs__link">Notifications</a>
     </div>
   </nav>
 
@@ -134,7 +134,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
             <a href="index.html" class="docs-nav-link">Overview</a>
-            <a href="notifications.html" class="docs-nav-link active">Notifications</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Performance</div>
@@ -152,7 +152,7 @@
             <div class="docs-nav-section-title">Extensibility</div>
             <a href="skills.html" class="docs-nav-link">Skills</a>
             <a href="plugins.html" class="docs-nav-link">Plugins</a>
-            <a href="mcp.html" class="docs-nav-link">MCP</a>
+            <a href="mcp.html" class="docs-nav-link active">MCP</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Automation</div>
@@ -171,101 +171,90 @@
       <main class="docs-content" id="main-content">
 
         <div class="page-hero">
-          <h1>Notifications</h1>
-          <p class="page-hero__sub">Get pinged when Claudin needs you — through whatever channel your terminal and OS support.</p>
+          <h1>MCP</h1>
+          <p class="page-hero__sub">Connect Claudin to external tools and data as MCP servers — per project, per user, or per machine.</p>
         </div>
 
         <h2 id="overview">Overview</h2>
 
-        <p>Claudin surfaces "needs attention" events — input required, long task finished, custom hook-driven events — through the best channel available in your environment. The router picks automatically by default, and you can override it via <code>/config</code> at any time.</p>
+        <p>The Model Context Protocol (MCP) lets Claudin talk to external systems — issue trackers, databases, internal APIs — as servers it connects to over stdio, HTTP, or SSE. Once connected, a server's tools show up to the model as <code>mcp__&lt;server&gt;__&lt;tool&gt;</code>, its prompts as <code>mcp__&lt;server&gt;__&lt;prompt&gt;</code>, and any skills it exposes as <code>&lt;server&gt;:&lt;skill&gt;</code>.</p>
 
-        <p>Identical notifications fired within 2 seconds are coalesced, so you won't get spammed when several tools complete in quick succession.</p>
-
-        <h2 id="channels">Channels</h2>
-
-        <p>Configured via <code>preferredNotifChannel</code> in <code>~/.claudin/settings.json</code> — or pick interactively under <code>/config</code> → <strong>Notifications</strong>.</p>
+        <h2 id="config">Config scopes</h2>
 
         <table>
           <thead>
-            <tr><th>Channel</th><th>What it does</th></tr>
+            <tr><th>Scope</th><th>Where it lives</th><th>Shared?</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>auto</code></td><td>Pick the best available channel for the detected terminal/OS (default).</td></tr>
-            <tr><td><code>iterm2</code></td><td>iTerm2 proprietary OSC 9 sub-protocol.</td></tr>
-            <tr><td><code>iterm2_with_bell</code></td><td>iTerm2 OSC 9 + raw BEL.</td></tr>
-            <tr><td><code>kitty</code></td><td>Kitty OSC 99 (3-part: title / body / focus).</td></tr>
-            <tr><td><code>ghostty</code></td><td>Ghostty OSC 777 <code>notify;…</code>.</td></tr>
-            <tr><td><code>os_native</code></td><td>Desktop toast via <code>notify-send</code> / <code>osascript</code> / Windows Toast XML.</td></tr>
-            <tr><td><code>terminal_bell</code></td><td>Raw <code>\x07</code> BEL.</td></tr>
-            <tr><td><code>notifications_disabled</code></td><td>No-op.</td></tr>
+            <tr><td><code>project</code></td><td><code>.mcp.json</code> at the project root (walked up from cwd)</td><td>Yes — commit it.</td></tr>
+            <tr><td><code>user</code></td><td><code>mcpServers</code> in the global config, <code>~/.claudin/config.json</code></td><td>No — this machine, every project.</td></tr>
+            <tr><td><code>local</code></td><td><code>mcpServers</code> under this project's entry in <code>~/.claudin/config.json</code></td><td>No — this machine, this project only.</td></tr>
+            <tr><td><code>enterprise</code></td><td>A managed file, exclusive control</td><td>Org-wide, blocks <code>mcp add</code> while active.</td></tr>
           </tbody>
         </table>
 
-        <h2 id="auto">Auto resolution</h2>
+        <p><code>mcpServers</code> is not a field of <code>.claudin/settings.json</code> — that file only holds MCP <em>policy</em>: <code>enabledMcpjsonServers</code>, <code>disabledMcpjsonServers</code>, <code>enableAllProjectMcpServers</code>, and enterprise <code>allowedMcpServers</code>/<code>deniedMcpServers</code>.</p>
 
-        <p>The <code>auto</code> channel walks this decision tree:</p>
+        <h2 id="schema">Server config schema</h2>
 
-        <ol>
-          <li><strong>Headless</strong> (<code>!process.stdout.isTTY</code>) → <code>os_native</code> (no terminal to talk to).</li>
-          <li><strong>OSC channel</strong> from the terminal matrix below, if one matches.</li>
-          <li><strong>Apple Terminal</strong> → try <code>os_native</code> (toast), else BEL if the user's Profile has Bell enabled.</li>
-          <li><strong>SSH session without WSL</strong> → skip OS-native (a toast on the remote host is invisible). The terminal-side OSC paths still work — the escape travels over the tty to your local emulator.</li>
-          <li>Otherwise → <code>os_native</code>.</li>
-        </ol>
+        <pre><code>// stdio (default, no "type" needed)
+{ "command": "npx", "args": ["my-mcp-server"], "env": { "API_KEY": "xxx" } }
 
-        <h2 id="matrix">Terminal → channel matrix</h2>
+// http
+{ "type": "http", "url": "https://mcp.sentry.dev/mcp" }
 
-        <table>
-          <thead>
-            <tr><th>Terminal</th><th>Channel chosen by <code>auto</code></th></tr>
-          </thead>
-          <tbody>
-            <tr><td>iTerm2</td><td><code>iterm2</code></td></tr>
-            <tr><td>kitty</td><td><code>kitty</code></td></tr>
-            <tr><td>Ghostty</td><td>OSC 777</td></tr>
-            <tr><td>WezTerm</td><td>OSC 777</td></tr>
-            <tr><td>foot (Wayland)</td><td>OSC 777</td></tr>
-            <tr><td>urxvt / rxvt</td><td>OSC 777</td></tr>
-            <tr><td>Windows Terminal</td><td>OSC 9 plain (WT renders raw OSC 9 as a toast)</td></tr>
-            <tr><td>ConEmu</td><td>OSC 9 plain</td></tr>
-            <tr><td>Apple Terminal</td><td><code>os_native</code> (osascript) → fallback BEL</td></tr>
-            <tr><td>Alacritty</td><td><code>os_native</code></td></tr>
-            <tr><td>GNOME Terminal / Konsole / Terminator / Tilix / xterm</td><td><code>os_native</code></td></tr>
-            <tr><td>Anything else</td><td><code>os_native</code> (best-effort)</td></tr>
-          </tbody>
-        </table>
+// sse
+{ "type": "sse", "url": "https://example.com/sse", "headers": { "Authorization": "Bearer ..." } }</code></pre>
 
-        <h2 id="os-native">OS-native backends</h2>
-
-        <table>
-          <thead>
-            <tr><th>Platform</th><th>Primary</th><th>Fallback</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>macOS</td><td><code>terminal-notifier</code> (if installed via brew)</td><td><code>osascript -e 'display notification …'</code></td></tr>
-            <tr><td>Linux</td><td><code>notify-send</code> (libnotify)</td><td><code>kdialog --passivepopup</code></td></tr>
-            <tr><td>Windows 10/11</td><td><code>powershell.exe</code> Toast XML via <code>-EncodedCommand</code> (built-in WinRT, no module dep)</td><td>—</td></tr>
-            <tr><td>WSL</td><td>Same Toast XML over <code>powershell.exe</code> interop</td><td>—</td></tr>
-          </tbody>
-        </table>
-
-        <p>The Windows Toast payload is base64-encoded as UTF-16LE before being passed to <code>powershell.exe -EncodedCommand</code> — that avoids both XML and shell-quoting pitfalls. AppleScript and Toast XML payloads are escaped accordingly.</p>
-
-        <h2 id="hooks">Hooks</h2>
-
-        <p>Before routing to the channel above, Claudin fires <code>executeNotificationHooks()</code>. That lets you wire any custom backend — Slack, Pushover, ntfy, an internal webhook — via the <code>hooks</code> section of <code>~/.claudin/settings.json</code>. The channel runs <em>in addition to</em>, not <em>instead of</em>, the hook.</p>
-
-        <p>Useful when you want both a desktop toast and a Slack DM, or when you're on a remote box and want the notification to reach your phone instead.</p>
-
-        <h2 id="configuration">Configuration</h2>
-
-        <p>Open <code>/config</code> inside the Claudin REPL and pick a channel under <strong>Notifications</strong>. Or edit <code>~/.claudin/settings.json</code> directly:</p>
+        <p>Example <code>.mcp.json</code>:</p>
 
         <pre><code>{
-  "preferredNotifChannel": "auto"
+  "mcpServers": {
+    "sentry": { "type": "http", "url": "https://mcp.sentry.dev/mcp" },
+    "my-server": { "command": "npx", "args": ["my-mcp-server"], "env": { "API_KEY": "xxx" } }
+  }
 }</code></pre>
 
-        <p>Set to any of the channels listed above. Omit the key (or leave it at <code>auto</code>) for automatic detection.</p>
+        <h2 id="cli">CLI</h2>
+
+        <table>
+          <thead>
+            <tr><th>Command</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>claudin mcp add &lt;name&gt; &lt;commandOrUrl&gt; [args...]</code></td><td>Add a server. <code>-s/--scope local|user|project</code>, <code>-t/--transport stdio|sse|http</code>, <code>-e/--env KEY=value</code>, <code>-H/--header "K: V"</code>.</td></tr>
+            <tr><td><code>claudin mcp add-json &lt;name&gt; &lt;json&gt;</code></td><td>Add a server from a raw JSON string.</td></tr>
+            <tr><td><code>claudin mcp add-from-claude-desktop</code></td><td>Import servers from a local Claude Desktop config (macOS/WSL).</td></tr>
+            <tr><td><code>claudin mcp remove &lt;name&gt;</code></td><td>Remove a server. <code>-s/--scope</code>.</td></tr>
+            <tr><td><code>claudin mcp list</code></td><td>List configured servers (health-checks stdio servers — only run this in trusted directories).</td></tr>
+            <tr><td><code>claudin mcp get &lt;name&gt;</code></td><td>Show detail for one server.</td></tr>
+            <tr><td><code>claudin mcp reset-project-choices</code></td><td>Reset approved/rejected <code>.mcp.json</code> server choices for this project.</td></tr>
+            <tr><td><code>claudin mcp doctor</code></td><td>Diagnose connection issues.</td></tr>
+            <tr><td><code>claudin mcp serve</code></td><td>Run Claudin itself as an MCP server.</td></tr>
+          </tbody>
+        </table>
+
+        <p>Inside the REPL, <code>/mcp</code> opens the same management surface — list, enable/disable, or inspect a server's tools without leaving the session.</p>
+
+        <h2 id="oauth">OAuth</h2>
+
+        <p><code>http</code> and <code>sse</code> servers support a full OAuth2 flow. Add auth-time flags when you register the server:</p>
+
+        <pre><code>claudin mcp add sentry https://mcp.sentry.dev/mcp \
+  --transport http \
+  --client-id "..." \
+  --client-secret "..." \
+  --callback-port 3000</code></pre>
+
+        <p>Once a server needs auth, Claudin surfaces it as a pseudo-tool: calling it returns an authorization URL to open, then reconnects and swaps in the server's real tools once the callback completes — no separate login step to remember.</p>
+
+        <h2 id="resources">Resources</h2>
+
+        <p>Two tools read MCP resources directly: one lists what a server exposes, optionally filtered to a single server; the other reads a specific resource by URI. Binary resources are decoded and written to disk — the model gets a file path back, not an inline base64 blob.</p>
+
+        <h2 id="vs-claude-code">Differences from Claude Code</h2>
+
+        <p>The <code>.mcp.json</code> format and the <code>mcp__server__tool</code> naming convention are the same. What's Claudin-specific: the CLI is <code>claudin mcp</code> instead of <code>claude mcp</code>; the global config lives at <code>~/.claudin/config.json</code> instead of <code>~/.claude.json</code>; and there's a fourth scope, <code>local</code>, for machine-and-project-specific servers that shouldn't be committed but also shouldn't apply to every project on the machine.</p>
 
       </main>
 
@@ -276,12 +265,12 @@
           <svg class="docs-toc-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <a href="#overview" class="docs-nav-link">Overview</a>
-        <a href="#channels" class="docs-nav-link">Channels</a>
-        <a href="#auto" class="docs-nav-link">Auto resolution</a>
-        <a href="#matrix" class="docs-nav-link">Terminal matrix</a>
-        <a href="#os-native" class="docs-nav-link">OS-native backends</a>
-        <a href="#hooks" class="docs-nav-link">Hooks</a>
-        <a href="#configuration" class="docs-nav-link">Configuration</a>
+        <a href="#config" class="docs-nav-link">Config scopes</a>
+        <a href="#schema" class="docs-nav-link">Server config schema</a>
+        <a href="#cli" class="docs-nav-link">CLI</a>
+        <a href="#oauth" class="docs-nav-link">OAuth</a>
+        <a href="#resources" class="docs-nav-link">Resources</a>
+        <a href="#vs-claude-code" class="docs-nav-link">Vs. Claude Code</a>
       </aside>
     </div>
   </div>
