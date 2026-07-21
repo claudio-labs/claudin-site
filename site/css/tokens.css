@@ -67,7 +67,7 @@
   --space-32: 8rem;
 
   /* Layout */
-  --container-max: 1200px;
+  --container-max: 1440px;
   --container-pad: clamp(1.25rem, 5vw, 3rem);
   --nav-height: 4rem;
 
