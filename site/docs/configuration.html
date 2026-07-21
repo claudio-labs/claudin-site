@@ -5,40 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary meta -->
-  <title>Automation: Scheduling, Goals &amp; Headless — Claudin Docs</title>
-  <meta name="description" content="Run Claudin without someone watching: scheduled prompts, /goal stopping conditions, headless mode for CI, and claude-cli:// deep links." />
-  <meta name="keywords" content="claudin automation, claudin cron, claudin loop, claudin goal, claudin headless, claude-cli deep link, claudin features" />
+  <title>Configuration: Settings, Permissions &amp; Models — Claudin Docs</title>
+  <meta name="description" content="Configure Claudin: layered settings.json, permissions, sandboxing, provider/model setup, fast mode, the advisor tool, output styles, and interface options." />
+  <meta name="keywords" content="claudin settings.json, claudin permissions, claudin sandbox, claudin provider configuration, claudin fast mode, claudin advisor tool, claudin output styles, claudin status line, claudin keybindings" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
-  <link rel="canonical" href="https://claudiolabs.ai/docs/automation.html" />
+  <link rel="canonical" href="https://claudiolabs.ai/docs/configuration.html" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Claudin" />
-  <meta property="og:title" content="Automation — Claudin Docs" />
-  <meta property="og:description" content="Scheduled prompts, stopping conditions, headless runs, and deep links." />
-  <meta property="og:url" content="https://claudiolabs.ai/docs/automation.html" />
+  <meta property="og:title" content="Configuration — Claudin Docs" />
+  <meta property="og:description" content="Settings, permissions, sandboxing, model setup, and interface options — every knob Claudin exposes, in one place." />
+  <meta property="og:url" content="https://claudiolabs.ai/docs/configuration.html" />
   <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Claudin CLI — Automation" />
+  <meta property="og:image:alt" content="Claudin CLI — Configuration" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Automation — Claudin Docs" />
-  <meta name="twitter:description" content="Scheduled prompts, stopping conditions, headless runs, and deep links." />
+  <meta name="twitter:title" content="Configuration — Claudin Docs" />
+  <meta name="twitter:description" content="Settings, permissions, sandboxing, model setup, and interface options — every knob Claudin exposes, in one place." />
   <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
-  <meta name="twitter:image:alt" content="Claudin CLI — Automation" />
+  <meta name="twitter:image:alt" content="Claudin CLI — Configuration" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "Automation: Scheduling, Goals & Headless — Claudin Docs",
-    "description": "Claudin's smaller automation surface: cron and /loop scheduling, the /goal stopping condition, headless mode, and claude-cli:// deep links.",
-    "url": "https://claudiolabs.ai/docs/automation.html",
+    "headline": "Configuration: Settings, Permissions & Models — Claudin Docs",
+    "description": "How to configure Claudin: layered settings.json, permissions, sandboxing, provider/model setup, fast mode, advisor tool, output styles, and interface options.",
+    "url": "https://claudiolabs.ai/docs/configuration.html",
     "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
@@ -107,11 +107,11 @@
   <nav class="section-tabs section-tabs--subjects" aria-label="Doc sections">
     <div class="section-tabs__inner">
       <a href="index.html" class="section-tabs__link">Overview</a>
-      <a href="configuration.html" class="section-tabs__link">Configuration</a>
+      <a href="configuration.html" class="section-tabs__link active">Configuration</a>
       <a href="index.html#performance" class="section-tabs__link">Performance</a>
       <a href="agents.html" class="section-tabs__link">Agents</a>
       <a href="skills.html" class="section-tabs__link">Extensibility</a>
-      <a href="hooks.html" class="section-tabs__link active">Automation</a>
+      <a href="hooks.html" class="section-tabs__link">Automation</a>
       <a href="notifications.html" class="section-tabs__link">Notifications</a>
     </div>
   </nav>
@@ -140,7 +140,7 @@
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Configuration</div>
-            <a href="configuration.html#settings-and-permissions" class="docs-nav-link">Settings &amp; permissions</a>
+            <a href="configuration.html#settings-and-permissions" class="docs-nav-link active">Settings &amp; permissions</a>
             <a href="configuration.html#model-and-responses" class="docs-nav-link">Model &amp; responses</a>
             <a href="configuration.html#interface" class="docs-nav-link">Interface</a>
           </div>
@@ -165,7 +165,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Automation</div>
             <a href="hooks.html" class="docs-nav-link">Hooks</a>
-            <a href="automation.html" class="docs-nav-link active">Automation</a>
+            <a href="automation.html" class="docs-nav-link">Automation</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Reference</div>
@@ -179,65 +179,105 @@
       <main class="docs-content" id="main-content">
 
         <div class="page-hero">
-          <h1>Automation</h1>
-          <p class="page-hero__sub">Scheduled prompts, stopping conditions, headless runs, and deep links — the smaller pieces that make Claudin run without someone watching.</p>
+          <h1>Configuration</h1>
+          <p class="page-hero__sub">Every knob Claudin exposes — settings files, permissions, sandboxing, model setup, and interface behavior — in one place.</p>
         </div>
 
-        <h2 id="scheduling">Scheduled prompts</h2>
+        <h2 id="settings-and-permissions">Settings and permissions</h2>
 
-        <p>Three tools handle it: <code>CronCreate</code> takes a standard 5-field cron expression, a prompt to enqueue when it fires, and two flags — <code>recurring</code> (default <code>true</code>) and <code>durable</code> (default <code>false</code>). A non-durable job lives only in the running process's memory; a durable one is written to <code>.claudin/scheduled_tasks.json</code> and survives a restart. <code>CronList</code> and <code>CronDelete</code> round it out. There's no daemon — everything fires from inside a running Claudin process, on a timer, only while the REPL is idle. If Claudin isn't running, a durable job just waits on disk until the next launch, at which point missed one-shots surface for catch-up. <code>CLAUDE_CODE_DISABLE_CRON=1</code> turns the whole scheduler off.</p>
+        <h3 id="settings">Settings</h3>
 
-        <p>A related, narrower tool, <code>ScheduleWakeup</code>, handles one-shot, session-only delays — no cron expression, just a delay in seconds and an optional prompt.</p>
-
-        <p>The <code>/loop</code> skill sits on top of both, picking the right primitive for how it's called:</p>
+        <p>Config is layered across JSON files, later sources winning on conflicting keys:</p>
 
         <table>
           <thead>
-            <tr><th>Usage</th><th>What happens</th></tr>
+            <tr><th>Source</th><th>Path</th><th>Git</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>/loop 5m check the deploy</code></td><td>Fixed interval — a recurring <code>CronCreate</code> job.</td></tr>
-            <tr><td><code>/loop check the deploy</code></td><td>Dynamic — the model picks its own delay each iteration via <code>ScheduleWakeup</code>.</td></tr>
-            <tr><td><code>/loop</code> (no arguments)</td><td>Maintenance mode — reads <code>.claudin/loop.md</code> or <code>~/.claudin/loop.md</code> if present, else a built-in maintenance prompt.</td></tr>
+            <tr><td>User</td><td><code>~/.claudin/settings.json</code></td><td>—</td></tr>
+            <tr><td>Project</td><td><code>.claudin/settings.json</code></td><td>Commit</td></tr>
+            <tr><td>Project-local</td><td><code>.claudin/settings.local.json</code></td><td>Gitignore</td></tr>
+            <tr><td>Flag</td><td>path passed via <code>--settings</code></td><td>—</td></tr>
+            <tr><td>Managed</td><td><code>managed-settings.json</code> + <code>managed-settings.d/*.json</code> drop-ins (or remote/MDM-sourced)</td><td>Enterprise</td></tr>
           </tbody>
         </table>
 
-        <h2 id="goals">Stopping conditions</h2>
+        <p>Precedence: user &lt; project &lt; local &lt; the <code>--settings</code> flag &lt; managed.</p>
 
-        <p><code>/goal &lt;condition&gt;</code> sets a session-scoped stopping condition: every time the assistant tries to stop, an LLM judge checks the transcript against the condition and blocks the stop until it holds, then clears itself automatically. <code>/goal clear</code> ends it early; bare <code>/goal</code> shows the condition, iteration count, elapsed time, and tokens used. It works in headless mode too — there's no user around to say "keep going," so the goal does that instead. Limits: 4,000-character condition, 120-second judge timeout, 50 iterations interactive / 10 non-interactive.</p>
+        <p>The schema is Zod-defined (<code>SettingsSchema</code>). <code>/config</code> opens an interactive settings UI (<code>theme</code>, <code>outputStyle</code>, and more). Separately, an agent-facing <code>ConfigTool</code> — backed by a <code>SUPPORTED_SETTINGS</code> allowlist — lets the model itself read or change a curated subset of keys (<code>model</code>, <code>permissions.defaultMode</code>, <code>editorMode</code>, and more) mid-session. A few settings, like <code>statusLine</code>, aren't exposed by either UI and can only be set by hand-editing the settings file. The config directory root itself can be relocated with the <code>CLAUDIN_CONFIG_DIR</code> env var.</p>
 
-        <p>This is a different mechanism from Task tracking (<code>TaskCreate</code>/<code>TaskList</code>/<code>TaskGet</code>) — Tasks track discrete units of work; a goal gates whether the session is allowed to stop at all, implemented as a session-scoped <code>Stop</code> hook.</p>
+        <h3 id="permissions">Permissions</h3>
 
-        <h2 id="headless">Headless mode</h2>
-
-        <p><code>-p</code>/<code>--print</code> runs Claudin non-interactively — the prompt is a separate argument (<code>claudin -p "text"</code>) — for scripts, CI, or piping into other tools.</p>
+        <p><code>settings.permissions</code> holds <code>allow[]</code>, <code>deny[]</code>, <code>ask[]</code> rule lists plus a <code>defaultMode</code>. Modes:</p>
 
         <table>
           <thead>
-            <tr><th>Flag</th><th>Meaning</th></tr>
+            <tr><th>Mode</th><th>Behavior</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>--output-format text|json|stream-json</code></td><td>Structured output, including cost.</td></tr>
-            <tr><td><code>--input-format stream-json</code></td><td>Stream input in, requires <code>stream-json</code> output.</td></tr>
-            <tr><td><code>--include-partial-messages</code></td><td>Stream partial assistant messages (requires <code>-p</code> + <code>stream-json</code>).</td></tr>
-            <tr><td><code>--no-session-persistence</code></td><td>Don't write session state to disk.</td></tr>
+            <tr><td><code>default</code></td><td>Prompts for anything not explicitly allowed</td></tr>
+            <tr><td><code>plan</code></td><td>Read-only exploration, no edits or side effects</td></tr>
+            <tr><td><code>acceptEdits</code></td><td>Auto-approves file edits, still prompts elsewhere</td></tr>
+            <tr><td><code>bypassPermissions</code></td><td>No prompts at all</td></tr>
+            <tr><td><code>dontAsk</code></td><td>Denies instead of prompting when a rule doesn't match</td></tr>
           </tbody>
         </table>
 
-        <pre><code>claudin -p "summarize the failing tests" --output-format json</code></pre>
+        <p><code>/permissions</code> opens an interactive browser/editor for the current rule set.</p>
 
-        <h2 id="deep-links">Launch from a link</h2>
+        <h3 id="sandbox-environments">Sandbox environments</h3>
 
-        <p>A <code>claude-cli://open</code> URI opens a new terminal window with Claudin already running:</p>
+        <p><code>/sandbox</code> toggles OS-level isolation for tool calls on macOS, Linux, and WSL2 (not supported on WSL1). On Linux/WSL, commands run wrapped via <code>bwrap</code> (bubblewrap); macOS uses a separate built-in mechanism ("seatbelt", based on <code>sandbox-exec</code>). Both back configurable filesystem read/write restriction, network restriction, and allowed Unix sockets/local bindings. An <code>enabledPlatforms</code> setting can restrict which platforms use it.</p>
 
-        <pre><code>claude-cli://open
-claude-cli://open?q=hello+world
-claude-cli://open?q=fix+tests&amp;repo=owner/repo
-claude-cli://open?cwd=/path/to/project</code></pre>
+        <h3 id="bash-sandbox">Bash sandbox</h3>
 
-        <p><code>q</code> pre-fills the prompt input — it does not submit it, so a link can't silently trigger an instruction without someone pressing Enter. <code>cwd</code> sets the working directory directly; <code>repo</code> resolves an <code>owner/repo</code> slug against locally known clones if <code>cwd</code> isn't given.</p>
+        <p>The same sandbox subsystem applies specifically to the Bash tool, decided per invocation. An <code>excludedCommands</code> list lets specific commands bypass the wrapper — this is a convenience, not a security boundary; the permission prompt is the actual control. A <code>dangerouslyDisableSandbox</code> flag can also opt a single call out.</p>
 
-        <p>A separate scheme, <code>cc://</code>, is unrelated: it's for connecting to an already-running Claudin session on another machine (<code>claudin open &lt;cc-url&gt;</code>), not for pre-filling a prompt from a webpage.</p>
+        <h2 id="model-and-responses">Model and responses</h2>
+
+        <h3 id="model-configuration">Model configuration</h3>
+
+        <p>Because Claudin's generic <code>custom</code> preset can point at 200+ OpenAI-compatible endpoints, on top of first-class presets for the major hosted providers, model setup goes through <code>/provider</code> rather than a single API key or env var. It manages a list of <code>providerProfiles</code> plus an <code>activeProviderProfileId</code> in <code>~/.claudin/settings.json</code>, with presets for Anthropic (OAuth or API key), Codex/ChatGPT OAuth, GitHub Copilot device flow, Bedrock/Vertex/Foundry (native cloud credentials), Ollama/local servers, and the generic <code>custom</code> preset (<code>baseUrl</code>/<code>apiKey</code>/model alias).</p>
+
+        <p><code>/provider doctor</code> runs a non-destructive health check on the active profile; <code>/provider migrate</code> copies over legacy <code>~/.claude/</code> settings and credentials. <code>/model</code> (or the <code>--model</code> flag at launch) picks the model within the active profile.</p>
+
+        <h3 id="fast-mode">Speed up responses with fast mode</h3>
+
+        <p><code>/fast</code> toggles fast mode, which only works on Opus 4.7 or Opus 4.6 — enabling it auto-switches the session to one of those models if the current model doesn't qualify.</p>
+
+        <h3 id="advisor-tool">Escalate hard decisions with the advisor tool</h3>
+
+        <p><code>/advisor &lt;model&gt;</code> sets an advisor model that the main model can call out to mid-task for a second opinion, via a server-side tool. Restricted to Opus 4.8/4.7/4.6 or Sonnet 5/4.6 — both as the calling model and as the advisor model itself — unavailable on Bedrock/Vertex, and can be disabled entirely with the <code>CLAUDE_CODE_DISABLE_ADVISOR_TOOL</code> env var.</p>
+
+        <h3 id="output-styles">Output styles</h3>
+
+        <p>The <code>/output-style</code> command is deprecated in favor of <code>/config</code> or editing the settings file directly. The underlying feature still works: set <code>outputStyle</code>, and define custom styles as markdown files with frontmatter (<code>name</code>, <code>description</code>, <code>keep-coding-instructions</code>) under <code>.claudin/output-styles/*.md</code> (project) or <code>~/.claudin/output-styles/*.md</code> (user).</p>
+
+        <h2 id="interface">Interface</h2>
+
+        <h3 id="terminal-configuration">Terminal configuration</h3>
+
+        <p><code>terminal-setup</code> installs a Shift+Enter (Option+Enter on Apple Terminal) keybinding for inserting newlines. It's skipped automatically on terminals with native CSI-u/Kitty keyboard-protocol support (Ghostty, Kitty, iTerm2, WezTerm, Warp), since they don't need it.</p>
+
+        <h3 id="fullscreen-rendering">Fullscreen rendering</h3>
+
+        <p>Claudin automatically detects whether it can safely use the terminal's alt-screen/fullscreen mode, based on tmux control-mode detection and other terminal heuristics. It can be overridden with the <code>flickerFreeMode</code> setting or the <code>CLAUDE_CODE_NO_FLICKER</code> env var (<code>0</code> forces it off, <code>1</code> forces it on) if the auto-detection guesses wrong.</p>
+
+        <h3 id="voice-dictation">Voice dictation</h3>
+
+        <p><code>/voice</code> toggles voice input. It requires a Claude.ai account (<code>/login</code>); a <code>language</code> setting controls the speech-to-text language.</p>
+
+        <h3 id="status-line">Customize status line</h3>
+
+        <p>Set <code>statusLine: { type: "command", command: "...", padding?: number }</code> in settings to run your own command and render its output as a persistent status line.</p>
+
+        <h3 id="keyboard-shortcuts">Customize keyboard shortcuts</h3>
+
+        <p><code>/keybindings</code> writes an editable template to <code>~/.claudin/keybindings.json</code> and opens it in your editor. This is currently a preview feature — gated behind a flag, and replies with a "not enabled yet" message if it's off.</p>
+
+        <h3 id="accessibility-mode">Accessibility mode</h3>
+
+        <p>Set the <code>CLAUDE_CODE_ACCESSIBILITY</code> env var to keep the native terminal cursor visible (instead of hidden) for screen readers and magnifiers. It's env-var-only today — there's no <code>/config</code>-exposed setting or slash command for it, unlike Claude Code's dedicated "Screen reader mode".</p>
 
       </main>
 
@@ -247,10 +287,9 @@ claude-cli://open?cwd=/path/to/project</code></pre>
           <div class="docs-nav-section-title">On this page</div>
           <svg class="docs-toc-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-        <a href="#scheduling" class="docs-nav-link">Scheduled prompts</a>
-        <a href="#goals" class="docs-nav-link">Stopping conditions</a>
-        <a href="#headless" class="docs-nav-link">Headless mode</a>
-        <a href="#deep-links" class="docs-nav-link">Launch from a link</a>
+        <a href="#settings-and-permissions" class="docs-nav-link">Settings and permissions</a>
+        <a href="#model-and-responses" class="docs-nav-link">Model and responses</a>
+        <a href="#interface" class="docs-nav-link">Interface</a>
       </aside>
     </div>
   </div>

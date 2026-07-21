@@ -107,6 +107,7 @@
   <nav class="section-tabs section-tabs--subjects" aria-label="Doc sections">
     <div class="section-tabs__inner">
       <a href="index.html" class="section-tabs__link">Overview</a>
+      <a href="configuration.html" class="section-tabs__link">Configuration</a>
       <a href="index.html#performance" class="section-tabs__link">Performance</a>
       <a href="agents.html" class="section-tabs__link active">Agents</a>
       <a href="skills.html" class="section-tabs__link">Extensibility</a>
@@ -136,6 +137,12 @@
             <div class="docs-nav-section-title">Docs</div>
             <a href="index.html" class="docs-nav-link">Overview</a>
             <a href="notifications.html" class="docs-nav-link">Notifications</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Configuration</div>
+            <a href="configuration.html#settings-and-permissions" class="docs-nav-link">Settings &amp; permissions</a>
+            <a href="configuration.html#model-and-responses" class="docs-nav-link">Model &amp; responses</a>
+            <a href="configuration.html#interface" class="docs-nav-link">Interface</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Performance</div>
@@ -268,6 +275,8 @@
           </tbody>
         </table>
 
+        <p>See <a href="configuration.html#permissions">Permissions</a> for how these modes work session-wide.</p>
+
         <pre><code>---
 name: reviewer-perf
 description: Reviews a diff for performance regressions only.
@@ -319,6 +328,8 @@ file:line, and skip anything that isn't a measurable regression.</code></pre>
     "built-in:WebResearcher": "deepseek-chat"
   }
 }</code></pre>
+
+        <p>See <a href="configuration.html#model-configuration">Model configuration</a> for the full provider/model setup story.</p>
 
         <h2 id="tools">Tool permissions</h2>
 
