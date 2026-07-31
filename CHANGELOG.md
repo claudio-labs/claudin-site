@@ -1,3 +1,7 @@
+## v1.1.5 — 2026-07-31
+
+_No user-facing commits since previous tag._
+
 ## v1.1.4 — 2026-07-30
 
 - feat(shell): show the batch elapsed on the collapsed group header (88b4c60)
