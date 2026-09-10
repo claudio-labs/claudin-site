@@ -124,6 +124,7 @@
             <div class="docs-nav-section-title">Providers</div>
             <a href="providers.html#all-providers" class="docs-nav-link">All providers</a>
             <a href="providers.html#local" class="docs-nav-link">Local models</a>
+            <a href="docs/litellm-setup.html" class="docs-nav-link">LiteLLM setup</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
@@ -136,11 +137,13 @@
             <a href="docs/cache-policy.html" class="docs-nav-link">Cache policy</a>
             <a href="docs/read-outline.html" class="docs-nav-link">Read outline</a>
             <a href="docs/web-researcher.html" class="docs-nav-link">Web researcher</a>
+            <a href="docs/memory.html" class="docs-nav-link">Memory</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="docs/agents.html" class="docs-nav-link">Agents</a>
             <a href="docs/workflows.html" class="docs-nav-link">Workflows</a>
+            <a href="docs/diff-reviewer.html" class="docs-nav-link">Diff reviewer</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Extensibility</div>
@@ -235,6 +238,28 @@
 /provider doctor   # health check: reachability, auth, model availability</code></pre>
 
         <p>Next: configure a <a href="providers.html" style="color: var(--color-accent)">provider</a> or explore <a href="docs/bash-output-filter.html" style="color: var(--color-accent)">features</a>.</p>
+
+        <h2 id="lmstudio">Local models with LM Studio</h2>
+
+        <p>Start the LM Studio server with a model loaded, then inside Claudin run <code>/provider</code> → preset <code>custom</code> (or <code>lmstudio</code> if listed) → set <strong>Base URL</strong> to <code>http://localhost:1234/v1</code> and the model name shown in LM Studio. No API key required.</p>
+
+        <h2 id="update-uninstall">Update, uninstall, and config paths</h2>
+
+        <table>
+          <thead>
+            <tr><th></th><th>macOS / Linux</th><th>Windows (PowerShell)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Update</strong></td><td><code>npm install -g @claudiolabs/claudin@latest</code></td><td><code>npm install -g @claudiolabs/claudin@latest</code></td></tr>
+            <tr><td><strong>Uninstall</strong></td><td><code>npm uninstall -g @claudiolabs/claudin</code></td><td><code>npm uninstall -g @claudiolabs/claudin</code></td></tr>
+            <tr><td><strong>Config directory</strong></td><td><code>~/.claudin/</code></td><td><code>%USERPROFILE%\.claudin\</code></td></tr>
+            <tr><td><strong>Credentials file</strong></td><td><code>~/.claudin/.credentials.json</code></td><td><code>%USERPROFILE%\.claudin\.credentials.json</code></td></tr>
+          </tbody>
+        </table>
+
+        <p>Removing the config directory wipes all saved profiles, tokens, and settings. Override the location on either OS with <code>CLAUDIN_CONFIG_DIR=/path/to/dir</code>.</p>
+
+        <p>If <code>claudin</code> isn't found right after install, close the terminal and open a new one — the npm global bin usually just needs a fresh shell to land on <code>PATH</code>.</p>
 
       </main>
     </div>

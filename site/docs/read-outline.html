@@ -181,6 +181,7 @@
             <div class="docs-nav-section-title">Providers</div>
             <a href="../providers.html#all-providers" class="docs-nav-link">All providers</a>
             <a href="../providers.html#local" class="docs-nav-link">Local models</a>
+            <a href="litellm-setup.html" class="docs-nav-link">LiteLLM setup</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
@@ -199,11 +200,13 @@
             <a href="cache-policy.html" class="docs-nav-link">Cache policy</a>
             <a href="read-outline.html" class="docs-nav-link active">Read outline</a>
             <a href="web-researcher.html" class="docs-nav-link">Web researcher</a>
+            <a href="memory.html" class="docs-nav-link">Memory</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="agents.html" class="docs-nav-link">Agents</a>
             <a href="workflows.html" class="docs-nav-link">Workflows</a>
+            <a href="diff-reviewer.html" class="docs-nav-link">Diff reviewer</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Extensibility</div>
@@ -311,12 +314,13 @@
 
         <p>Precedence inside <code>Read</code> is <code>symbol</code> &gt; <code>view</code> &gt; <code>offset</code>/<code>limit</code>, honoured at any file size.</p>
 
-        <p>And three automatic behaviors, so the model benefits even when it never asks:</p>
+        <p>And four automatic behaviors, so the model benefits even when it never asks:</p>
 
         <ol>
           <li><strong>Over-cap pivot</strong> — a plain <code>Read</code> that blows the size caps (256 KB / 2 000 lines / ~25k estimated tokens) on a code file returns the <strong>outline instead of an error</strong>. The dead end becomes a map.</li>
           <li><strong>Auto-outline on large reads</strong> — a vanilla full-file <code>Read</code> of a code file &ge; ~10 KB pivots to the outline with a footer explaining how to get more (<code>view='full'</code> forces the body, <code>symbol</code>/<code>offset</code> target a range). The ~10 KB floor is empirical: it is where the slice-walk re-read loop starts, and returning the outline removes the stimulus entirely.</li>
           <li><strong>Helpful misses</strong> — <code>symbol='foo'</code> on a file that has no <code>foo</code> doesn't just fail: the error lists the available symbol names and points at <code>view='outline'</code>. On a name collision, the shallowest (top-level) entry wins.</li>
+          <li><strong>Nested outline for an oversized symbol</strong> — <code>symbol='X'</code> on a symbol that is itself over the pivot threshold returns <em>its</em> structure instead of its body. <code>Read(REPL.tsx, symbol='REPL')</code> used to hand back 2 785 lines; it now hands back the handlers inside it, with their line ranges. <code>view='full'</code> alongside <code>symbol</code> is the escape back to the body.</li>
         </ol>
 
         <h2 id="huge-files">Why it matters on huge-file projects</h2>

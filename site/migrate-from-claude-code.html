@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary meta -->
-  <title>Migrate from Claude Code to Claudin — Automatic Import</title>
-  <meta name="description" content="Switch from Claude Code to Claudin with zero friction — it detects ~/.claude/ on first launch and migrates tokens, settings, theme, and memory." />
+  <title>Migrate from Claude Code to Claudin — Keep Your Setup</title>
+  <meta name="description" content="Switch from Claude Code to Claudin without losing your setup — /provider migrate copies your sign-in, /import brings skills, MCP, plugins, theme, and keybindings across." />
   <meta name="keywords" content="migrate claude code, claude code to claudin, claude code alternative, import claude code settings, claudin migration, switch from claude code, any llm coding agent" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
   <link rel="canonical" href="https://claudiolabs.ai/migrate-from-claude-code.html" />
@@ -16,7 +16,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Claudin" />
   <meta property="og:title" content="Switch from Claude Code — Zero-Friction Migration" />
-  <meta property="og:description" content="On first launch Claudin detects your existing ~/.claude/ and migrates tokens, settings, theme, plugins, keybindings, and memory. Then run any LLM provider." />
+  <meta property="og:description" content="/provider migrate copies your Claude Code sign-in; /import brings the rest — skills, MCP, plugins, theme, keybindings — across, with nothing overwritten. Then run any LLM provider." />
   <meta property="og:url" content="https://claudiolabs.ai/migrate-from-claude-code.html" />
   <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
@@ -27,7 +27,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Switch from Claude Code — Zero-Friction Migration" />
-  <meta name="twitter:description" content="Zero-friction migration: Claudin imports your ~/.claude/ on first launch, then runs on any LLM provider." />
+  <meta name="twitter:description" content="/provider migrate copies your sign-in, /import brings the rest across — then run on any LLM provider." />
   <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
   <meta name="twitter:image:alt" content="Claudin CLI — Migrate from Claude Code" />
 
@@ -37,7 +37,7 @@
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "Migrate from Claude Code to Claudin",
-    "description": "Claudin detects an existing ~/.claude/ directory on first launch and migrates tokens, settings, theme, plugins, keybindings, and memory automatically.",
+    "description": "Claudin migrates your Claude Code sign-in with /provider migrate, then imports skills, agents, MCP servers, plugins, theme, and keybindings with /import — nothing is overwritten without confirmation.",
     "url": "https://claudiolabs.ai/migrate-from-claude-code.html",
     "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
@@ -56,7 +56,15 @@
         "name": "Is migrating from Claude Code to Claudin automatic?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. On first launch Claudin detects your existing ~/.claude/ directory and migrates your tokens, settings, theme, plugins, keybindings, and memory. There are no manual export or import steps."
+          "text": "Signing in is one command, not automatic on first launch. The first time you run /provider with an existing ~/.claude/ and no ~/.claudin/ yet, a banner offers to copy your sign-in — accept it, or run /provider migrate yourself at any time. It copies only your OAuth tokens and provider settings. Everything else — skills, agents, slash commands, MCP servers, plugins, theme, and keybindings — comes across with a separate /import command, which never overwrites anything without confirmation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does migrating bring my memory across?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Claudin's memory system is project-local and git-trackable, a different design from Claude Code's, so neither /provider migrate nor /import copies old memory files. Claudin builds up fresh memory for your projects from the first session."
         }
       },
       {
@@ -163,6 +171,7 @@
             <div class="docs-nav-section-title">Providers</div>
             <a href="providers.html#all-providers" class="docs-nav-link">All providers</a>
             <a href="providers.html#local" class="docs-nav-link">Local models</a>
+            <a href="docs/litellm-setup.html" class="docs-nav-link">LiteLLM setup</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
@@ -175,11 +184,13 @@
             <a href="docs/cache-policy.html" class="docs-nav-link">Cache policy</a>
             <a href="docs/read-outline.html" class="docs-nav-link">Read outline</a>
             <a href="docs/web-researcher.html" class="docs-nav-link">Web researcher</a>
+            <a href="docs/memory.html" class="docs-nav-link">Memory</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="docs/agents.html" class="docs-nav-link">Agents</a>
             <a href="docs/workflows.html" class="docs-nav-link">Workflows</a>
+            <a href="docs/diff-reviewer.html" class="docs-nav-link">Diff reviewer</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Extensibility</div>
@@ -205,40 +216,60 @@
 
         <div class="page-hero">
           <h1>Migrate from Claude Code</h1>
-          <p class="page-hero__sub">Keep your setup, lose the lock-in. Claudin imports your existing configuration on first launch — then runs on any LLM provider.</p>
+          <p class="page-hero__sub">Keep your setup, lose the lock-in. Claudin copies your Claude Code sign-in with one command, then imports the rest on your terms — and runs on any LLM provider.</p>
         </div>
 
         <h2 id="overview">Overview</h2>
 
-        <p>Claudin originated from the Claude Code codebase and has been substantially modified to support any provider. Because of that shared lineage, moving over is not a fresh setup — it is an <strong>import</strong>. On its first launch, Claudin detects your existing <code>~/.claude/</code> directory and brings your configuration across automatically.</p>
+        <p>Claudin originated from the Claude Code codebase and has been substantially modified to support any provider. Because of that shared lineage, moving over is not a fresh setup — it is a two-step <strong>import</strong>: your sign-in first, then everything else, whenever you want it.</p>
 
-        <p><strong>No export step. No config files to copy. No workflow to relearn.</strong></p>
+        <p><strong>No manual export step. No config files to copy by hand. No workflow to relearn.</strong></p>
 
         <pre><code># install claudin
 npm install -g @claudiolabs/claudin@latest
 
-# run — migration happens automatically on first launch
+# run, then open /provider — a one-time banner offers to
+# copy your Claude Code sign-in
 claudin
+/provider
 
-✓ Migrated settings from ~/.claude/
-✓ Tokens, theme, plugins restored
-✓ Ready — switch provider with /provider</code></pre>
+✓ Detected ~/.claude/ — sign-in copied
+✓ Ready — switch or add providers right here
+✓ Bring the rest across any time with /import</code></pre>
 
         <h2 id="what">What gets migrated</h2>
 
-        <p>On first launch Claudin reads your Claude Code directory and carries over:</p>
+        <p>Migration is two separate commands, each with a different scope. <code>/provider migrate</code> handles sign-in only; <code>/import</code> handles everything else, and only when you ask for it.</p>
+
+        <p><strong><code>/provider migrate</code></strong> — offered automatically as a banner the first time you open <code>/provider</code> with an existing <code>~/.claude/</code> and no <code>~/.claudin/</code> yet. Copies:</p>
 
         <table>
           <thead>
-            <tr><th>What</th><th>Migrated</th></tr>
+            <tr><th>What</th><th>Copied</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>Auth tokens &amp; API keys</strong></td><td>Restored and ready to use</td></tr>
-            <tr><td><strong>Settings</strong></td><td>Your <code>settings.json</code> preferences are preserved</td></tr>
-            <tr><td><strong>Theme</strong></td><td>Your terminal theme carries over</td></tr>
-            <tr><td><strong>Plugins</strong></td><td>Installed plugins are restored</td></tr>
-            <tr><td><strong>Keybindings</strong></td><td>Your custom key map is preserved</td></tr>
-            <tr><td><strong>Memory</strong></td><td>Project and user memory come with you</td></tr>
+            <tr><td><strong>Anthropic OAuth tokens</strong></td><td>Restored and ready to use</td></tr>
+            <tr><td><strong>Provider settings</strong></td><td><code>providerProfiles</code>, <code>activeProviderProfileId</code>, and <code>customApiKeyResponses</code> (already-approved API keys)</td></tr>
+            <tr><td><strong>Account identity</strong></td><td>The legacy global <code>~/.claude.json</code></td></tr>
+          </tbody>
+        </table>
+
+        <p>It's a copy, not a move — <code>~/.claude/</code> is left untouched, and running it again doesn't duplicate anything. Rerun it manually any time with <code>/provider migrate</code>.</p>
+
+        <p><strong><code>/import</code></strong> — a separate, explicit command that reads eight agents, not just Claude Code (openclaude, OpenAI Codex, Gemini CLI, Qwen Code, opencode, Kimi CLI, and Cursor too). It shows what each one can contribute before writing anything:</p>
+
+        <table>
+          <thead>
+            <tr><th>What</th><th>Imported</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Skills, agents, slash commands</strong></td><td>Yes, with conflicts reported and left to you to resolve</td></tr>
+            <tr><td><strong>MCP servers</strong></td><td>Yes</td></tr>
+            <tr><td><strong>Theme &amp; keybindings</strong></td><td>Yes</td></tr>
+            <tr><td><strong>Plugins</strong></td><td>Yes</td></tr>
+            <tr><td><strong>Rules &amp; instructions, settings</strong></td><td>Yes — permissions are counted and reported rather than translated, since rule syntax differs between agents</td></tr>
+            <tr><td><strong>Credentials</strong></td><td>Never — <code>/provider migrate</code> is the only path that copies tokens</td></tr>
+            <tr><td><strong>Memory</strong></td><td>Not imported — see <a href="docs/memory.html" style="color: var(--color-accent)">Memory</a> for why</td></tr>
           </tbody>
         </table>
 
@@ -246,8 +277,9 @@ claudin
 
         <ol>
           <li><strong>Install Claudin.</strong> Requires Node.js 20+. Install globally with <code>npm install -g @claudiolabs/claudin@latest</code> (or <code>bun</code>, <code>npx</code>, and the one-line <code>curl</code> installer — see <a href="install.html" style="color: var(--color-accent)">Install</a>).</li>
-          <li><strong>Run <code>claudin</code>.</strong> On the very first launch it looks for <code>~/.claude/</code>. If it finds one, the migration runs before you reach the prompt — no flag required.</li>
-          <li><strong>Start coding.</strong> Everything you configured in Claude Code is already in place. The only new thing is that you can now point Claudin at any model.</li>
+          <li><strong>Run <code>claudin</code>, then <code>/provider</code>.</strong> If it finds <code>~/.claude/</code> and you haven't set up Claudin yet, a banner offers to copy your sign-in. Accept it, or skip it and run <code>/provider migrate</code> later — the choice is remembered either way.</li>
+          <li><strong>Bring the rest across, when you're ready.</strong> Run <code>/import</code> to pick up skills, agents, MCP servers, plugins, theme, and keybindings. Nothing is overwritten by default — conflicts are reported, and overwriting is a separate, explicit choice on the confirmation screen.</li>
+          <li><strong>Start coding.</strong> The only new thing is that you can now point Claudin at any model.</li>
         </ol>
 
         <h2 id="after">After you migrate</h2>
@@ -261,14 +293,19 @@ claudin
 
         <h2 id="keep-both">Nothing is overwritten</h2>
 
-        <p>Migration is a read, not a move. Claudin reads from <code>~/.claude/</code> and writes its own configuration to <code>~/.claudin/</code>. Your original Claude Code directory is left untouched, so you can keep both tools installed and fall back at any time — the migration just gives Claudin a running start.</p>
+        <p><code>/provider migrate</code> is a read, not a move. Claudin reads from <code>~/.claude/</code> and writes its own configuration to <code>~/.claudin/</code>. Your original Claude Code directory is left untouched, so you can keep both tools installed and fall back at any time. <code>/import</code> goes further: anything you already have is reported as a conflict and left alone by default — overwriting is a separate, explicit choice on the confirmation screen, so running it twice is a no-op.</p>
 
         <h2 id="faq">FAQ</h2>
 
         <div class="faq-list">
           <details class="faq-item">
             <summary>Is migrating automatic?</summary>
-            <p>Yes. On first launch Claudin detects your existing <code>~/.claude/</code> directory and migrates your tokens, settings, theme, plugins, keybindings, and memory. There are no manual export or import steps — just install and run.</p>
+            <p>Signing in is one command, not automatic on first launch. The first time you open <code>/provider</code> with an existing <code>~/.claude/</code> and no <code>~/.claudin/</code> yet, a banner offers to copy your sign-in — accept it, or run <code>/provider migrate</code> yourself later. Everything else — skills, agents, MCP servers, plugins, theme, keybindings — comes across with a separate <code>/import</code> command, whenever you ask for it.</p>
+          </details>
+
+          <details class="faq-item">
+            <summary>Does migrating bring my memory across?</summary>
+            <p>No. Claudin's memory system is project-local and git-trackable — a different design from Claude Code's — so neither <code>/provider migrate</code> nor <code>/import</code> copies old memory files. See <a href="docs/memory.html" style="color: var(--color-accent)">Memory</a> for how Claudin's memory works instead.</p>
           </details>
 
           <details class="faq-item">

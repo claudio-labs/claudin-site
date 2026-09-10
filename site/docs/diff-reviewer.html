@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary meta -->
+  <title>Diff Reviewer: Tabbed, Split-Pane /diff — Claudin Docs</title>
+  <meta name="description" content="Claudin's /diff reviewer is an IDE-like overlay with two tabs — Local Changes and Log — a collapsible file tree, and a side-by-side diff pane." />
+  <meta name="keywords" content="claudin diff reviewer, claudin /diff, code review cli, split pane diff, git diff tui, monorepo diff, claudin features" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://claudiolabs.ai/docs/diff-reviewer.html" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Claudin" />
+  <meta property="og:title" content="Diff Reviewer — Claudin Docs" />
+  <meta property="og:description" content="An IDE-like /diff: two tabs (Local Changes, Log), a collapsible file tree, and a side-by-side diff pane with incremental context expand." />
+  <meta property="og:url" content="https://claudiolabs.ai/docs/diff-reviewer.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Claudin CLI — Diff Reviewer" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Diff Reviewer — Claudin Docs" />
+  <meta name="twitter:description" content="Two tabs, a collapsible file tree, and a side-by-side diff pane — review code without leaving the terminal." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
+  <meta name="twitter:image:alt" content="Claudin CLI — Diff Reviewer" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Diff Reviewer: Tabbed, Split-Pane /diff — Claudin Docs",
+    "description": "Claudin's /diff reviewer redesigns code review into an IDE-like overlay: a Local Changes tab (file tree + collapsible diff) and a Log tab (commit graph + per-commit files).",
+    "url": "https://claudiolabs.ai/docs/diff-reviewer.html",
+    "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
+  }
+  </script>
+
+  <!-- Theme & favicon -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+        claudin
+      </a>
+
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__links" id="nav-links" role="list">
+        <li>
+          <a href="https://github.com/claudio-labs/claudin" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+        </li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Getting started
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="../install.html" class="nav__dropdown-link">Install</a></li>
+            <li><a href="../install.html#quickstart" class="nav__dropdown-link">Quick start</a></li>
+            <li><a href="../migrate-from-claude-code.html" class="nav__dropdown-link">Migrate from Claude Code</a></li>
+          </ul>
+        </li>
+        <li><a href="../providers.html" class="nav__link">Providers</a></li>
+        <li><a href="index.html" class="nav__link" style="color: var(--color-accent)">Docs</a></li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Reference
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="../changelog.html" class="nav__dropdown-link">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../sponsor.html" class="nav__link">Sponsor ⚡</a></li>
+        <li><a href="../install.html" class="nav__cta">Install</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Section tabs -->
+  <nav class="section-tabs section-tabs--subjects" aria-label="Doc sections">
+    <div class="section-tabs__inner">
+      <a href="index.html" class="section-tabs__link">Overview</a>
+      <a href="configuration.html" class="section-tabs__link">Configuration</a>
+      <a href="index.html#performance" class="section-tabs__link">Performance</a>
+      <a href="agents.html" class="section-tabs__link active">Agents</a>
+      <a href="skills.html" class="section-tabs__link">Extensibility</a>
+      <a href="hooks.html" class="section-tabs__link">Automation</a>
+      <a href="notifications.html" class="section-tabs__link">Notifications</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="docs-layout docs-layout--with-toc">
+
+      <!-- Sidebar -->
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <nav>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Getting started</div>
+            <a href="../install.html" class="docs-nav-link">Install</a>
+            <a href="../install.html#quickstart" class="docs-nav-link">Quick start</a>
+            <a href="../migrate-from-claude-code.html" class="docs-nav-link">Migrate from Claude Code</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Providers</div>
+            <a href="../providers.html#all-providers" class="docs-nav-link">All providers</a>
+            <a href="../providers.html#local" class="docs-nav-link">Local models</a>
+            <a href="litellm-setup.html" class="docs-nav-link">LiteLLM setup</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Docs</div>
+            <a href="index.html" class="docs-nav-link">Overview</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Configuration</div>
+            <a href="configuration.html#settings-and-permissions" class="docs-nav-link">Settings &amp; permissions</a>
+            <a href="configuration.html#model-and-responses" class="docs-nav-link">Model &amp; responses</a>
+            <a href="configuration.html#interface" class="docs-nav-link">Interface</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Performance</div>
+            <a href="bash-output-filter.html" class="docs-nav-link">Bash output filter</a>
+            <a href="cache-policy.html" class="docs-nav-link">Cache policy</a>
+            <a href="read-outline.html" class="docs-nav-link">Read outline</a>
+            <a href="web-researcher.html" class="docs-nav-link">Web researcher</a>
+            <a href="memory.html" class="docs-nav-link">Memory</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Agents &amp; workflows</div>
+            <a href="agents.html" class="docs-nav-link">Agents</a>
+            <a href="workflows.html" class="docs-nav-link">Workflows</a>
+            <a href="diff-reviewer.html" class="docs-nav-link active">Diff reviewer</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Extensibility</div>
+            <a href="skills.html" class="docs-nav-link">Skills</a>
+            <a href="plugins.html" class="docs-nav-link">Plugins</a>
+            <a href="mcp.html" class="docs-nav-link">MCP</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Automation</div>
+            <a href="hooks.html" class="docs-nav-link">Hooks</a>
+            <a href="automation.html" class="docs-nav-link">Automation</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Reference</div>
+            <a href="../changelog.html" class="docs-nav-link">Changelog</a>
+            <a href="https://github.com/claudio-labs/claudin" class="docs-nav-link" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <main class="docs-content" id="main-content">
+
+        <div class="page-hero">
+          <h1>Diff Reviewer</h1>
+          <p class="page-hero__sub">An IDE-like <code>/diff</code> — two tabs, a collapsible file tree, and a side-by-side diff pane, without leaving the terminal.</p>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+
+        <p><code>/diff</code> is a two-tab, side-by-side reviewer:</p>
+
+        <ul>
+          <li><strong>Local Changes</strong> — file <strong>tree</strong> (left) | diff of the selected file (right), collapsed to the changed lines with incremental expand of unchanged context.</li>
+          <li><strong>Log</strong> — the git <strong>graph/tree</strong> (left) | files changed in the selected commit (right).</li>
+        </ul>
+
+        <pre><code>┌ Diff ─────────────────────────────────────────────────────────┐
+│  Local Changes   Log                         (Tab to switch)   │
+│  source: working tree ▾   (←/→ when focus on list, only here)  │
+│ ┌ Files ─────────────┐┌ Diff: src/foo.ts ───────────────────┐ │
+│ │ web  2 files · main ││  12  export function foo() {        │ │
+│ │› src/foo.ts  +12 -3 ││ ··· 8 lines ───────────────────────  │ │
+│ │  README.md   +4  -4 ││ -18  const x = old()               │ │
+│ │ api  1 file  · dev  ││ +18  const x = new()               │ │
+│ │  src/bar.ts  +1  -0 ││                                     │ │
+│ └────────────────────┘└─────────────────────────────────────┘ │
+│  Tab tabs · ↑/↓ files · → diff · ← back · r refresh · Esc close│
+└────────────────────────────────────────────────────────────────┘</code></pre>
+
+        <h2 id="tree">File tree (Local Changes)</h2>
+
+        <p>The left pane is a collapsible folder tree, not a flat list. Files nest under their directories; folders sort first, then files; single-child directory chains compact into one row (like VS Code's compact folders). Folder rows show a caret plus an open/closed icon; file rows show the basename with its per-file <code>+/−</code> stat. When more than one repo is in scope, a per-repo group header sits above its files — collapsible too, so you can fold an entire repo's changes out of the way while keeping its header visible.</p>
+
+        <p>Keys: <code>↑/↓</code> move, <code>Enter</code> toggles a folder or opens a file, <code>→</code> expands a folder or focuses the diff, <code>←</code> collapses a folder or focuses the list.</p>
+
+        <h2 id="sources">The four sources</h2>
+
+        <p>The source selector on Local Changes cycles with <code>[</code>/<code>]</code> across three kinds, all feeding the same file-list + diff panes:</p>
+
+        <ul>
+          <li><strong>Working tree</strong> — uncommitted changes vs <code>HEAD</code> (the default).</li>
+          <li><strong>Per-turn</strong> — one entry per agent turn in the current session.</li>
+          <li><strong>Stash</strong> — <code>stash@{0}</code>…<code>stash@{n}</code> from <code>git stash list</code>.</li>
+        </ul>
+
+        <h2 id="monorepo">Multi-repo / monorepo grouping</h2>
+
+        <p>When more than one git repo is in scope, the file list groups per project with a colored swatch, the repo name, file count, and branch:</p>
+
+        <pre><code>web   2 files changed · main
+  src/foo.ts   +12 -3
+  README.md    +4  -4
+api   1 file changed  · dev
+  src/bar.ts   +1  -0</code></pre>
+
+        <p>Scope is the cwd's repo, every <code>/add-dir</code> workspace directory, and <strong>nested child repos discovered underneath them</strong> — the common monorepo shape where sibling folders each carry their own <code>.git</code> and the parent's <code>git status</code> never sees their changes. Discovery is bounded (max depth 3, max 1 500 directories scanned) and skips <code>node_modules</code>/<code>dist</code>/<code>vendor</code>-style noise. A single repo in scope shows no header at all — the flat list you already know.</p>
+
+        <h2 id="collapse">Collapse &amp; expand</h2>
+
+        <p>The diff pane shows only changed lines plus 3 lines of context; unchanged stretches collapse to a <code>··· N lines</code> marker. Activating a marker reveals ±10 more lines, GitHub-style, pulled from the working-tree file. Untracked files no longer show a placeholder — they render as an all-green synthesized diff, syntax-highlighted like any other file.</p>
+
+        <h2 id="icons">Nerd-Font file icons</h2>
+
+        <p>When your terminal font supports it, a per-file-type icon sits next to every filename in both tabs' file lists. On terminals without Nerd Font glyphs, it falls back to plain ASCII markers — no raw glyph is ever emitted unconditionally. Override with <code>CLAUDIN_NERD_FONT=on</code> / <code>off</code>.</p>
+
+        <h2 id="log">Log tab</h2>
+
+        <p>The left rail is the real branch/merge topology (<code>git log --graph</code>), not a flat list of commits — authors get stable colors, tags render green, branches/HEAD render amber. In a monorepo, <code>[</code>/<code>]</code> cycle which repo's log is shown. The right pane lists the selected commit's changed files with per-file stats and the commit-wide total; drilling into a file (<code>Enter</code>/<code>→</code>) shows its diff at the third level, through the same rendering path as Local Changes, so theme colors and syntax highlighting match exactly.</p>
+
+        <pre><code>┌ Diff ─────────────────────────────────────────────────────────┐
+│  Local Changes   Log                         (Tab to switch)   │
+│ ┌ Log ───────────────────────┐┌ Files in dca77a5 ───────────┐ │
+│ │ ○ feat: @-mention nav  main ││  src/components/x.tsx  +20 -4│ │
+│ │ ●  chore: bump deps         ││  src/hooks/y.ts        +3  -1│ │
+│ │ ├─╮ Merge branch 'fix'      ││                              │ │
+│ │ │ ● fix(ink): vacated rows  ││                              │ │
+│ │ ●─╯ feat(bridge): remote    ││                              │ │
+│ └────────────────────────────┘└──────────────────────────────┘ │
+│  main ⟳ ⊗0 ⚠12     Tab tabs · ↑/↓ commits · → files · Esc close │
+└────────────────────────────────────────────────────────────────┘</code></pre>
+
+        <h2 id="keys">Navigation</h2>
+
+        <table>
+          <thead>
+            <tr><th>Key</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Tab</code></td><td>switch tabs (Local Changes ↔ Log)</td></tr>
+            <tr><td><code>↑/↓</code></td><td>move selection in the left list, or scroll the diff when it's focused</td></tr>
+            <tr><td><code>←/→</code></td><td>move focus between the left list and the right pane (also collapses/expands a folder on Local Changes)</td></tr>
+            <tr><td><code>[</code> / <code>]</code></td><td>cycle the source (Local Changes) or the project (Log, monorepo)</td></tr>
+            <tr><td><code>Enter</code></td><td>open a file / toggle a folder (list focus); grow the next collapsed gap (content focus)</td></tr>
+            <tr><td><code>a</code></td><td>expand the whole file (Local Changes)</td></tr>
+            <tr><td><code>u</code> / <code>d</code>, <code>g</code>/<code>G</code></td><td>page / jump to ends (content focused, split layout)</td></tr>
+            <tr><td><code>r</code></td><td>manual refresh</td></tr>
+            <tr><td><code>Esc</code></td><td>close (from content focus, returns to the list first)</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="entry">Entry points</h2>
+
+        <p><code>/diff</code> stays the canonical command. <code>gg</code> opens the same overlay too — but only when the prompt is empty (vim-style), so it never fires mid-typing.</p>
+
+        <p>On narrow terminals (under 100 columns) or outside a fullscreen-capable environment, the reviewer falls back to a stacked list-then-detail layout instead of the side-by-side split, so it stays usable everywhere.</p>
+
+      </main>
+
+      <!-- On this page -->
+      <aside class="docs-toc" aria-label="On this page">
+        <div class="docs-toc-header">
+          <div class="docs-nav-section-title">On this page</div>
+          <svg class="docs-toc-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <a href="#overview" class="docs-nav-link">Overview</a>
+        <a href="#tree" class="docs-nav-link">File tree</a>
+        <a href="#sources" class="docs-nav-link">The four sources</a>
+        <a href="#monorepo" class="docs-nav-link">Monorepo grouping</a>
+        <a href="#collapse" class="docs-nav-link">Collapse &amp; expand</a>
+        <a href="#icons" class="docs-nav-link">Nerd-Font icons</a>
+        <a href="#log" class="docs-nav-link">Log tab</a>
+        <a href="#keys" class="docs-nav-link">Navigation</a>
+        <a href="#entry" class="docs-nav-link">Entry points</a>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div>
+          <div class="footer__brand">
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+            claudin
+          </div>
+          <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__links-title">Project</div>
+          <a href="https://github.com/claudio-labs/claudin" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="../changelog.html" class="footer__link">Changelog</a>
+          <a href="../install.html" class="footer__link">Install</a>
+          <a href="../sponsor.html" class="footer__link">Sponsor</a>
+          <a href="https://github.com/claudio-labs/claudin/issues" class="footer__link" target="_blank" rel="noopener noreferrer">Issues</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span>claudiolabs.ai</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

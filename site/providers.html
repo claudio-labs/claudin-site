@@ -123,6 +123,7 @@
             <div class="docs-nav-section-title">Providers</div>
             <a href="#all-providers" class="docs-nav-link active">All providers</a>
             <a href="#local" class="docs-nav-link">Local models</a>
+            <a href="docs/litellm-setup.html" class="docs-nav-link">LiteLLM setup</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
@@ -135,11 +136,13 @@
             <a href="docs/cache-policy.html" class="docs-nav-link">Cache policy</a>
             <a href="docs/read-outline.html" class="docs-nav-link">Read outline</a>
             <a href="docs/web-researcher.html" class="docs-nav-link">Web researcher</a>
+            <a href="docs/memory.html" class="docs-nav-link">Memory</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="docs/agents.html" class="docs-nav-link">Agents</a>
             <a href="docs/workflows.html" class="docs-nav-link">Workflows</a>
+            <a href="docs/diff-reviewer.html" class="docs-nav-link">Diff reviewer</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Extensibility</div>
@@ -227,6 +230,37 @@ ollama pull qwen2.5-coder:7b
 ollama run qwen2.5-coder:7b</code></pre>
 
         <p>Any model available on <a href="https://ollama.com/library" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent)">ollama.com/library</a> works — <code>llama3</code>, <code>mistral</code>, <code>phi4</code>, <code>deepseek-coder</code>, and more.</p>
+
+        <h2 id="advanced">Advanced usage</h2>
+
+        <h3 id="multi-profile">Multi-profile workflows</h3>
+
+        <p><code>/provider</code> supports any number of profiles, switchable at any time — the change takes effect on the next request. Common patterns:</p>
+
+        <ul>
+          <li><strong>Cost split</strong> — a strong cloud profile (Anthropic, OpenAI, Codex) for hard sessions and a fast/cheap profile (DeepSeek, Ollama, Groq) for routine tasks.</li>
+          <li><strong>Provider redundancy</strong> — primary cloud profile plus a fallback on a different provider for outage windows.</li>
+          <li><strong>Local vs remote</strong> — local Ollama profile for offline work, cloud profile for connectivity-dependent tasks.</li>
+          <li><strong>Role split</strong> — separate profiles for <code>dev</code> and <code>review</code>, switched manually between sessions.</li>
+        </ul>
+
+        <p>Profiles live under <code>providerProfiles[]</code> in <code>~/.claudin/settings.json</code>; the active one is referenced by <code>activeProviderProfileId</code>. All sessions and sub-agents share the same active profile — there is no per-agent routing.</p>
+
+        <h3 id="custom-headers">Custom headers</h3>
+
+        <p>The Anthropic preset includes a <strong>Custom headers</strong> field on the profile (one <code>Header: Value</code> per line), sent on every request from that profile. Use it to route through proxies that require extra headers, or to tag requests at a corporate gateway.</p>
+
+        <h3 id="doctor">/provider doctor</h3>
+
+        <p><code>/provider doctor</code> runs reachability, auth, and model-availability checks against the active profile — useful when a fresh profile fails to send its first message, a previously working profile starts erroring out, or you want a one-shot before/after comparison after editing a profile. It never mutates state, only reports.</p>
+
+        <h3 id="migrate-vs-import">/provider migrate vs. /import</h3>
+
+        <p><code>/provider migrate</code> and <code>/import</code> solve different problems. <code>/provider migrate</code> copies only your Claude Code sign-in — OAuth tokens and provider settings — and is offered automatically as a banner the first time you open <code>/provider</code> with an existing <code>~/.claude/</code>. <code>/import</code> is the general form: it reads eight agents (Claude Code, openclaude, Codex, Gemini CLI, Qwen Code, opencode, Kimi CLI, Cursor), never touches credentials, and never overwrites anything without confirmation. See the <a href="migrate-from-claude-code.html" style="color: var(--color-accent)">migration guide</a> for the full walkthrough.</p>
+
+        <h3 id="custom-proxies">Custom proxies &amp; LiteLLM</h3>
+
+        <p>The <code>custom</code> preset works with any OpenAI-compatible base URL — self-hosted gateways, corporate proxies, or <a href="docs/litellm-setup.html" style="color: var(--color-accent)">LiteLLM</a>. Set <code>baseUrl</code>, optionally <code>apiKey</code>, and the model alias your gateway exposes.</p>
 
       </main>
     </div>

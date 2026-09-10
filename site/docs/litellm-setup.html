@@ -5,40 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary meta -->
-  <title>Agent Workflows: Automated Phases — Claudin Docs</title>
-  <meta name="description" content="Claudin agent workflows: a phase state machine that runs agents automatically — triggered locally with /workflows or by polling GitHub issues." />
-  <meta name="keywords" content="claudin workflows, agent workflows, claudin workflow watch, claudin workflow run, .claudin/workflows, claudin features" />
+  <title>LiteLLM Setup — Claudin Docs</title>
+  <meta name="description" content="Point Claudin at a LiteLLM proxy through the custom provider preset — one unified API to 100+ model providers, with a config example and troubleshooting." />
+  <meta name="keywords" content="claudin litellm, litellm proxy setup, openai compatible llm gateway, claudin custom provider, litellm config, claudin providers" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
-  <link rel="canonical" href="https://claudiolabs.ai/docs/workflows.html" />
+  <link rel="canonical" href="https://claudiolabs.ai/docs/litellm-setup.html" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Claudin" />
-  <meta property="og:title" content="Workflows — Claudin Docs" />
-  <meta property="og:description" content="A phase state machine that runs agents automatically, triggered locally or by polling GitHub issues." />
-  <meta property="og:url" content="https://claudiolabs.ai/docs/workflows.html" />
+  <meta property="og:title" content="LiteLLM Setup — Claudin Docs" />
+  <meta property="og:description" content="Run Claudin through a LiteLLM proxy via the custom preset — config example, multi-provider routing, and a troubleshooting table." />
+  <meta property="og:url" content="https://claudiolabs.ai/docs/litellm-setup.html" />
   <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Claudin CLI — Workflows" />
+  <meta property="og:image:alt" content="Claudin CLI — LiteLLM Setup" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Workflows — Claudin Docs" />
-  <meta name="twitter:description" content="A phase state machine that runs agents automatically, from your terminal or a labeled GitHub issue." />
+  <meta name="twitter:title" content="LiteLLM Setup — Claudin Docs" />
+  <meta name="twitter:description" content="Point Claudin's custom preset at a LiteLLM proxy for one unified API to 100+ model providers." />
   <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
-  <meta name="twitter:image:alt" content="Claudin CLI — Workflows" />
+  <meta name="twitter:image:alt" content="Claudin CLI — LiteLLM Setup" />
 
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "Agent Workflows: Automated Phases — Claudin Docs",
-    "description": "How Claudin agent workflows work: the phase state machine, the /workflows TUI, and claudin workflow run/watch for local and GitHub-triggered runs.",
-    "url": "https://claudiolabs.ai/docs/workflows.html",
+    "headline": "LiteLLM Setup — Claudin Docs",
+    "description": "How to run a LiteLLM proxy and point Claudin's custom OpenAI-compatible preset at it, with a multi-provider config example and troubleshooting steps.",
+    "url": "https://claudiolabs.ai/docs/litellm-setup.html",
     "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
@@ -71,7 +71,7 @@
         <li>
           <a href="https://github.com/claudio-labs/claudin" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
             </svg>
             GitHub
           </a>
@@ -108,9 +108,9 @@
   <nav class="section-tabs section-tabs--subjects" aria-label="Doc sections">
     <div class="section-tabs__inner">
       <a href="index.html" class="section-tabs__link">Overview</a>
-      <a href="configuration.html" class="section-tabs__link">Configuration</a>
+      <a href="configuration.html" class="section-tabs__link active">Configuration</a>
       <a href="index.html#performance" class="section-tabs__link">Performance</a>
-      <a href="agents.html" class="section-tabs__link active">Agents</a>
+      <a href="agents.html" class="section-tabs__link">Agents</a>
       <a href="skills.html" class="section-tabs__link">Extensibility</a>
       <a href="hooks.html" class="section-tabs__link">Automation</a>
       <a href="notifications.html" class="section-tabs__link">Notifications</a>
@@ -133,7 +133,7 @@
             <div class="docs-nav-section-title">Providers</div>
             <a href="../providers.html#all-providers" class="docs-nav-link">All providers</a>
             <a href="../providers.html#local" class="docs-nav-link">Local models</a>
-            <a href="litellm-setup.html" class="docs-nav-link">LiteLLM setup</a>
+            <a href="litellm-setup.html" class="docs-nav-link active">LiteLLM setup</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
@@ -157,7 +157,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="agents.html" class="docs-nav-link">Agents</a>
-            <a href="workflows.html" class="docs-nav-link active">Workflows</a>
+            <a href="workflows.html" class="docs-nav-link">Workflows</a>
             <a href="diff-reviewer.html" class="docs-nav-link">Diff reviewer</a>
           </div>
           <div class="docs-nav-section">
@@ -183,92 +183,125 @@
       <main class="docs-content" id="main-content">
 
         <div class="page-hero">
-          <h1>Workflows</h1>
-          <p class="page-hero__sub">A phase state machine that runs agents automatically — from your terminal, or triggered by a labeled GitHub issue.</p>
+          <h1>LiteLLM Setup</h1>
+          <p class="page-hero__sub">Route Claudin through a LiteLLM proxy for one unified API to 100+ model providers.</p>
         </div>
 
         <h2 id="overview">Overview</h2>
 
-        <p>A workflow, defined at <code>.claudin/workflows/&lt;name&gt;.md</code>, is a linear phase state machine — <code>backlog → development → code-review → test → done</code> by default. Each phase runs one or more agents in parallel, referencing the same <code>.claudin/agents/*.md</code> definitions used by the plain <a href="agents.html">Agent tool</a> or a built-in. A <code>main</code> orchestrator agent decides, after each phase, whether to <code>advance</code>, <code>refine</code> the current phase, or <code>handback</code> to an earlier one. Because each agent definition sets its own model, a single workflow can mix a cheap model for one phase with a stronger one for another — across providers, not just within one.</p>
+        <p><a href="https://docs.litellm.ai/" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent)">LiteLLM</a> is an open-source LLM gateway that provides a unified API to 100+ model providers. Running the LiteLLM Proxy in front of Claudin lets you route requests through LiteLLM to any of its supported providers, all through Claudin's existing OpenAI-compatible <code>custom</code> preset — no code changes.</p>
 
-        <p>The underlying tools — <code>Workflow</code>, <code>ListWorkflows</code>, <code>WorkflowStatus</code> — are available to the model directly, the same way <code>Agent</code> is.</p>
+        <p>Prerequisites: LiteLLM installed (<code>pip install litellm[proxy]</code>), a <code>litellm_config.yaml</code>, and the proxy running on a local or remote port.</p>
 
-        <h2 id="tui">The /workflows TUI</h2>
+        <h2 id="proxy">1. Start the LiteLLM proxy</h2>
 
-        <p><code>/workflows</code> opens the same kind of interactive surface as <code>/agents</code>: a Library tab to create or edit <code>.claudin/workflows/*.md</code> definitions, and a way to watch a run in progress.</p>
+        <pre><code>pip install litellm[proxy]</code></pre>
 
-        <h2 id="run">Running one locally</h2>
+        <p>Create a <code>litellm_config.yaml</code> with your model aliases:</p>
 
-        <pre><code>claudin workflow run &lt;name&gt; --task "&lt;text&gt;"</code></pre>
+        <pre><code>model_list:
+  - model_name: gpt-4o
+    litellm_params:
+      model: openai/gpt-4o
+      api_key: os.environ/OPENAI_API_KEY
+
+  - model_name: claude-sonnet-4
+    litellm_params:
+      model: anthropic/claude-sonnet-4-5-20250929
+      api_key: os.environ/ANTHROPIC_API_KEY
+
+  - model_name: gemini-2.5-flash
+    litellm_params:
+      model: gemini/gemini-2.5-flash
+      api_key: os.environ/GEMINI_API_KEY
+
+  - model_name: llama-3.3-70b
+    litellm_params:
+      model: together_ai/meta-llama/Llama-3.3-70B-Instruct-Turbo
+      api_key: os.environ/TOGETHER_API_KEY</code></pre>
+
+        <p>Run the proxy — it starts at <code>http://localhost:4000</code> by default:</p>
+
+        <pre><code>litellm --config litellm_config.yaml --port 4000</code></pre>
+
+        <h2 id="connect">2. Point Claudin at LiteLLM</h2>
+
+        <p>No environment variables to set — everything goes through <code>/provider</code>:</p>
+
+        <ol>
+          <li>Run <code>claudin</code>, then <code>/provider</code>.</li>
+          <li>Pick <strong>Add profile</strong> → preset <code>custom</code> (or <code>openai</code> with an overridden base URL).</li>
+          <li>Set <strong>Base URL</strong> to <code>http://localhost:4000</code> (or wherever your proxy runs).</li>
+          <li>Set <strong>API key</strong> to your LiteLLM master key, or any placeholder if your local proxy doesn't enforce auth.</li>
+          <li>Set <strong>Model</strong> to the alias from your config — <code>gpt-4o</code>, <code>claude-sonnet-4</code>, <code>gemini-2.5-flash</code>, etc.</li>
+          <li>Save and activate the profile.</li>
+        </ol>
+
+        <p>To switch upstream providers later, edit the profile and change <strong>Model</strong> to a different LiteLLM alias — no restart beyond the next request.</p>
+
+        <h2 id="examples">3. Example configs</h2>
+
+        <p><strong>Multi-provider routing with spend tracking:</strong></p>
+
+        <pre><code>model_list:
+  - model_name: gpt-4o
+    litellm_params:
+      model: openai/gpt-4o
+      api_key: os.environ/OPENAI_API_KEY
+
+  - model_name: claude-sonnet-4
+    litellm_params:
+      model: anthropic/claude-sonnet-4-5-20250929
+      api_key: os.environ/ANTHROPIC_API_KEY
+
+  - model_name: deepseek-chat
+    litellm_params:
+      model: deepseek/deepseek-chat
+      api_key: os.environ/DEEPSEEK_API_KEY
+
+litellm_settings:
+  set_verbose: false
+  num_retries: 3</code></pre>
+
+        <p><strong>With a master key for auth:</strong></p>
+
+        <pre><code>litellm --config litellm_config.yaml --port 4000 --master_key sk-my-master-key</code></pre>
+
+        <p>Then in <code>/provider</code>, set the profile's <strong>API key</strong> to <code>sk-my-master-key</code> and <strong>Base URL</strong> to <code>http://localhost:4000</code>.</p>
+
+        <h2 id="notes">4. Notes</h2>
+
+        <ul>
+          <li>The Claudin profile's <strong>Model</strong> must match a <code>model_name</code> from your LiteLLM config, not the upstream raw provider model name.</li>
+          <li>If your proxy requires authentication, use the proxy key (or <code>master_key</code>) as the profile's API key.</li>
+          <li>LiteLLM's OpenAI-compatible endpoint accepts the same request format as OpenAI, so Claudin works without any code changes.</li>
+          <li>Switch upstream providers by editing the profile's <strong>Model</strong> field — nothing else needs to change.</li>
+        </ul>
+
+        <h2 id="troubleshooting">5. Troubleshooting</h2>
 
         <table>
           <thead>
-            <tr><th>Flag</th><th>Default</th><th>Meaning</th></tr>
+            <tr><th>Issue</th><th>Likely cause</th><th>Fix</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>--task &lt;text&gt;</code></td><td>required</td><td>The task seeding the workflow.</td></tr>
-            <tr><td><code>--worktree</code></td><td>off</td><td>Run in an isolated git worktree instead of the working tree.</td></tr>
-            <tr><td><code>--pr</code></td><td>off</td><td>On success: commit, push, and open a PR with <code>gh</code>.</td></tr>
-            <tr><td><code>--base &lt;branch&gt;</code></td><td>remote default</td><td>PR base branch.</td></tr>
-            <tr><td><code>--report &lt;file&gt;</code></td><td>temp file</td><td>Where to write the markdown run report.</td></tr>
+            <tr><td>404 or Model Not Found</td><td>Model alias doesn't exist in the LiteLLM config</td><td>Verify the <code>model_name</code> in <code>litellm_config.yaml</code> matches the profile's Model</td></tr>
+            <tr><td>Connection refused</td><td>LiteLLM proxy isn't running</td><td>Start it with <code>litellm --config litellm_config.yaml --port 4000</code></td></tr>
+            <tr><td>Auth failed</td><td>Wrong or missing master key on the profile</td><td>Run <code>/provider</code>, edit the profile, paste the correct key</td></tr>
+            <tr><td>Upstream provider error</td><td>The backend provider key is missing or invalid</td><td>Ensure the upstream API key (e.g. <code>OPENAI_API_KEY</code>) is set in your LiteLLM proxy process environment</td></tr>
+            <tr><td>Tools fail but chat works</td><td>The selected model has weak function/tool-calling support</td><td>Switch to a model with strong tool support (e.g. GPT-4o, Claude Sonnet)</td></tr>
           </tbody>
         </table>
 
-        <p>Exit codes: <code>0</code> reached <code>done</code>, <code>1</code> finished without reaching it (or threw), <code>2</code> unknown or invalid workflow (bad structure, or references an unknown agent), or worktree-creation failure.</p>
+        <p>You can also run <code>/provider doctor</code> inside Claudin to check the active profile.</p>
 
-        <h2 id="watch">Triggering from external events</h2>
+        <h2 id="resources">6. Resources</h2>
 
-        <p><code>claudin workflow watch</code> polls a source and spawns a <code>workflow run … --worktree --pr</code> for each new trigger, one at a time, each in its own isolated worktree. This is outbound polling only — there's no inbound webhook server and no open port.</p>
-
-        <pre><code>claudin workflow watch --workflow &lt;name&gt; [flags]</code></pre>
-
-        <table>
-          <thead>
-            <tr><th>Flag</th><th>Default</th><th>Meaning</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>--source &lt;source&gt;</code></td><td><code>github</code></td><td><code>github</code> / <code>url</code> / <code>command</code></td></tr>
-            <tr><td><code>--label &lt;label&gt;</code></td><td><code>claudin</code></td><td>(github) issue label that triggers a run.</td></tr>
-            <tr><td><code>--url &lt;url&gt;</code></td><td>—</td><td>(url) endpoint to poll.</td></tr>
-            <tr><td><code>--command &lt;cmd&gt;</code></td><td>—</td><td>(command) local shell command to poll, reads stdout.</td></tr>
-            <tr><td><code>--match &lt;regex&gt;</code></td><td>—</td><td>Only trigger when title+body matches.</td></tr>
-            <tr><td><code>--interval &lt;seconds&gt;</code></td><td><code>30</code></td><td>Poll interval, floored at 5s.</td></tr>
-            <tr><td><code>--base &lt;branch&gt;</code></td><td>remote default</td><td>Passed through to each run.</td></tr>
-          </tbody>
-        </table>
-
-        <table>
-          <thead>
-            <tr><th>Source</th><th>Polls</th><th>Reports back</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><code>github</code></td><td><code>gh issue list --label &lt;label&gt; --state open</code></td><td>Comments the PR URL on the issue.</td></tr>
-            <tr><td><code>url</code></td><td><code>GET &lt;url&gt;</code></td><td>—</td></tr>
-            <tr><td><code>command</code></td><td>Runs <code>&lt;cmd&gt;</code>, reads stdout</td><td>—</td></tr>
-          </tbody>
-        </table>
-
-        <p>GitHub auth goes through your local <code>gh</code> CLI — there's no separate token to configure, just make sure <code>gh auth status</code> is green. Dedup/processed-trigger state is written to <code>.claudin/workflow-watch-state.json</code> (gitignored), so restarting the watcher doesn't replay old triggers.</p>
-
-        <pre><code>claudin workflow run dev-flow --task "Add a --json flag to the status command" --worktree --pr
-
-claudin workflow watch --workflow dev-flow --label claudin --interval 30
-
-claudin workflow watch --workflow dev-flow --source url --url https://example.com/queue.json
-
-claudin workflow watch --workflow dev-flow --source command --command './scripts/next-task.sh' --match '^READY:'</code></pre>
-
-        <h2 id="limits">Limits</h2>
-
-        <p>Safety caps keep a run from looping forever: at most <strong>20 transitions per run</strong> and <strong>3 refines/handbacks per phase</strong>; exceeding either marks the run <code>stalled</code> instead of spinning. The main orchestrator can only <code>advance</code> to the next phase or <code>handback</code> to an allowed earlier one — no forward jumps. Run state is written after every phase and decision to <code>.claudin/workflows/.runs/&lt;runId&gt;.json</code>, so a run survives a restart and the board can replay it.</p>
-
-        <h2 id="scope">Scope</h2>
-
-        <p>What's covered today: local polling across the three sources above, <code>--match</code> filtering, per-job worktree isolation, PR-out plus issue-comment report-back, deterministic exit codes, atomic dedup state. Deliberately out of scope: an inbound webhook server, parallel/multi-tenant jobs, non-GitHub forges with report-back, sandbox enforcement, and a committed GitHub Action template.</p>
-
-        <h2 id="vs-claude-code">Differences from Claude Code</h2>
-
-        <p>Claude Code's automation path here is GitHub Actions — a committed workflow YAML, a hosted runner, triggered by an <code>@claude</code> mention. Claudin's watcher runs entirely on a machine you control, with no YAML and no runner: <code>claudin workflow watch</code> is a local process polling a source you choose (GitHub issues by label, a URL, or a command), and every run it spawns is isolated to its own git worktree.</p>
+        <ul>
+          <li><a href="https://docs.litellm.ai/docs/proxy/quick_start" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent)">LiteLLM Proxy Docs</a></li>
+          <li><a href="https://docs.litellm.ai/docs/providers" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent)">LiteLLM Provider List</a></li>
+          <li><a href="https://docs.litellm.ai/docs/proxy/openai_compatible_proxy" target="_blank" rel="noopener noreferrer" style="color: var(--color-accent)">LiteLLM OpenAI-Compatible Endpoints</a></li>
+        </ul>
 
       </main>
 
@@ -279,12 +312,12 @@ claudin workflow watch --workflow dev-flow --source command --command './scripts
           <svg class="docs-toc-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <a href="#overview" class="docs-nav-link">Overview</a>
-        <a href="#tui" class="docs-nav-link">The /workflows TUI</a>
-        <a href="#run" class="docs-nav-link">Running one locally</a>
-        <a href="#watch" class="docs-nav-link">External events</a>
-        <a href="#limits" class="docs-nav-link">Limits</a>
-        <a href="#scope" class="docs-nav-link">Scope</a>
-        <a href="#vs-claude-code" class="docs-nav-link">Vs. Claude Code</a>
+        <a href="#proxy" class="docs-nav-link">Start the proxy</a>
+        <a href="#connect" class="docs-nav-link">Point Claudin at it</a>
+        <a href="#examples" class="docs-nav-link">Example configs</a>
+        <a href="#notes" class="docs-nav-link">Notes</a>
+        <a href="#troubleshooting" class="docs-nav-link">Troubleshooting</a>
+        <a href="#resources" class="docs-nav-link">Resources</a>
       </aside>
     </div>
   </div>

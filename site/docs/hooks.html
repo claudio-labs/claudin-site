@@ -133,6 +133,7 @@
             <div class="docs-nav-section-title">Providers</div>
             <a href="../providers.html#all-providers" class="docs-nav-link">All providers</a>
             <a href="../providers.html#local" class="docs-nav-link">Local models</a>
+            <a href="litellm-setup.html" class="docs-nav-link">LiteLLM setup</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Docs</div>
@@ -151,11 +152,13 @@
             <a href="cache-policy.html" class="docs-nav-link">Cache policy</a>
             <a href="read-outline.html" class="docs-nav-link">Read outline</a>
             <a href="web-researcher.html" class="docs-nav-link">Web researcher</a>
+            <a href="memory.html" class="docs-nav-link">Memory</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="agents.html" class="docs-nav-link">Agents</a>
             <a href="workflows.html" class="docs-nav-link">Workflows</a>
+            <a href="diff-reviewer.html" class="docs-nav-link">Diff reviewer</a>
           </div>
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Extensibility</div>
@@ -297,6 +300,110 @@
         <h2 id="chains">Hook chains</h2>
 
         <p>A separate, opt-in layer sits on top of ordinary hooks: instead of a matcher firing a command, a rules engine reacts to hook <em>outcomes</em> — a failed tool call, a completed task — with declarative remediation (spawn a fallback agent, notify the team, warm up remote capacity). Configured at <code>.claudin/hook-chains.json</code>, disabled by default. Most setups won't need this; reach for it only once plain hooks stop being enough.</p>
+
+        <p>Safety is conservative by design: a depth guard blocks dispatch once <code>chainDepth &gt;= maxChainDepth</code>, each rule has a cooldown before it can re-fire, identical event/action pairs are deduped within a window, and every action fails safe (skipped with a structured reason) rather than throwing when its context isn't available.</p>
+
+        <h3 id="chains-schema">Configuration schema</h3>
+
+        <table>
+          <thead>
+            <tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>version</code></td><td><code>1</code></td><td>Defaults to <code>1</code>.</td></tr>
+            <tr><td><code>enabled</code></td><td><code>boolean</code></td><td>Global switch for this config file.</td></tr>
+            <tr><td><code>maxChainDepth</code></td><td><code>integer</code></td><td>Global depth guard (default <code>2</code>, max <code>10</code>).</td></tr>
+            <tr><td><code>defaultCooldownMs</code></td><td><code>integer</code></td><td>Default rule cooldown in ms (default <code>30000</code>).</td></tr>
+            <tr><td><code>defaultDedupWindowMs</code></td><td><code>integer</code></td><td>Default action dedup window in ms (default <code>30000</code>).</td></tr>
+            <tr><td><code>rules</code></td><td><code>HookChainRule[]</code></td><td>Defaults to <code>[]</code>. An empty ruleset is valid — dispatch is a no-op.</td></tr>
+          </tbody>
+        </table>
+
+        <p>Each rule has an <code>id</code>, a <code>trigger</code> (<code>event</code> plus <code>outcome</code>/<code>outcomes</code>), an optional <code>condition</code>, and one or more <code>actions</code> run in order:</p>
+
+        <table>
+          <thead>
+            <tr><th>Condition field</th><th>Matches against</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>toolNames</code></td><td><code>tool_name</code> / <code>toolName</code> in the event payload</td></tr>
+            <tr><td><code>taskStatuses</code></td><td><code>task_status</code> / <code>taskStatus</code> / <code>status</code></td></tr>
+            <tr><td><code>errorIncludes</code></td><td>Case-insensitive substring match against <code>error</code> / <code>reason</code> / <code>message</code></td></tr>
+            <tr><td><code>eventFieldEquals</code></td><td>Dot-path equality against the payload, e.g. <code>"meta.source": "scheduler"</code></td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="chains-actions">Action types</h3>
+
+        <table>
+          <thead>
+            <tr><th>Type</th><th>Does</th><th>Key fields</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>spawn_fallback_agent</code></td><td>Launches a recovery agent with a templated prompt</td><td><code>promptTemplate</code>, <code>agentType</code>, <code>model</code></td></tr>
+            <tr><td><code>notify_team</code></td><td>Posts a templated message to team context</td><td><code>teamName</code>, <code>recipients</code>, <code>summary</code>, <code>messageTemplate</code></td></tr>
+            <tr><td><code>warm_remote_capacity</code></td><td>Pre-warms a remote bridge environment</td><td><code>createDefaultEnvironmentIfMissing</code></td></tr>
+          </tbody>
+        </table>
+
+        <p>Template variables available in <code>promptTemplate</code>, <code>summary</code>, and <code>messageTemplate</code>: <code>${EVENT_NAME}</code>, <code>${OUTCOME}</code>, <code>${RULE_ID}</code>, <code>${TASK_SUBJECT}</code>, <code>${TASK_DESCRIPTION}</code>, <code>${TASK_ID}</code>, <code>${ERROR}</code>, <code>${PAYLOAD_JSON}</code>.</p>
+
+        <h3 id="chains-example">Example: fallback + notify + warm, combined</h3>
+
+        <pre><code>{
+  "version": 1,
+  "enabled": true,
+  "maxChainDepth": 2,
+  "defaultCooldownMs": 45000,
+  "defaultDedupWindowMs": 30000,
+  "rules": [
+    {
+      "id": "full-recovery-chain",
+      "trigger": {
+        "event": "TaskCompleted",
+        "outcomes": ["failed", "timeout"]
+      },
+      "condition": {
+        "errorIncludes": ["timeout", "capacity", "connection"]
+      },
+      "cooldownMs": 90000,
+      "actions": [
+        {
+          "type": "spawn_fallback_agent",
+          "id": "fallback-agent",
+          "description": "Recover failed task execution",
+          "promptTemplate": "Recover failed task and produce a concise fix summary.\nTask=${TASK_SUBJECT}\nError=${ERROR}\nPayload=${PAYLOAD_JSON}"
+        },
+        {
+          "type": "notify_team",
+          "id": "notify-team",
+          "recipients": ["*"],
+          "summary": "Recovery chain triggered",
+          "messageTemplate": "Recovery chain ${RULE_ID} fired.\nOutcome=${OUTCOME}\nTask=${TASK_SUBJECT}\nError=${ERROR}"
+        },
+        {
+          "type": "warm_remote_capacity",
+          "id": "warm-capacity",
+          "createDefaultEnvironmentIfMissing": false
+        }
+      ]
+    }
+  ]
+}</code></pre>
+
+        <h3 id="chains-troubleshooting">Troubleshooting</h3>
+
+        <table>
+          <thead>
+            <tr><th>Symptom</th><th>Check</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Rule never triggers</td><td><code>trigger.event</code>/<code>outcome(s)</code> match the dispatched event exactly; <code>condition</code> filters (especially <code>toolNames</code> and <code>eventFieldEquals</code> dot-paths); the config file is valid JSON.</td></tr>
+            <tr><td>Actions show as skipped</td><td>Common reasons: <code>action disabled</code>, rule cooldown or dedup window still active, max chain depth reached, missing team context/team file, remote sessions blocked by policy, bridge inactive, or no fallback agent launcher registered.</td></tr>
+            <tr><td>Config changes not reflected</td><td>The loader memoizes by file mtime/size — confirm your editor writes the file fully and updates mtime, or force a reload with <code>forceReloadConfig: true</code>.</td></tr>
+            <tr><td>Existing workflows changed unexpectedly</td><td>Set <code>"enabled": false</code> at the top level, or globally disable with <code>CLAUDIN_ENABLE_HOOK_CHAINS=0</code>, then re-enable one rule at a time.</td></tr>
+          </tbody>
+        </table>
 
       </main>
 
