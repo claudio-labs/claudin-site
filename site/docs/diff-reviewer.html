@@ -59,7 +59,7 @@
   <nav class="nav" aria-label="Main navigation">
     <div class="nav__inner">
       <a href="/" class="nav__logo">
-        <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
         claudin
       </a>
 
@@ -157,6 +157,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="agents.html" class="docs-nav-link">Agents</a>
+            <a href="cross-session-messaging.html" class="docs-nav-link">Cross-session messaging</a>
             <a href="workflows.html" class="docs-nav-link">Workflows</a>
             <a href="diff-reviewer.html" class="docs-nav-link active">Diff reviewer</a>
           </div>
@@ -184,34 +185,35 @@
 
         <div class="page-hero">
           <h1>Diff Reviewer</h1>
-          <p class="page-hero__sub">An IDE-like <code>/diff</code> — two tabs, a collapsible file tree, and a side-by-side diff pane, without leaving the terminal.</p>
+          <p class="page-hero__sub">An IDE-like <code>/diff</code> for the terminal — a stacked file tree and diff on Local Changes, a side-by-side commit graph and diff on Log.</p>
         </div>
 
         <h2 id="overview">Overview</h2>
 
-        <p><code>/diff</code> is a two-tab, side-by-side reviewer:</p>
+        <p><code>/diff</code> is a two-tab reviewer — stacked sections on Local Changes, a side-by-side graph and diff on Log when the terminal is wide enough:</p>
 
         <ul>
-          <li><strong>Local Changes</strong> — file <strong>tree</strong> (left) | diff of the selected file (right), collapsed to the changed lines with incremental expand of unchanged context.</li>
+          <li><strong>Local Changes</strong> — file <strong>tree</strong> stacked above the diff of the selected file, each section a titled rule rather than a boxed pane, collapsed to the changed lines with incremental expand of unchanged context.</li>
           <li><strong>Log</strong> — the git <strong>graph/tree</strong> (left) | files changed in the selected commit (right).</li>
         </ul>
 
         <pre><code>┌ Diff ─────────────────────────────────────────────────────────┐
 │  Local Changes   Log                         (Tab to switch)   │
-│  source: working tree ▾   (←/→ when focus on list, only here)  │
-│ ┌ Files ─────────────┐┌ Diff: src/foo.ts ───────────────────┐ │
-│ │ web  2 files · main ││  12  export function foo() {        │ │
-│ │› src/foo.ts  +12 -3 ││ ··· 8 lines ───────────────────────  │ │
-│ │  README.md   +4  -4 ││ -18  const x = old()               │ │
-│ │ api  1 file  · dev  ││ +18  const x = new()               │ │
-│ │  src/bar.ts  +1  -0 ││                                     │ │
-│ └────────────────────┘└─────────────────────────────────────┘ │
-│  Tab tabs · ↑/↓ files · → diff · ← back · r refresh · Esc close│
+│  source: working tree ▾                                        │
+│ ─ Files  2 files changed ───────────────────────── +16 -7 ──── │
+│ › src/foo.ts  +12 -3                                            │
+│   README.md   +4  -4                                            │
+│ ─ Diff: foo.ts ────────────────────────────────────────────── │
+│  12  export function foo() {                                   │
+│ ··· 8 lines ─────────────────────────────────────────────────  │
+│ -18  const x = old()                                            │
+│ +18  const x = new()                                            │
+│  Tab tabs · ↑/↓ move · → diff · ← back · ctrl+↑/↓ section · r refresh · Esc close│
 └────────────────────────────────────────────────────────────────┘</code></pre>
 
         <h2 id="tree">File tree (Local Changes)</h2>
 
-        <p>The left pane is a collapsible folder tree, not a flat list. Files nest under their directories; folders sort first, then files; single-child directory chains compact into one row (like VS Code's compact folders). Folder rows show a caret plus an open/closed icon; file rows show the basename with its per-file <code>+/−</code> stat. When more than one repo is in scope, a per-repo group header sits above its files — collapsible too, so you can fold an entire repo's changes out of the way while keeping its header visible.</p>
+        <p>The file list sits above the diff, as a collapsible folder tree rather than a flat list. Files nest under their directories; folders sort first, then files; single-child directory chains compact into one row (like VS Code's compact folders). Folder rows show a caret plus an open/closed icon; file rows show the basename with its per-file <code>+/−</code> stat. When more than one repo is in scope, a per-repo group header sits above its files — collapsible too, so you can fold an entire repo's changes out of the way while keeping its header visible.</p>
 
         <p>Keys: <code>↑/↓</code> move, <code>Enter</code> toggles a folder or opens a file, <code>→</code> expands a folder or focuses the diff, <code>←</code> collapses a folder or focuses the list.</p>
 
@@ -269,22 +271,27 @@ api   1 file changed  · dev
           </thead>
           <tbody>
             <tr><td><code>Tab</code></td><td>switch tabs (Local Changes ↔ Log)</td></tr>
-            <tr><td><code>↑/↓</code></td><td>move selection in the left list, or scroll the diff when it's focused</td></tr>
-            <tr><td><code>←/→</code></td><td>move focus between the left list and the right pane (also collapses/expands a folder on Local Changes)</td></tr>
+            <tr><td><code>↑/↓</code></td><td>move selection in the list, or scroll the diff when it's focused</td></tr>
+            <tr><td><code>←/→</code></td><td>move focus between the file/commit list and the diff — side by side on Log (≥96 cols), stacked above/below on Local Changes; also collapses/expands a folder on Local Changes</td></tr>
+            <tr><td><code>ctrl+↑</code> / <code>ctrl+↓</code></td><td>move focus between the stacked sections on Local Changes, without collapsing or expanding a folder</td></tr>
             <tr><td><code>[</code> / <code>]</code></td><td>cycle the source (Local Changes) or the project (Log, monorepo)</td></tr>
             <tr><td><code>Enter</code></td><td>open a file / toggle a folder (list focus); grow the next collapsed gap (content focus)</td></tr>
+            <tr><td><code>v</code></td><td>(diff focused) anchor a visual line selection; <code>↑/↓</code> extend it, <code>Enter</code> attaches <code>@path#La-Lb</code> to the prompt, <code>Esc</code> cancels</td></tr>
+            <tr><td>mouse drag over the diff</td><td>attaches the dragged lines the same way, on release</td></tr>
             <tr><td><code>a</code></td><td>expand the whole file (Local Changes)</td></tr>
             <tr><td><code>u</code> / <code>d</code>, <code>g</code>/<code>G</code></td><td>page / jump to ends (content focused, split layout)</td></tr>
             <tr><td><code>r</code></td><td>manual refresh</td></tr>
+            <tr><td><code>ctrl+g</code></td><td>toggle the reviewer open/closed from anywhere, including from inside the panel</td></tr>
+            <tr><td><code>ctrl+→</code> / <code>ctrl+←</code></td><td>step focus into the panel / back out to the prompt</td></tr>
             <tr><td><code>Esc</code></td><td>close (from content focus, returns to the list first)</td></tr>
           </tbody>
         </table>
 
         <h2 id="entry">Entry points</h2>
 
-        <p><code>/diff</code> stays the canonical command. <code>gg</code> opens the same overlay too — but only when the prompt is empty (vim-style), so it never fires mid-typing.</p>
+        <p><code>/diff</code> stays the canonical command. <code>ctrl+g</code> toggles the same overlay open and closed from anywhere, including from inside the panel — it replaced the older <code>gg</code> chord (a <code>g</code> then a quick second <code>g</code> on an empty prompt).</p>
 
-        <p>On narrow terminals (under 100 columns) or outside a fullscreen-capable environment, the reviewer falls back to a stacked list-then-detail layout instead of the side-by-side split, so it stays usable everywhere.</p>
+        <p>Local Changes stacks its sections at any terminal width. Log keeps its side-by-side graph/files split down to 96 usable columns; below that it falls back to the same one-at-a-time list-then-detail path, so both tabs stay usable everywhere.</p>
 
       </main>
 
@@ -313,7 +320,7 @@ api   1 file changed  · dev
       <div class="footer__inner">
         <div>
           <div class="footer__brand">
-            <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
             claudin
           </div>
           <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>

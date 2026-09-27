@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary meta -->
+  <title>Cross-Session Messaging: SendMessage &amp; ListAgents — Claudin Docs</title>
+  <meta name="description" content="SendMessage and ListAgents let a Claudin agent or session reach a subagent, the main conversation, a teammate, or another session — sanitized and policy-gated." />
+  <meta name="keywords" content="claudin cross-session messaging, SendMessage, ListAgents, agent messaging, multi-session, peer sessions, notify_when_idle, claudin features" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <link rel="canonical" href="https://claudiolabs.ai/docs/cross-session-messaging.html" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Claudin" />
+  <meta property="og:title" content="Cross-Session Messaging — Claudin Docs" />
+  <meta property="og:description" content="One agent, or a whole Claudin session, sending a message to another — SendMessage and ListAgents cover every destination, over a sanitized, policy-gated transport." />
+  <meta property="og:url" content="https://claudiolabs.ai/docs/cross-session-messaging.html" />
+  <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Claudin CLI — Cross-Session Messaging" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Cross-Session Messaging — Claudin Docs" />
+  <meta name="twitter:description" content="SendMessage and ListAgents let an agent or a whole session reach a subagent, the main conversation, or another Claudin session on the same machine." />
+  <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
+  <meta name="twitter:image:alt" content="Claudin CLI — Cross-Session Messaging" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Cross-Session Messaging: SendMessage & ListAgents — Claudin Docs",
+    "description": "One agent sending a message to another — a subagent, the main conversation, a teammate, or another interactive Claudin session on the same machine — over a sanitized, policy-gated transport.",
+    "url": "https://claudiolabs.ai/docs/cross-session-messaging.html",
+    "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
+    "isPartOf": { "@type": "WebSite", "name": "Claudin", "url": "https://claudiolabs.ai/" }
+  }
+  </script>
+
+  <!-- Theme & favicon -->
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo">
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
+        claudin
+      </a>
+
+      <button class="nav__hamburger" aria-label="Toggle menu" aria-expanded="false" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__links" id="nav-links" role="list">
+        <li>
+          <a href="https://github.com/claudio-labs/claudin" class="nav__link nav__link--github" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            GitHub
+          </a>
+        </li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Getting started
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="../install.html" class="nav__dropdown-link">Install</a></li>
+            <li><a href="../install.html#quickstart" class="nav__dropdown-link">Quick start</a></li>
+            <li><a href="../migrate-from-claude-code.html" class="nav__dropdown-link">Migrate from Claude Code</a></li>
+          </ul>
+        </li>
+        <li><a href="../providers.html" class="nav__link">Providers</a></li>
+        <li><a href="index.html" class="nav__link" style="color: var(--color-accent)">Docs</a></li>
+        <li class="nav__dropdown">
+          <button class="nav__link nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Reference
+            <svg class="nav__dropdown-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="nav__dropdown-menu" role="list">
+            <li><a href="../changelog.html" class="nav__dropdown-link">Changelog</a></li>
+          </ul>
+        </li>
+        <li><a href="../sponsor.html" class="nav__link">Sponsor ⚡</a></li>
+        <li><a href="../install.html" class="nav__cta">Install</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Section tabs -->
+  <nav class="section-tabs section-tabs--subjects" aria-label="Doc sections">
+    <div class="section-tabs__inner">
+      <a href="index.html" class="section-tabs__link">Overview</a>
+      <a href="configuration.html" class="section-tabs__link">Configuration</a>
+      <a href="index.html#performance" class="section-tabs__link">Performance</a>
+      <a href="agents.html" class="section-tabs__link active">Agents</a>
+      <a href="skills.html" class="section-tabs__link">Extensibility</a>
+      <a href="hooks.html" class="section-tabs__link">Automation</a>
+      <a href="notifications.html" class="section-tabs__link">Notifications</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="docs-layout docs-layout--with-toc">
+
+      <!-- Sidebar -->
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <nav>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Getting started</div>
+            <a href="../install.html" class="docs-nav-link">Install</a>
+            <a href="../install.html#quickstart" class="docs-nav-link">Quick start</a>
+            <a href="../migrate-from-claude-code.html" class="docs-nav-link">Migrate from Claude Code</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Providers</div>
+            <a href="../providers.html#all-providers" class="docs-nav-link">All providers</a>
+            <a href="../providers.html#local" class="docs-nav-link">Local models</a>
+            <a href="litellm-setup.html" class="docs-nav-link">LiteLLM setup</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Docs</div>
+            <a href="index.html" class="docs-nav-link">Overview</a>
+            <a href="notifications.html" class="docs-nav-link">Notifications</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Configuration</div>
+            <a href="configuration.html#settings-and-permissions" class="docs-nav-link">Settings &amp; permissions</a>
+            <a href="configuration.html#model-and-responses" class="docs-nav-link">Model &amp; responses</a>
+            <a href="configuration.html#interface" class="docs-nav-link">Interface</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Performance</div>
+            <a href="bash-output-filter.html" class="docs-nav-link">Bash output filter</a>
+            <a href="cache-policy.html" class="docs-nav-link">Cache policy</a>
+            <a href="read-outline.html" class="docs-nav-link">Read outline</a>
+            <a href="web-researcher.html" class="docs-nav-link">Web researcher</a>
+            <a href="memory.html" class="docs-nav-link">Memory</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Agents &amp; workflows</div>
+            <a href="agents.html" class="docs-nav-link">Agents</a>
+            <a href="cross-session-messaging.html" class="docs-nav-link active">Cross-session messaging</a>
+            <a href="workflows.html" class="docs-nav-link">Workflows</a>
+            <a href="diff-reviewer.html" class="docs-nav-link">Diff reviewer</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Extensibility</div>
+            <a href="skills.html" class="docs-nav-link">Skills</a>
+            <a href="plugins.html" class="docs-nav-link">Plugins</a>
+            <a href="mcp.html" class="docs-nav-link">MCP</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Automation</div>
+            <a href="hooks.html" class="docs-nav-link">Hooks</a>
+            <a href="automation.html" class="docs-nav-link">Automation</a>
+          </div>
+          <div class="docs-nav-section">
+            <div class="docs-nav-section-title">Reference</div>
+            <a href="../changelog.html" class="docs-nav-link">Changelog</a>
+            <a href="https://github.com/claudio-labs/claudin" class="docs-nav-link" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <main class="docs-content" id="main-content">
+
+        <div class="page-hero">
+          <h1>Cross-Session Messaging</h1>
+          <p class="page-hero__sub">One agent sending a message to another — a subagent, the main conversation, or a whole separate Claudin session on the same machine — through two tools and one sanitized, policy-gated transport.</p>
+        </div>
+
+        <h2 id="overview">Overview</h2>
+
+        <p><code>SendMessage</code> and <code>ListAgents</code> cover every destination an agent might want to reach. The same call shape works whether the target is a subagent this conversation launched, the main conversation from a background agent, a teammate in an agent team, or an entirely different interactive Claudin session running in another terminal:</p>
+
+        <table>
+          <thead>
+            <tr><th><code>to</code></th><th>Destination</th><th>Delivered</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>a name or <code>agentId</code> from <code>ListAgents</code></td><td>another agent of this conversation — one it launched, or a sibling</td><td>queued for its next tool round; a stopped agent resumes from its transcript</td></tr>
+            <tr><td><code>"main"</code></td><td>the main conversation (from a background agent only)</td><td>queued for the main thread's next turn</td></tr>
+            <tr><td>a teammate name, <code>"*"</code></td><td>agent-team members (inside an agent team only)</td><td>the team mailbox</td></tr>
+            <tr><td><code>claudin-goal</code>, <code>claudin-goal [3fa9c1]</code>, <code>uds:&lt;path&gt;</code></td><td>another interactive Claudin session on this machine</td><td>its peer inbox, over a Unix domain socket</td></tr>
+          </tbody>
+        </table>
+
+        <p>Both tools are deferred — they only add their names to the request until the model actually reaches for one — so what a receiving model needs to know about a peer message (that it isn't from the user, how to reply) travels <em>with</em> each message rather than living in every system prompt.</p>
+
+        <p>Sessions on another machine, and cloud / Remote Control sessions, are <strong>not</strong> reachable — a <code>bridge:</code> address is refused with a reason. Windows has no inbox in this version (named pipes have no file mode to check ownership against), so a Windows session can still message its own agents but not a peer session.</p>
+
+        <h2 id="addressing">Addressing a peer session</h2>
+
+        <p><code>ListAgents</code> prints how the current session is addressed, then three sections — subagents, teammates (inside a team), and peer sessions:</p>
+
+        <pre><code>This session is claudin [3fa9c1] — the name other sessions use to message it.
+
+Subagents (1):
+  researcher  ·  running  ·  Map the registry
+
+Peer sessions (2):
+  claudin-goal [8c21d0]  ·  idle  ·  ~/projects/claudin-goal  ·  started 12 min ago
+  claudin-loop [41be07]  ·  busy  ·  ~/projects/claudin-loop  ·  started 1 h ago</code></pre>
+
+        <p>A session's name is its <code>--name</code> flag or <code>/rename</code>, or else its working directory's basename — which is what tells parallel worktrees apart. The <code>[ref]</code> is a short unique prefix of a hash of the socket path; send it only when two rows share a name, or an error asks for one. A name that also names one of this conversation's agents goes to the agent, not a peer session.</p>
+
+        <h2 id="receiving">What the receiver sees</h2>
+
+        <p>An inbound message from another session arrives wrapped in a tag that says where it came from and how to reply, so the receiving model never mistakes it for something the user typed:</p>
+
+        <pre><code>&lt;cross-session-message from="uds:/run/user/1000/claudin-socks/4242.sock" from-name="claudin-goal"&gt;
+run the tests in packages/core and tell me which fail
+&lt;/cross-session-message&gt;
+From another Claudin session on this machine, not from your user: …  To reply, call SendMessage with to: "uds:…".</code></pre>
+
+        <ul>
+          <li>It's queued as a notification: read at the running turn's next tool round, or it starts a turn if the session is idle — the same path a background agent's completion takes.</li>
+          <li>The body can't close or open its own tag, so a crafted message can't forge the end of the wrapper and put words after it.</li>
+          <li>The body is sanitized on arrival: terminal escapes, bidi overrides, other invisible code points, and every control character but tab and newline are stripped — so the confirmation dialog and the model see exactly the same text.</li>
+          <li><code>@path</code>, <code>@server:resource</code>, and <code>@agent-…</code> mentions inside it attach nothing, and no slash command runs from it.</li>
+          <li>The TUI renders it inline as <code>@claudin-goal❯ first line · another session</code>.</li>
+        </ul>
+
+        <h2 id="policy">Inbound policy</h2>
+
+        <p>With no setting changed, delivery follows <strong>mode parity</strong>: a message is delivered automatically when the sending and receiving sessions are on the same side of <code>bypassPermissions</code>, and held for the receiving user to approve when they aren't — a session that asks before acting shouldn't get a message from one that doesn't, and a session running unattended shouldn't silently act on a message from one that isn't.</p>
+
+        <p>A session in <strong>plan mode</strong> marks its outgoing messages accordingly, and a receiver that isn't planning holds them for the same reason: a session that changes nothing shouldn't be able to trigger changes elsewhere without the user seeing it first. A message sent <em>into</em> a planning session is delivered as usual.</p>
+
+        <p><code>/config</code> → <em>Agents &amp; workflows</em> → <em>Messages from other sessions</em> overrides this per session: <code>accept</code>, <code>hold</code>, or <code>refuse</code>. Project and local settings can only make it stricter, never looser, than the user's own setting.</p>
+
+        <p>A held message waits in a dialog — <em>Held message from another session</em>, showing the sender, the reason it was held, and the full body (a long one opens on its first 12 lines with a way to show the rest). <strong>Deny</strong> is the default and what <code>Esc</code> does. A held message expires after 5 minutes if left unanswered, and a session holds at most 100 at once. Either way, the sender's tool result reports what happened — held, then delivered, denied, or expired — once the user decides.</p>
+
+        <h2 id="notify-when-idle">Waiting for a reply without spending a turn</h2>
+
+        <p><code>SendMessage({ to, message?, notify_when_idle: true })</code> asks a session for one notice the next time it finishes a turn with nothing left queued, or exits. Sent without a message, it's a pure subscription — no turn runs on the other side just to answer it, and a session that's already idle answers immediately. A subscription lasts 12 hours before it expires on its own; a sender can hold at most 3 open on a given session (a fourth pushes out the oldest), and a session accepts at most 32 total. Only a session's main conversation can subscribe — a subagent asking is refused, since the notice needs a turn to land in.</p>
+
+        <h2 id="guardrails">Guardrails</h2>
+
+        <p>A few limits keep two sessions from turning a conversation into a loop, or one session into a relay for something the user already said no to:</p>
+
+        <ul>
+          <li><strong>Send budget</strong> — 10 sends to other sessions per prompt the user actually typed. A turn another session opened doesn't renew the budget, and neither does a prompt the harness itself wrote (a cron fire, a scheduled wakeup, a rate-limit resume) — so two sessions volleying messages back and forth stop at the tenth.</li>
+          <li><strong>No relaying a refusal.</strong> The prompt is explicit that an agent must never ask another session to do what was just denied or blocked here.</li>
+          <li><strong>The auto-mode classifier treats agent messages as untrusted input.</strong> A message another agent wrote is shown as a single line — <code>Agent message (not from the user) from "&lt;name&gt;": "&lt;text&gt;"</code> — so a newline inside it can't forge a fake <code>User:</code> line, and the classifier is told such a message never by itself establishes user intent.</li>
+        </ul>
+
+        <p>Two environment variables turn the whole feature off if you need to:</p>
+
+        <table>
+          <thead>
+            <tr><th>Env</th><th>Effect</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>CLAUDIN_DISABLE_CROSS_SESSION=1</code></td><td>no inbox, no peer-session rows in <code>ListAgents</code>, every send to a session refused with a reason</td></tr>
+            <tr><td><code>CLAUDIN_DISABLE_SEND_MESSAGE=1</code></td><td>removes <code>SendMessage</code> and <code>ListAgents</code> entirely, outside an agent team</td></tr>
+          </tbody>
+        </table>
+
+        <h2 id="try">Try it</h2>
+
+        <p>Start a second Claudin session in another terminal, in the same or a different project directory:</p>
+
+        <pre><code>claudin --name build</code></pre>
+
+        <p>Then, from your original session, ask it to reach the other one:</p>
+
+        <pre><code>ask the "build" session to run the test suite and tell me if anything fails</code></pre>
+
+        <p>What to expect: the model calls <code>ListAgents</code> to confirm <code>build</code> is listed as a peer session, then <code>SendMessage</code> with <code>to: "build"</code>. If both sessions are in the same permission mode the message is delivered straight away; otherwise it shows up as a held-message dialog in the <code>build</code> session, waiting for a decision there.</p>
+
+      </main>
+
+      <!-- On this page -->
+      <aside class="docs-toc" aria-label="On this page">
+        <div class="docs-toc-header">
+          <div class="docs-nav-section-title">On this page</div>
+          <svg class="docs-toc-caret" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <a href="#overview" class="docs-nav-link">Overview</a>
+        <a href="#addressing" class="docs-nav-link">Addressing a peer session</a>
+        <a href="#receiving" class="docs-nav-link">What the receiver sees</a>
+        <a href="#policy" class="docs-nav-link">Inbound policy</a>
+        <a href="#notify-when-idle" class="docs-nav-link">notify_when_idle</a>
+        <a href="#guardrails" class="docs-nav-link">Guardrails</a>
+        <a href="#try" class="docs-nav-link">Try it</a>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div>
+          <div class="footer__brand">
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
+            claudin
+          </div>
+          <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__links-title">Project</div>
+          <a href="https://github.com/claudio-labs/claudin" class="footer__link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="../changelog.html" class="footer__link">Changelog</a>
+          <a href="../install.html" class="footer__link">Install</a>
+          <a href="../sponsor.html" class="footer__link">Sponsor</a>
+          <a href="https://github.com/claudio-labs/claudin/issues" class="footer__link" target="_blank" rel="noopener noreferrer">Issues</a>
+        </div>
+
+      </div>
+
+      <div class="footer__bottom">
+        <span>claudiolabs.ai</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

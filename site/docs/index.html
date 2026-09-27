@@ -102,7 +102,7 @@
   <nav class="nav" aria-label="Main navigation">
     <div class="nav__inner">
       <a href="/" class="nav__logo">
-        <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
         claudin
       </a>
 
@@ -202,6 +202,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="agents.html" class="docs-nav-link">Agents</a>
+            <a href="cross-session-messaging.html" class="docs-nav-link">Cross-session messaging</a>
             <a href="workflows.html" class="docs-nav-link">Workflows</a>
             <a href="diff-reviewer.html" class="docs-nav-link">Diff reviewer</a>
           </div>
@@ -274,6 +275,11 @@
             <span class="doc-card-stat">6 built-in · unlimited custom</span>
             <div class="doc-card-title">Agents</div>
             <p class="doc-card-desc">Fork with full context, run in the background, or isolate in a git worktree — plus custom agents that mix models across providers.</p>
+          </a>
+          <a href="cross-session-messaging.html" class="doc-card">
+            <span class="doc-card-stat">10 sends / prompt</span>
+            <div class="doc-card-title">Cross-session messaging</div>
+            <p class="doc-card-desc"><code>SendMessage</code> and <code>ListAgents</code> reach a subagent, the main conversation, or another Claudin session on the same machine — sanitized and policy-gated.</p>
           </a>
           <a href="workflows.html" class="doc-card">
             <span class="doc-card-stat">local or GitHub-triggered</span>
@@ -366,7 +372,7 @@
       <div class="footer__inner">
         <div>
           <div class="footer__brand">
-            <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
             claudin
           </div>
           <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>

@@ -98,7 +98,7 @@
   <nav class="nav" aria-label="Main navigation">
     <div class="nav__inner">
       <a href="/" class="nav__logo">
-        <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
         claudin
       </a>
 
@@ -196,6 +196,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="agents.html" class="docs-nav-link">Agents</a>
+            <a href="cross-session-messaging.html" class="docs-nav-link">Cross-session messaging</a>
             <a href="workflows.html" class="docs-nav-link">Workflows</a>
             <a href="diff-reviewer.html" class="docs-nav-link">Diff reviewer</a>
           </div>
@@ -374,14 +375,14 @@
         <ul>
           <li><strong>Clipping is free when the cache is already cold.</strong> Under <code>retain</code>, the time-based microcompact fires only after an idle gap &ge; the 1h cache TTL — the server entry has already expired, so the next request re-writes the prefix regardless; the clip costs nothing extra. Under <code>aggressive</code> it stays off (everything old is already a stub).</li>
           <li><strong>Forks don't pollute the cache.</strong> Fire-and-forget sub-agent forks shift their marker to the last <em>shared-prefix</em> message: the write is a no-op merge on the server and the fork never registers its own tail. The flip side: a default <code>Agent(...)</code> spawn inherits the parent's full context <strong>and its warm prompt cache</strong>, so sub-agents start from cache hits instead of a cold prefix.</li>
-          <li><strong>One marker, 1h TTL, on purpose.</strong> Claudin places exactly one message-level marker (two markers pin server-side KV pages that nothing will ever resume from) and annotates 1h TTL on first-party Anthropic, deferred until &ge;2048 trailing tokens accumulate so every write registers a usable entry.</li>
+          <li><strong>One marker, 1h TTL, on purpose.</strong> Claudin places exactly one advancing message-level marker (two markers pin server-side KV pages that nothing will ever resume from) on the last message, never past the clip frontier, and annotates 1h TTL on first-party Anthropic. Until 2026-09-23 the marker was deferred until &ge;2048 trailing tokens accumulated; a graded session benchmark found that deferral billed the tail as uncached input and wrote it anyway, so it's gone by default. <code>CLAUDIN_DEFER_CACHE_MARKER=2048</code> opts back in.</li>
         </ul>
 
         <h2 id="observability">Observability — how to tell it's working</h2>
 
         <ul>
           <li><strong>Built-in break detection</strong>: every request's prompt state is hashed per-section (system, tools, per-message); when <code>cache_read</code> drops unexpectedly, the detector classifies the break — <em>client-side</em> (which section's bytes changed) vs <em>likely server-side</em> ("prompt unchanged, &lt;5min gap") — so an unexpected cost is attributable, not a mystery.</li>
-          <li><strong>Wire dumps for deep debugging</strong>: <code>CLAUDIN_DUMP_CACHE_ANNOTATIONS</code> logs every <code>cache_control</code> annotation actually sent (marker position, TTL); <code>CLAUDIN_DUMP_PREFIX_HASHES</code> dumps block-level hashes per request to diff the exact mutating block across turns.</li>
+          <li><strong>Wire dumps for deep debugging</strong>: <code>CLAUDIN_DUMP_CACHE_ANNOTATIONS</code> logs every <code>cache_control</code> annotation actually sent (marker position, TTL). There is no block-hash dump; the per-section hashing the break detector already does is what names the mutating block.</li>
           <li><strong>In-session</strong>: <code>/cost</code> prices cache reads/writes per the actually-served model.</li>
         </ul>
 
@@ -405,6 +406,7 @@
           </thead>
           <tbody>
             <tr><td><code>CLAUDIN_CLIP_FRONTIER=0</code></td><td>revert to uncapped (defer-walk-only) marker placement</td></tr>
+            <tr><td><code>CLAUDIN_DEFER_CACHE_MARKER=2048</code></td><td>defer the marker until &ge;2048 trailing tokens accumulate (pre-2026-09-23 default; measured worse, opt-in only)</td></tr>
             <tr><td><code>CLAUDIN_CACHE_PROFILE=aggressive|retain</code></td><td>force a profile instead of <code>auto</code> per-provider resolution</td></tr>
             <tr><td><code>CLAUDIN_STUB_HEAD_CHARS=&lt;n|0&gt;</code></td><td>head-preserved chars per stub (<code>0</code> = pure stubs)</td></tr>
           </tbody>
@@ -437,7 +439,7 @@
       <div class="footer__inner">
         <div>
           <div class="footer__brand">
-            <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
             claudin
           </div>
           <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>

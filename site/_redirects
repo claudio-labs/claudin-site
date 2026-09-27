@@ -1,6 +1,6 @@
 https://www.claudiolabs.ai/* https://claudiolabs.ai/:splat 301!
 /docs.html /install.html 301
-/docs /install.html 301
+/docs /docs/ 301
 
 # Docs pages moved under /docs/
 /bash-output-filter.html /docs/bash-output-filter.html 301

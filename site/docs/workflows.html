@@ -59,7 +59,7 @@
   <nav class="nav" aria-label="Main navigation">
     <div class="nav__inner">
       <a href="/" class="nav__logo">
-        <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
         claudin
       </a>
 
@@ -157,6 +157,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="agents.html" class="docs-nav-link">Agents</a>
+            <a href="cross-session-messaging.html" class="docs-nav-link">Cross-session messaging</a>
             <a href="workflows.html" class="docs-nav-link active">Workflows</a>
             <a href="diff-reviewer.html" class="docs-nav-link">Diff reviewer</a>
           </div>
@@ -191,7 +192,7 @@
 
         <p>A workflow, defined at <code>.claudin/workflows/&lt;name&gt;.md</code>, is a linear phase state machine — <code>backlog → development → code-review → test → done</code> by default. Each phase runs one or more agents in parallel, referencing the same <code>.claudin/agents/*.md</code> definitions used by the plain <a href="agents.html">Agent tool</a> or a built-in. A <code>main</code> orchestrator agent decides, after each phase, whether to <code>advance</code>, <code>refine</code> the current phase, or <code>handback</code> to an earlier one. Because each agent definition sets its own model, a single workflow can mix a cheap model for one phase with a stronger one for another — across providers, not just within one.</p>
 
-        <p>The underlying tools — <code>Workflow</code>, <code>ListWorkflows</code>, <code>WorkflowStatus</code> — are available to the model directly, the same way <code>Agent</code> is.</p>
+        <p>The underlying tools — <code>Workflow</code> (run one), <code>ListWorkflows</code> (discover them), <code>WorkflowStatus</code> (inspect a run by id) — are available to the model directly, but opt-in only: unlike <code>Agent</code>, the model won't fire a workflow unless you ask for one.</p>
 
         <h2 id="tui">The /workflows TUI</h2>
 
@@ -295,7 +296,7 @@ claudin workflow watch --workflow dev-flow --source command --command './scripts
       <div class="footer__inner">
         <div>
           <div class="footer__brand">
-            <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
             claudin
           </div>
           <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>

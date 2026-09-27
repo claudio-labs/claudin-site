@@ -121,7 +121,7 @@
   <nav class="nav" aria-label="Main navigation">
     <div class="nav__inner">
       <a href="/" class="nav__logo">
-        <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+        <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
         claudin
       </a>
 
@@ -219,6 +219,7 @@
           <div class="docs-nav-section">
             <div class="docs-nav-section-title">Agents &amp; workflows</div>
             <a href="agents.html" class="docs-nav-link">Agents</a>
+            <a href="cross-session-messaging.html" class="docs-nav-link">Cross-session messaging</a>
             <a href="workflows.html" class="docs-nav-link">Workflows</a>
             <a href="diff-reviewer.html" class="docs-nav-link">Diff reviewer</a>
           </div>
@@ -272,7 +273,7 @@
           </div>
         </div>
 
-        <p>Measured across a typical 30-minute session after Phase 12 coverage (JS/Python/Go/Rust package managers, linters, git remote ops). Aggregate measurement across 30 Phase 12 sample fixtures: <strong>75.1%</strong> byte reduction (36 170 B &rarr; 8 999 B). Reproducible via <code>bun test src/outputFilter/Bash/phase12Report.test.ts</code>.</p>
+        <p>Measured across a typical 30-minute session after Phase 12 coverage (JS/Python/Go/Rust package managers, linters, git remote ops). Aggregate measurement across 30 Phase 12 sample fixtures: <strong>75.1%</strong> byte reduction (36 170 B &rarr; 8 999 B). Reproducible via <code>bun test src/tools/shared/outputFilter/Bash/phase12Report.test.ts</code>.</p>
 
         <h2 id="commands">Commands</h2>
 
@@ -974,7 +975,7 @@ src/api/client.py:42: error: Incompatible types in assignment</code></pre>
 
         <h2 id="summary">Per-command reduction summary</h2>
 
-        <p>Measured on the in-repo fixtures via <code>bun test scripts/measure-bash-filter-roi.test.ts</code>. Numbers are byte reduction of the filtered body (the <code>&lt;bash-output-filtered …&gt;</code> wrapper itself adds ~80 bytes, dominant only for very small fixtures).</p>
+        <p>Measured on the in-repo fixtures via <code>bun test scripts/bench/tokens/measure-bash-filter-roi.test.ts</code>. Numbers are byte reduction of the filtered body (the <code>&lt;bash-output-filtered …&gt;</code> wrapper itself adds ~80 bytes, dominant only for very small fixtures).</p>
 
         <table>
           <thead>
@@ -1046,7 +1047,7 @@ src/api/client.py:42: error: Incompatible types in assignment</code></pre>
         <h3 id="toggle">Activate / deactivate</h3>
 
         <figure class="config-screenshot">
-          <img src="../img/config-bash-filter.png" alt="/config panel showing Bash output filter set to true" style="width:100%;border-radius:8px;border:1px solid var(--border);display:block;">
+          <img src="../img/config-bash-filter.png" alt="/config panel showing Bash output filter set to true" width="992" height="808" loading="lazy" style="width:100%;border-radius:8px;border:1px solid var(--border);display:block;">
         </figure>
         <p>Open <code>/config</code> inside the Claudin REPL and toggle <strong>Bash output filter</strong>.</p>
 
@@ -1100,7 +1101,7 @@ src/api/client.py:42: error: Incompatible types in assignment</code></pre>
       <div class="footer__inner">
         <div>
           <div class="footer__brand">
-            <img class="nav__logo-dot" src="/img/icon.png" alt="" aria-hidden="true" />
+            <img class="nav__logo-dot" src="/img/icon.png" alt="" width="32" height="32" aria-hidden="true" />
             claudin
           </div>
           <p class="footer__disclaimer">Independent project. Not affiliated with, endorsed by, or sponsored by Anthropic.</p>
