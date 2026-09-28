@@ -1,1 +1,5 @@
 .wrangler/
+node_modules/
+# Written at deploy time by scripts/build-llms.js
+site/llms.txt
+site/**/*.md
