@@ -1,0 +1,12 @@
+{
+  "name": "claudin-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-changelog.js && node scripts/build-llms.js"
+  },
+  "devDependencies": {
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2"
+  }
+}

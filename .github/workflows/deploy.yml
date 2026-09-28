@@ -6,7 +6,9 @@ on:
     paths:
       - 'site/**'
       - 'CHANGELOG.md'
-      - 'scripts/build-changelog.js'
+      - 'scripts/**'
+      - 'package.json'
+      - 'package-lock.json'
 
 jobs:
   deploy:
@@ -21,8 +23,14 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Build changelog data
         run: node scripts/build-changelog.js
+
+      - name: Build llms.txt and Markdown mirrors
+        run: node scripts/build-llms.js
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
