@@ -6,8 +6,8 @@
 
   <!-- Primary meta -->
   <title>Configuration: Settings, Permissions &amp; Models — Claudin Docs</title>
-  <meta name="description" content="Configure Claudin: layered settings.json, permissions, sandboxing, provider/model setup, fast mode, the advisor tool, output styles, and interface options." />
-  <meta name="keywords" content="claudin settings.json, claudin permissions, claudin sandbox, claudin provider configuration, claudin fast mode, claudin advisor tool, claudin output styles, claudin status line, claudin keybindings" />
+  <meta name="description" content="Configure Claudin: layered settings.json, permissions, sandboxing, provider/model setup, fast mode, output styles, the status line, and interface options." />
+  <meta name="keywords" content="claudin settings.json, claudin permissions, claudin sandbox, claudin provider configuration, claudin fast mode, claudin output styles, claudin status line" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
   <link rel="canonical" href="https://claudiolabs.ai/docs/configuration.html" />
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
@@ -37,7 +37,7 @@
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "Configuration: Settings, Permissions & Models — Claudin Docs",
-    "description": "How to configure Claudin: layered settings.json, permissions, sandboxing, provider/model setup, fast mode, advisor tool, output styles, and interface options.",
+    "description": "How to configure Claudin: layered settings.json, permissions, sandboxing, provider/model setup, fast mode, output styles, the status line, and interface options.",
     "url": "https://claudiolabs.ai/docs/configuration.html",
     "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
@@ -250,10 +250,6 @@
 
         <p><code>/fast</code> toggles fast mode, which only works on Opus 4.7 or Opus 4.6 — enabling it auto-switches the session to one of those models if the current model doesn't qualify.</p>
 
-        <h3 id="advisor-tool">Escalate hard decisions with the advisor tool</h3>
-
-        <p><code>/advisor &lt;model&gt;</code> sets an advisor model that the main model can call out to mid-task for a second opinion, via a server-side tool. Restricted to Opus 4.8/4.7/4.6 or Sonnet 5/4.6 — both as the calling model and as the advisor model itself — unavailable on Bedrock/Vertex, and can be disabled entirely with the <code>CLAUDE_CODE_DISABLE_ADVISOR_TOOL</code> env var.</p>
-
         <h3 id="output-styles">Output styles</h3>
 
         <p>The <code>/output-style</code> command is deprecated in favor of <code>/config</code> or editing the settings file directly. The underlying feature still works: set <code>outputStyle</code>, and define custom styles as markdown files with frontmatter (<code>name</code>, <code>description</code>, <code>keep-coding-instructions</code>) under <code>.claudin/output-styles/*.md</code> (project) or <code>~/.claudin/output-styles/*.md</code> (user).</p>
@@ -268,17 +264,13 @@
 
         <p>Claudin automatically detects whether it can safely use the terminal's alt-screen/fullscreen mode, based on tmux control-mode detection and other terminal heuristics. It can be overridden with the <code>flickerFreeMode</code> setting or the <code>CLAUDE_CODE_NO_FLICKER</code> env var (<code>0</code> forces it off, <code>1</code> forces it on) if the auto-detection guesses wrong.</p>
 
-        <h3 id="voice-dictation">Voice dictation</h3>
-
-        <p><code>/voice</code> toggles voice input. It requires a Claude.ai account (<code>/login</code>); a <code>language</code> setting controls the speech-to-text language.</p>
-
         <h3 id="status-line">Customize status line</h3>
 
         <p>Set <code>statusLine: { type: "command", command: "...", padding?: number }</code> in settings to run your own command and render its output as a persistent status line.</p>
 
-        <h3 id="keyboard-shortcuts">Customize keyboard shortcuts</h3>
+        <p>You don't have to write it by hand: <code>/statusline [what to show]</code> hands the job to the built-in <a href="agents.html#built-in"><code>statusline-setup</code> agent</a>. With no argument it imports your shell prompt (PS1) from <code>~/.zshrc</code>, <code>~/.bashrc</code>, <code>~/.bash_profile</code>, or <code>~/.profile</code>, and falls back to a default line — model · directory · git branch · context used — if it finds none. It writes <code>statusLine</code> into your user <code>settings.json</code>, plus <code>~/.claudin/statusline-command.sh</code> when the command is longer than a one-liner. Every edit asks for confirmation first, and it only runs in interactive sessions.</p>
 
-        <p><code>/keybindings</code> writes an editable template to <code>~/.claudin/keybindings.json</code> and opens it in your editor. This is currently a preview feature — gated behind a flag, and replies with a "not enabled yet" message if it's off.</p>
+        <p>The generated script reads the session JSON with <code>jq</code>. If <code>jq</code> isn't installed, the agent tells you the line stays empty until you install it.</p>
 
         <h3 id="accessibility-mode">Accessibility mode</h3>
 

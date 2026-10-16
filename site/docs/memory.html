@@ -6,7 +6,7 @@
 
   <!-- Primary meta -->
   <title>Memory: Project-Local, Git-Trackable Team Memory — Claudin Docs</title>
-  <meta name="description" content="Claudin's memory is file-based and project-local under .claudin/memory/ — private notes plus a git-trackable team/ folder that reaches teammates via git push/pull." />
+  <meta name="description" content="File-based memory in three scopes: global for you across projects, private per project, and a git-trackable team/ folder that reaches teammates via git push/pull." />
   <meta name="keywords" content="claudin memory, git-trackable ai memory, team memory ai agent, claudin project memory, persistent agent memory, claudin features" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
   <link rel="canonical" href="https://claudiolabs.ai/docs/memory.html" />
@@ -16,7 +16,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Claudin" />
   <meta property="og:title" content="Memory — Claudin Docs" />
-  <meta property="og:description" content="Private and team memory, file-based and project-local under .claudin/memory/ — the team/ folder is git-trackable, no server or Anthropic account required." />
+  <meta property="og:description" content="Global, private and team memory, all plain files — the team/ folder under .claudin/memory/ is git-trackable, no server or Anthropic account required." />
   <meta property="og:url" content="https://claudiolabs.ai/docs/memory.html" />
   <meta property="og:image" content="https://claudiolabs.ai/og-image.png" />
   <meta property="og:image:width" content="1200" />
@@ -27,7 +27,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Memory — Claudin Docs" />
-  <meta name="twitter:description" content="Private memory plus a git-trackable team/ folder — memory that reaches your teammates via plain git push/pull, no server required." />
+  <meta name="twitter:description" content="Global memory for you, private notes per project, and a git-trackable team/ folder that reaches your teammates via plain git push/pull — no server required." />
   <meta name="twitter:image" content="https://claudiolabs.ai/og-image.png" />
   <meta name="twitter:image:alt" content="Claudin CLI — Memory" />
 
@@ -37,7 +37,7 @@
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "Memory: Project-Local, Git-Trackable Team Memory — Claudin Docs",
-    "description": "How Claudin's memory system works: private per-project memory, a git-trackable team/ folder, the four-type taxonomy, and the secret guard that protects shared memory.",
+    "description": "How Claudin's memory system works: global, private and team memory scopes, the git-trackable team/ folder, the four-type taxonomy, the secret guard that protects shared memory, and the project navigation map.",
     "url": "https://claudiolabs.ai/docs/memory.html",
     "author": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
     "publisher": { "@type": "Organization", "name": "Claudio Labs", "url": "https://claudiolabs.ai/" },
@@ -185,27 +185,42 @@
 
         <div class="page-hero">
           <h1>Memory</h1>
-          <p class="page-hero__sub">Private notes for you, a shared folder for your team — both file-based, both project-local, both plain git.</p>
+          <p class="page-hero__sub">Notes that follow you across projects, private notes for this one, a shared folder for your team — all plain files, and the team folder is plain git.</p>
         </div>
 
         <h2 id="overview">Overview</h2>
 
-        <p>Claudin keeps a persistent, file-based memory alongside your project: a private directory just for you and the current project, and a shared <code>team/</code> subfolder that any contributor can write to and that reaches everyone else through ordinary <code>git push</code>/<code>pull</code>/<code>clone</code> — no server, no Anthropic account, no special sync step. Both load at the start of every session, so the model shows up already knowing who you are, what the project's conventions are, and what the team has already decided.</p>
+        <p>Claudin keeps a persistent, file-based memory in three scopes: a <a href="#global">global</a> directory with what's true of you in every project, a private directory just for you and the current project, and a shared <code>team/</code> subfolder that any contributor can write to and that reaches everyone else through ordinary <code>git push</code>/<code>pull</code>/<code>clone</code> — no server, no Anthropic account, no special sync step. All three load at the start of every session, so the model shows up already knowing who you are, what the project's conventions are, and what the team has already decided.</p>
 
         <p><strong>On by default for any project inside a git repository.</strong></p>
 
         <h2 id="layout">Where it lives</h2>
 
-        <p>Memory is project-local: it defaults to <code>&lt;gitRoot&gt;/.claudin/memory/</code>, the same pattern already used for <code>.claudin/plans/</code>. Private memory is one file per fact under that directory; team memory lives in its <code>team/</code> subfolder. Resolution order, first match wins:</p>
+        <p>Private and team memory are project-local: they default to <code>&lt;gitRoot&gt;/.claudin/memory/</code>, the same pattern already used for <code>.claudin/plans/</code>. Private memory is one file per fact under that directory; team memory lives in its <code>team/</code> subfolder. (The <a href="#global">global memory</a> is separate and not part of this order.) Resolution order, first match wins:</p>
 
         <ol>
           <li><code>CLAUDE_COWORK_MEMORY_PATH_OVERRIDE</code> environment variable (Cowork only)</li>
           <li><code>autoMemoryDirectory</code> in <code>settings.json</code> (trusted sources only)</li>
           <li><code>&lt;gitRoot&gt;/.claudin/memory/</code>, unless <code>autoMemoryProjectLocal: false</code> is set</li>
-          <li><code>&lt;memoryBase&gt;/projects/&lt;sanitized-git-root&gt;/memory/</code> — the legacy global path, used for non-git projects</li>
+          <li><code>&lt;memoryBase&gt;/projects/&lt;sanitized-git-root&gt;/memory/</code> — the legacy per-project path under <code>~/.claudin/</code>, used for non-git projects</li>
         </ol>
 
-        <p>If a project already had memory under the legacy global path, the first project-local resolution <strong>copies</strong> it across automatically — it never deletes or moves the original, so the old directory stays as a backup, and the copy only runs once.</p>
+        <p>If a project already had memory under the legacy per-project path, the first project-local resolution <strong>copies</strong> it across automatically — it never deletes or moves the original, so the old directory stays as a backup, and the copy only runs once.</p>
+
+        <h2 id="global">Global memory</h2>
+
+        <p>Private and team memory both belong to one project, so what is true of <em>you</em> — your language, how much detail you want in an answer, a taste for clean architecture — used to stay in whichever repo it was learned in, and every new project started knowing nothing about you. The <strong>global</strong> memory holds that: <code>~/.claudin/memory/</code>, read by every project. Its <code>MEMORY.md</code> index loads before the private and team ones, general to specific, the way your user-level instructions precede the project's.</p>
+
+        <ul>
+          <li><strong>Never committed.</strong> It lives in your config home, not in any repository, so there's no secret scan — same as private memory.</li>
+          <li><strong>No permission prompt</strong> to read or write it, like private memory. The background memory passes (extraction and dream) can only <em>add</em> to it, never rewrite: a run sees one project, and what looks stale there may still hold in another.</li>
+          <li><strong>Background, not orders.</strong> A memory index is written by a past conversation, so Claudin presents it as context to check against the current state. <code>AGENTS.md</code>/<code>CLAUDE.md</code> and your rules take precedence.</li>
+          <li><code>/memory global</code> opens it; deleting a file there warns that every project loses it. <code>/memory tidy</code> covers it but never merges across directories.</li>
+        </ul>
+
+        <p>If you used Claudin before the global memory existed, your <code>user</code> memories are still in each project's private directory. The <code>/memory</code> screen flags them on the <code>Private memory</code> row (<em>"3 about you — /memory sort moves them to global"</em>), and <code>/memory sort</code> promotes them: it moves a file, merges it into an existing global memory, or splits a file that mixes you with the project. Nothing moves on its own, and each <code>mv</code> and <code>rm</code> goes through the normal permission prompt.</p>
+
+        <p>Set <code>CLAUDIN_GLOBAL_MEMORY=0</code> to turn it off, or move it with <code>autoMemoryGlobalDirectory</code> — see <a href="#config">Configuration</a>.</p>
 
         <h2 id="gitignore">Making <code>team/</code> actually git-trackable</h2>
 
@@ -227,12 +242,14 @@
             <tr><th>Type</th><th>Scope</th><th>Holds</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>user</code></td><td>Always private</td><td>Who the user is: role, expertise, goals, preferences.</td></tr>
-            <tr><td><code>feedback</code></td><td>Private by default; team only for a project-wide convention</td><td>Corrections and confirmed approaches — a testing policy or build invariant belongs to the team; personal style stays private.</td></tr>
-            <tr><td><code>project</code></td><td>Bias toward team</td><td>Ongoing work, decisions, bugs, or constraints not derivable from the code or git history.</td></tr>
-            <tr><td><code>reference</code></td><td>Usually team</td><td>Pointers to external systems — a tracker project, a chat channel, a dashboard.</td></tr>
+            <tr><td><code>user</code></td><td>Always global</td><td>Who you are: role, expertise, goals, preferences — the same in every project. What holds of you only in this project is a private <code>project</code> memory.</td></tr>
+            <tr><td><code>feedback</code></td><td>Global if it would still hold in an unrelated repo; private if it wouldn't or you're unsure; team only for a project-wide convention</td><td>Corrections and confirmed approaches — a testing policy or build invariant belongs to the team; personal style is global or private.</td></tr>
+            <tr><td><code>project</code></td><td>Never global; bias toward team</td><td>Ongoing work, decisions, bugs, or constraints not derivable from the code or git history.</td></tr>
+            <tr><td><code>reference</code></td><td>Usually team; global only for a personal resource outside any one project</td><td>Pointers to external systems — a tracker project, a chat channel, a dashboard.</td></tr>
           </tbody>
         </table>
+
+        <p>With the global memory turned off, <code>user</code> is always private again and nothing is global.</p>
 
         <p>Memories link to each other with <code>[[name]]</code>, across private and team directories alike. Stale or duplicate memories get updated or deleted rather than piling up — see <a href="#tidy">the tidy command</a> below.</p>
 
@@ -242,7 +259,35 @@
 
         <h2 id="tidy">Keeping memory tidy</h2>
 
-        <p>Run <code>/memory tidy</code> to merge duplicate memories and prune ones that no longer hold up — it works across both the private directory and the team folder.</p>
+        <p>Run <code>/memory tidy</code> to merge duplicate memories and prune ones that no longer hold up — it works across the global, private and team directories, and never merges across them. <code>/memory sort</code> does the filing: it promotes what's about you from the private directory to the global one, and files team memories into <code>decisions/</code>, <code>bugs/</code> and <code>docs/</code>.</p>
+
+        <h2 id="navigation-map">Navigation map</h2>
+
+        <p>Alongside memory, Claudin keeps a short <strong>navigation map</strong> of your project at <code>.claudin/rules/search-strategy.md</code>: a directory tree with file counts and, for each directory, a note on what it's for — so a fresh session knows where to look instead of grepping blind. It's a path-scoped rule (<code>paths:</code>), so it loads when the model works on the code it describes.</p>
+
+        <p>It is <strong>on by default in every git project</strong> and needs no setup:</p>
+
+        <ul>
+          <li>The first time, Claudin writes it from <code>git ls-files</code>. After that it's kept current at the end of each turn in which the tracked files changed. <code>/init</code> syncs it too.</li>
+          <li>It's an ordinary file in your repo — commit it and your teammates get it too.</li>
+          <li>Small directories (fewer than three source files) are left out and the tree stays shallow, so the map stays cheap to load.</li>
+        </ul>
+
+        <p>A map Claudin generated carries a <code>&lt;!-- claudin:module-map --&gt;</code> marker and is regenerated whole as the tree changes. The <code>← TODO</code> notes it starts with are yours to fill in, or you can let <code>/map annotate</code> do it from the code it reads; notes you write survive every refresh, keyed to the directory's full path. A map you wrote by hand has no marker: only its numbers are kept current, and its tree is never restructured.</p>
+
+        <p>The sync is skipped outside a git repository, in a linked worktree, while the map has edits of yours that aren't committed yet, after <code>/map off</code>, and everywhere when <code>CLAUDIN_DISABLE_RULE_MAP_SYNC=1</code> is set.</p>
+
+        <table>
+          <thead>
+            <tr><th>Command</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>/map</code></td><td>Status: whether the map is generated or hand-written, whether auto-sync is on, the last sync, any drift, and how many entries are still <code>← TODO</code>.</td></tr>
+            <tr><td><code>/map sync</code></td><td>Sync now, whatever changed.</td></tr>
+            <tr><td><code>/map off</code> / <code>/map on</code></td><td>Stop or resume the end-of-turn sync for this project. <code>/map sync</code> still works while it's off.</td></tr>
+            <tr><td><code>/map annotate</code></td><td>Have the model replace the <code>← TODO</code> notes with what each directory is for.</td></tr>
+          </tbody>
+        </table>
 
         <h2 id="config">Configuration</h2>
 
@@ -251,8 +296,11 @@
             <tr><th>Setting</th><th>Effect</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>autoMemoryProjectLocal: false</code></td><td>Forces the legacy global-only location. Set in user/local/policy settings — never <code>projectSettings</code>, for security.</td></tr>
+            <tr><td><code>autoMemoryProjectLocal: false</code></td><td>Forces the legacy per-project location under <code>~/.claudin/projects/</code> instead of <code>&lt;gitRoot&gt;/.claudin/memory/</code>. Doesn't affect the global memory. Set in user, flag or policy settings — never <code>projectSettings</code> or <code>settings.local.json</code>, which live in the repo.</td></tr>
             <tr><td><code>autoMemoryDirectory</code></td><td>Overrides the memory directory outright (trusted settings sources only).</td></tr>
+            <tr><td><code>autoMemoryGlobalDirectory</code></td><td>Moves the global memory off <code>~/.claudin/memory/</code>. Policy, flag or user settings only; refused if the path would contain the config home itself.</td></tr>
+            <tr><td><code>CLAUDIN_GLOBAL_MEMORY=0</code></td><td>Turns the global memory off (environment variable). It is also off under a Cowork memory override, or if settings make the global and private directories nest — <code>/memory global</code> says which.</td></tr>
+            <tr><td><code>CLAUDIN_DISABLE_RULE_MAP_SYNC=1</code></td><td>Turns the <a href="#navigation-map">navigation map</a> creation and sync off everywhere (environment variable). <code>/map off</code> does the same for one project.</td></tr>
           </tbody>
         </table>
 
@@ -266,10 +314,12 @@
         </div>
         <a href="#overview" class="docs-nav-link">Overview</a>
         <a href="#layout" class="docs-nav-link">Where it lives</a>
+        <a href="#global" class="docs-nav-link">Global memory</a>
         <a href="#gitignore" class="docs-nav-link">Git-trackable team/</a>
         <a href="#taxonomy" class="docs-nav-link">What to write where</a>
         <a href="#secrets" class="docs-nav-link">Secrets guard</a>
         <a href="#tidy" class="docs-nav-link">Keeping it tidy</a>
+        <a href="#navigation-map" class="docs-nav-link">Navigation map</a>
         <a href="#config" class="docs-nav-link">Configuration</a>
       </aside>
     </div>

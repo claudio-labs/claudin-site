@@ -262,7 +262,7 @@ Instructions for the model...</code></pre>
           </tbody>
         </table>
 
-        <p>The <code>/create</code> skill authors any of the three from a plain-language description, straight into the right spot under <code>.claudin/</code> or <code>~/.claudin/</code>.</p>
+        <p>The <code>/create</code> skill authors any of the three — as well as hooks and plugins — from a plain-language description, straight into the right spot under <code>.claudin/</code> or <code>~/.claudin/</code>.</p>
 
         <h2 id="bundled">Bundled skills</h2>
 
@@ -278,14 +278,15 @@ Instructions for the model...</code></pre>
             <tr><td><code>run</code></td><td>Launch the project's app and drive it to the change, end to end.</td></tr>
             <tr><td><code>batch</code></td><td>Research/plan a large-scale change, then execute it in parallel across 5–30 isolated worktree agents that each open a PR.</td></tr>
             <tr><td><code>fewer-permission-prompts</code></td><td>Scan recent transcripts for common read-only calls and allowlist them.</td></tr>
-            <tr><td><code>create</code></td><td>Author or refine skills, rules, and agents in <code>.claudin/</code>.</td></tr>
+            <tr><td><code>create</code></td><td>Author or refine skills, rules, agents, hooks, and plugins in <code>.claudin/</code>.</td></tr>
+            <tr><td><code>refresh-rules</code></td><td>Reconcile <code>.claudin/rules/</code> with the codebase and with what the agent actually reads, then propose corrections. Creates a <a href="memory.html#navigation-map">navigation rule</a> when the project has none and there is enough session history.</td></tr>
+            <tr><td><code>skill-doctor</code></td><td>Check project and global skills for invalid frontmatter, names that collide with built-in commands or other skills, and descriptions that never trigger, then propose fixes. Edits only what you confirm.</td></tr>
             <tr><td><code>loop</code></td><td>Run a prompt on a fixed or dynamic interval — see <a href="automation.html#scheduling">Automation</a>.</td></tr>
             <tr><td><code>debug</code></td><td>Turn on debug logging and help diagnose an issue.</td></tr>
-            <tr><td><code>keybindings-help</code></td><td>Customize keyboard shortcuts via <code>~/.claudin/keybindings.json</code>. Model-only, hidden from the <code>/</code> menu. Currently gated to an internal preview — most users will see "not enabled" rather than working customization.</td></tr>
           </tbody>
         </table>
 
-        <p>See <a href="configuration.html#settings">Settings</a> and <a href="configuration.html#keyboard-shortcuts">Keyboard shortcuts</a> for more on <code>update-config</code> and <code>keybindings-help</code>.</p>
+        <p>See <a href="configuration.html#settings">Settings</a> for more on <code>update-config</code>.</p>
 
         <h2 id="try-it">Try it</h2>
 
