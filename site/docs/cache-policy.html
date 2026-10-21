@@ -252,7 +252,7 @@
 
         <p>Prompt caches are prefix-based and byte-exact: one changed byte at position X invalidates everything from X to the end of the cached prefix. Every coding-agent CLI mutates its own history — stubbing old tool results to bound memory, stripping aged-out thinking blocks, compacting. If any of those rewrites lands <em>behind</em> the cache marker, the provider re-bills the whole tail as a cache <strong>write</strong> (1.25&times; input price on Anthropic) instead of a cache <strong>read</strong> (0.1&times;).</p>
 
-        <p>This is not hypothetical — it is what the upstream design does, and what Claudin's own baseline did before this feature:</p>
+        <p>This is not hypothetical — it is what Claude Code's design does, and what Claudin's own baseline did before this feature:</p>
 
         <ul>
           <li>The age-prune stubs the previous turn's <code>tool_result</code> every turn — always <em>before</em> the marker &rarr; a recurring per-turn cache break.</li>
@@ -334,7 +334,7 @@
 
         <h2 id="autocompact">Why this beats autocompact (graceful degradation vs the cliff)</h2>
 
-        <p>Autocompact — the upstream pressure valve — fires at ~92% of the context window and summarizes the <strong>entire conversation</strong> into one message. It is a cliff: one catastrophic, irreversible, lossy event. The model loses the exact bytes of everything at once, and worse, <strong>it doesn't know what it doesn't know</strong> — a summary carries no manifest of what was omitted, so nothing lost can be deliberately recovered. It is also a full cache reset (the whole prefix is rewritten), plus the cost of the summarization request itself.</p>
+        <p>Autocompact — Claude Code's pressure valve — fires at ~92% of the context window and summarizes the <strong>entire conversation</strong> into one message. It is a cliff: one catastrophic, irreversible, lossy event. The model loses the exact bytes of everything at once, and worse, <strong>it doesn't know what it doesn't know</strong> — a summary carries no manifest of what was omitted, so nothing lost can be deliberately recovered. It is also a full cache reset (the whole prefix is rewritten), plus the cost of the summarization request itself.</p>
 
         <p>Claudin's layers degrade context <strong>selectively, incrementally, and recoverably</strong> instead. The key observation is that history holds two classes of content:</p>
 

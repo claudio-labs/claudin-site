@@ -279,7 +279,7 @@
           </tbody>
         </table>
 
-        <p>This trade-off is measured, not speculated: an upstream experiment that tried truncating instead of throwing was <strong>reverted</strong> — the tool-error rate dropped but mean tokens rose. Neither branch of the dilemma wins; the missing option is one that is <em>both</em> cheap <em>and</em> informative.</p>
+        <p>This trade-off is measured, not speculated: a Claude Code experiment that tried truncating instead of throwing was <strong>reverted</strong> — the tool-error rate dropped but mean tokens rose. Neither branch of the dilemma wins; the missing option is one that is <em>both</em> cheap <em>and</em> informative.</p>
 
         <p>There is a subtler failure below the cap, too: even a full read that <em>fits</em> (say 15k chars) induces a pathology — the model re-reads the same file in slices, because a large literal body in a tool result reliably triggers "I need to see the middle again" loops.</p>
 
